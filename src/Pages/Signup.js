@@ -12,23 +12,31 @@ const SignUp = () => {
   const [selectedOption, setSelectedOption] = useState("");
 
   const [name, setName] = useState("");
-  const [nameCheck, setNameCheck] = useState(false);
-
-  console.log(1231231);
+  // const [nameCheck, setNameCheck] = useState(false);
+  // const [isName, setInName] = useState(false);
 
   const [email, setEmail] = useState("");
   const [onEmail, setOnEmail] = useState("");
   const [password, setPassword] = useState("");
   const [onPassword, setOnPassword] = useState("");
 
+  //오류 메세지 저장
+  const [nameMessage, setNameMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [onEamilMessage, setOnEamilMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [onPasswordMessage, setOnPasswordMessage] = useState("");
+
+  //유효성 검사
+
   // const [onCompleteSubmit, setOnCompleteSubmit] = useState("");
-  const [input, setinput] = useState({
-    name: "",
-    email: "",
-    onEmail: "",
-    password: "",
-    onPassword: "",
-  });
+  // const [input, setinput] = useState({
+  //   name: "",
+  //   email: "",
+  //   onEmail: "",
+  //   password: "",
+  //   onPassword: "",
+  // });
 
   const selectMenu = () => setOpen(!Open);
   const options = ["대한민국", "체코", "독일", "폴란드", "일본"];
@@ -40,6 +48,13 @@ const SignUp = () => {
 
   const onNameHandler = (e) => {
     setName(e.target.value);
+    // if (e.target.value.length < 2) {
+    //   setNameCheck("이름은 다시 입력 해주세요 ~ ");
+    //   setInName(false);
+    // } else {
+    //   setNameCheck("올바른 형식입니다.");
+    //   setInName(true);
+    // }
   };
   const onEmailHandler = (e) => {
     setEmail(e.target.value);
@@ -57,24 +72,6 @@ const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log(name, email, onEmail, password, onPassword);
-
-    if (name === "") {
-      alert("이름");
-      return;
-    }
-    if (email === "") {
-      alert("이메일");
-      return;
-    }
-    if (onEmail === "" || onEmail !== email) {
-      alert("이메일확인하세요.");
-      return;
-    }
-
-    // if (onEmail) {
-    //   alert("이메일체크");
-    //   return;
-    // }
 
     // const a = input.name;
     // if (!a.includes("@") && !a.includes(".")) {

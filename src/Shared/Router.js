@@ -7,7 +7,6 @@ import SignUp from "../Pages/Signup";
 import Login from "../Pages/Login";
 
 const Router = () => {
-  console.log("dev");
   return (
     <BrowserRouter>
       <Navbar />
