@@ -6,18 +6,20 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserSolid } from "./AwesomeSolid";
 import { useDispatch, useSelector } from "react-redux";
-import { searching } from "../Redux/modules/listSlice";
+import { searching, setAuthenticate } from "../Redux/modules/listSlice";
 
 const Navbar = ({}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [authenticate, setAuthenticate] = useState(false);
+  const { authenticate } = useSelector((state) => state.listSlice);
   const searched = useSelector((state) => state.listSlice.search);
 
   const menuList = ["여성", "남성", "백", "리네아 로사", "PRADASPHERE"];
   const goToLogin = () => {
     // authenticate ? setAuthenticate(false) : navigate("/login");
-    authenticate ? setAuthenticate(false) : setAuthenticate(true);
+    authenticate
+      ? dispatch(setAuthenticate(false))
+      : dispatch(setAuthenticate(true));
   };
   const search = (e) => {
     if (e.key === "Enter") {
