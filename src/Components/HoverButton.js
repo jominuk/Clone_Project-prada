@@ -2,14 +2,16 @@ import styled from "styled-components";
 
 export const HoverButton = styled.button`
   position: relative;
-  margin: 50px 0 0 0;
+  color: ${(props) => props.mode || "black"};
+  margin: ${(props) => props.margin || "50px 0 0 0"};
   font-weight: bold;
-  font-size: 23px;
+  font-size: ${(props) => props.fontSize || "23px"};
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${(props) => props.mode || "black"};
   transition: all 0.5s;
   overflow: hidden;
+  z-index: 0;
   cursor: pointer;
   :focus {
     outline: none;
@@ -19,7 +21,7 @@ export const HoverButton = styled.button`
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: black;
+    background-color: ${(props) => props.mode || "black"};
     top: 100%;
     left: 0%;
     transition: all 0.5s;
@@ -29,6 +31,7 @@ export const HoverButton = styled.button`
     transform: translateY(-100%);
   }
   :hover {
-    color: white;
+    color: ${(props) => props.hoverColor || "white"};
+    border: none;
   }
 `;

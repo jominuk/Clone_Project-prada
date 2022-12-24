@@ -1,7 +1,8 @@
 import React from "react";
+import ReactPlayer from "react-player";
 
 const Main = () => {
-  return <div></div>;
+  return <></>;
 };
 
 export default Main;
