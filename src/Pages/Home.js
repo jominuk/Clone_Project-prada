@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import styled from "styled-components";
+import { HoverButton } from "../Components/HoverButton";
 import { searching } from "../Redux/modules/listSlice";
 
 const Home = () => {
@@ -16,23 +16,36 @@ const Home = () => {
       <StDark search={search} onClick={onToggleSearch} />
       <Stdiv>
         <HomeLayout>
+          <Box></Box>
           <StFirstImage>
             <InsideFirstImage>
               <div>여성 선물</div>
-              <div>
-                <button>여성 제품</button>
-                <button>남성 제품</button>
-              </div>
+              <Gap>
+                <HoverButton mode="white" fontSize="15px">
+                  여성 제품
+                </HoverButton>
+                <HoverButton mode="white" fontSize="15px">
+                  남성 제품
+                </HoverButton>
+              </Gap>
             </InsideFirstImage>
           </StFirstImage>
           <StSecondImage>
             <SmallImageFirst>
               <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
-              <SmallImageButton>구매하기</SmallImageButton>
+              <div>
+                <HoverButton margin="20px 13px 0 0 " fontSize="15px">
+                  구매하기
+                </HoverButton>
+              </div>
             </SmallImageFirst>
             <SmallImageSecond>
               <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
-              <SmallImageButton>구매하기</SmallImageButton>
+              <div>
+                <HoverButton margin="20px 13px 0 0 " fontSize="15px">
+                  구매하기
+                </HoverButton>
+              </div>
             </SmallImageSecond>
           </StSecondImage>
           <StThirdImage>
@@ -55,6 +68,12 @@ const StDark = styled.div`
   height: 100%;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+`;
+
+const Box = styled.div`
+  width: 100%;
+  height: 50px;
 `;
 
 const Stdiv = styled.div`
@@ -64,6 +83,12 @@ const Stdiv = styled.div`
 
 const HomeLayout = styled.div`
   padding: 10px;
+`;
+
+const Gap = styled.div`
+  width: 150px;
+  justify-content: space-between;
+  display: flex;
 `;
 
 const StFirstImage = styled.div`
@@ -115,10 +140,6 @@ const SmallImageText = styled.div`
   padding: 20px;
   font-size: 32px;
   font-weight: 600;
-`;
-
-const SmallImageButton = styled.button`
-  height: 60px;
 `;
 
 const StThirdImage = styled.div`
