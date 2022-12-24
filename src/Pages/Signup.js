@@ -173,8 +173,9 @@ export default SignUp;
 
 const StDiv = styled.div`
   display: flex;
-  height: 100vh;
+  // height: 100vh;
   margin: 0 200px 0 200px;
+  border: 2px solid black;
 `;
 
 const StForm = styled.form`
