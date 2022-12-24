@@ -12,34 +12,27 @@ const SignUp = () => {
   const [selectedOption, setSelectedOption] = useState("");
 
   //초기값 세팅
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [onEmail, setOnEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [onPassword, setOnPassword] = useState("");
+  const [input, setInput] = useState({
+    lastName: "",
+    email: "",
+    emailConfirm: "",
+    password: "",
+    passwordConfirm: "",
+  });
 
   //오류 메세지 저장
   const [nameMessage, setNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
-  const [onEamilMessage, setOnEamilMessage] = useState("");
+  const [emailConfirmMessage, setEmailConfirmMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
-  const [onPasswordMessage, setOnPasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   //유효성 검사
   const [isName, setIsName] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
-  const [isOnEmail, setIsOnEmail] = useState(false);
+  const [isEmailConfirm, setIsEmailConfirm] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
-  const [isOnPassword, setIsOnPassword] = useState(false);
-
-  // const [onCompleteSubmit, setOnCompleteSubmit] = useState("");
-  // const [input, setinput] = useState({
-  //   name: "",
-  //   email: "",
-  //   onEmail: "",
-  //   password: "",
-  //   onPassword: "",
-  // });
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   const selectMenu = () => setOpen(!Open);
   const options = ["대한민국", "체코", "독일", "폴란드", "일본"];
@@ -50,31 +43,24 @@ const SignUp = () => {
   };
 
   const onNameHandler = (e) => {
-    setName(e.target.value);
-    // if (e.target.value.length < 2) {
-    //   setNameCheck("이름은 다시 입력 해주세요 ~ ");
-    //   setInName(false);
-    // } else {
-    //   setNameCheck("올바른 형식입니다.");
-    //   setInName(true);
-    // }
+    setInput(input.lastName(e.target.value));
   };
   const onEmailHandler = (e) => {
-    setEmail(e.target.value);
+    setInput(input.email(e.target.value));
   };
   const onPasswordHandler = (e) => {
-    setOnEmail(e.target.value);
+    setInput(input.emailConfirm(e.target.value));
   };
   const onEmailCompleteHandler = (e) => {
-    setPassword(e.target.value);
+    setInput(input.password(e.target.value));
   };
   const onPasswordCompleteHandler = (e) => {
-    setOnPassword(e.target.value);
+    setInput(input.passwordConfirm(e.target.value));
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(name, email, onEmail, password, onPassword);
+    console.log(input);
 
     // const a = input.name;
     // if (!a.includes("@") && !a.includes(".")) {
@@ -94,9 +80,9 @@ const SignUp = () => {
           <StContentBoxOne>
             <StInput
               placeholder="이름 (성 제외)*"
-              type="name"
-              length={name.length}
-              value={name}
+              type="lastName"
+              length={input.lastName.length}
+              value={input.lastName}
               onChange={onNameHandler}
             />
 
