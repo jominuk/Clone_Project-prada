@@ -5,7 +5,7 @@ import Navbar from "../Components/Navbar";
 import Home from "../Pages/Home";
 import SignUp from "../Pages/Signup";
 import Login from "../Pages/Login";
-
+import Footer from "../Components/Footer"
 const Router = () => {
   return (
     <BrowserRouter>
@@ -19,6 +19,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
