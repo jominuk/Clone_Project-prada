@@ -17,12 +17,21 @@ export const __getPostBox = createAsyncThunk(
 
 const initialState = {
   postList: [],
+  search: false,
 };
 
 const listSlice = createSlice({
   name: "POST_SLICE",
   initialState,
-  reducers: {},
+  reducers: {
+    loginCheck: (state, action) => {
+      state.login = action.payload;
+    },
+    searching: (state, action) => {
+      console.log(state.search);
+      state.search = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       //
@@ -39,5 +48,5 @@ const listSlice = createSlice({
   },
 });
 
-export const { data } = listSlice.actions;
+export const { searching } = listSlice.actions;
 export default listSlice.reducer;
