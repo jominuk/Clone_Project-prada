@@ -8,7 +8,7 @@ import { UserSolid } from "./AwesomeSolid";
 import { useDispatch, useSelector } from "react-redux";
 import { searching, setAuthenticate } from "../Redux/modules/listSlice";
 
-const Navbar = ({}) => {
+const Navbar = ({ }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { authenticate } = useSelector((state) => state.listSlice);
@@ -101,7 +101,6 @@ const Fifty = styled.div`
 const Boundary = styled.div`
   margin: 15px 3vw 10px 3vw;
   display: flex;
-
   /* position: fixed; */
 `;
 const NavSection = styled.div`
