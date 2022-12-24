@@ -21,7 +21,7 @@ export const HoverButton = styled.button`
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: black;
+    background-color: ${(props) => props.mode || "black"};
     top: 100%;
     left: 0%;
     transition: all 0.5s;
@@ -31,7 +31,7 @@ export const HoverButton = styled.button`
     transform: translateY(-100%);
   }
   :hover {
-    color: ${(props) => props.hover || "white"};
+    color: ${(props) => props.hoverColor || "white"};
     border: none;
   }
 `;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { HoverButton } from "../Components/HoverButton";
 import { searching } from "../Redux/modules/listSlice";
+import ReactPlayer from "react-player";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,19 +18,32 @@ const Home = () => {
       <Stdiv>
         <HomeLayout>
           <Box></Box>
-          <StFirstImage>
-            <InsideFirstImage>
-              <div>여성 선물</div>
-              <Gap>
-                <HoverButton mode="white" fontSize="15px">
-                  여성 제품
-                </HoverButton>
-                <HoverButton mode="white" fontSize="15px">
-                  남성 제품
-                </HoverButton>
-              </Gap>
-            </InsideFirstImage>
-          </StFirstImage>
+          <div>
+            <Test>
+              <InsideFirstImage>
+                <div>여성 선물</div>
+                <Gap>
+                  <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                    여성 제품
+                  </HoverButton>
+                  <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                    남성 제품
+                  </HoverButton>
+                </Gap>
+              </InsideFirstImage>
+            </Test>
+
+            <FirstVideo>
+              <ReactPlayer
+                url="img/prada.mp4"
+                width="100%"
+                height="70%"
+                muted={true} //chrome정책으로 인해 자동 재생을 위해 mute 옵션을 true로 해주었다.
+                playing={true}
+                loop={true}
+              />
+            </FirstVideo>
+          </div>
           <StSecondImage>
             <SmallImageFirst>
               <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
@@ -40,7 +54,7 @@ const Home = () => {
               </div>
             </SmallImageFirst>
             <SmallImageSecond>
-              <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
+              <SmallImageText>남성 홀리데이 컬렉션</SmallImageText>
               <div>
                 <HoverButton margin="20px 13px 0 0 " fontSize="15px">
                   구매하기
@@ -48,6 +62,19 @@ const Home = () => {
               </div>
             </SmallImageSecond>
           </StSecondImage>
+          <StFirstImage>
+            <InsideFirstImage>
+              <div>가방 제품</div>
+              <Gap>
+                <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                  여성 제품
+                </HoverButton>
+                <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                  남성 제품
+                </HoverButton>
+              </Gap>
+            </InsideFirstImage>
+          </StFirstImage>
           <StThirdImage>
             <ThirdImageBox>
               <div></div>
@@ -71,9 +98,29 @@ const StDark = styled.div`
   z-index: 1;
 `;
 
+const Test = styled.div`
+  color: white;
+  position: absolute;
+  width: 94.5%;
+  height: 85%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+`;
+
+const FirstVideo = styled.div`
+  width: 98.8%;
+  margin-left: 0.5vw;
+  display: flex;
+  justify-content: center;
+  border: none;
+  position: relative;
+  z-index: -1;
+`;
+
 const Box = styled.div`
   width: 100%;
-  height: 50px;
+  height: 70px;
 `;
 
 const Stdiv = styled.div`
@@ -110,7 +157,6 @@ const InsideFirstImage = styled.div`
   font-size: 2em;
   font-weight: 600;
 `;
-
 const StSecondImage = styled.div`
   display: flex;
   justify-content: center;

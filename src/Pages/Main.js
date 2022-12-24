@@ -1,12 +1,8 @@
 import React from "react";
-import { HoverButton } from "../Components/HoverButton";
+import ReactPlayer from "react-player";
 
 const Main = () => {
-  return (
-    <div>
-      <HoverButton>aaa</HoverButton>
-    </div>
-  );
+  return <></>;
 };
 
 export default Main;
