@@ -11,10 +11,8 @@ const SignUp = () => {
   const [Open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
+  //초기값 세팅
   const [name, setName] = useState("");
-  // const [nameCheck, setNameCheck] = useState(false);
-  // const [isName, setInName] = useState(false);
-
   const [email, setEmail] = useState("");
   const [onEmail, setOnEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +26,11 @@ const SignUp = () => {
   const [onPasswordMessage, setOnPasswordMessage] = useState("");
 
   //유효성 검사
+  const [isName, setIsName] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isOnEmail, setIsOnEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isOnPassword, setIsOnPassword] = useState(false);
 
   // const [onCompleteSubmit, setOnCompleteSubmit] = useState("");
   // const [input, setinput] = useState({
