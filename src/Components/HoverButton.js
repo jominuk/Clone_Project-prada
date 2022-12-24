@@ -11,6 +11,7 @@ export const HoverButton = styled.button`
   border-bottom: 1px solid ${(props) => props.mode || "black"};
   transition: all 0.5s;
   overflow: hidden;
+  z-index: 0;
   cursor: pointer;
   :focus {
     outline: none;
