@@ -5,8 +5,12 @@ import Navbar from "../Components/Navbar";
 import Home from "../Pages/Home";
 import SignUp from "../Pages/Signup";
 import Login from "../Pages/Login";
+
 import Main from "../Pages/Main";
 import Detail from "../Pages/Detail";
+
+
+import Footer from "../Components/Footer"
 
 const Router = () => {
   console.log("dev");
@@ -22,6 +26,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
