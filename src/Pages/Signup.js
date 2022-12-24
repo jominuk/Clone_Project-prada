@@ -11,22 +11,28 @@ const SignUp = () => {
   const [Open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const [name, setName] = useState("");
-  const [nameCheck, setNameCheck] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [onEmail, setOnEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [onPassword, setOnPassword] = useState("");
-
-  // const [onCompleteSubmit, setOnCompleteSubmit] = useState("");
-  const [input, setinput] = useState({
-    name: "",
+  //초기값 세팅
+  const [input, setInput] = useState({
+    lastName: "",
     email: "",
-    onEmail: "",
+    emailConfirm: "",
     password: "",
-    onPassword: "",
+    passwordConfirm: "",
   });
+
+  //오류 메세지 저장
+  const [nameMessage, setNameMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [emailConfirmMessage, setEmailConfirmMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+
+  //유효성 검사
+  const [isName, setIsName] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isEmailConfirm, setIsEmailConfirm] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   const selectMenu = () => setOpen(!Open);
   const options = ["대한민국", "체코", "독일", "폴란드", "일본"];
@@ -37,42 +43,24 @@ const SignUp = () => {
   };
 
   const onNameHandler = (e) => {
-    setName(e.target.value);
+    setInput(input.lastName(e.target.value));
   };
   const onEmailHandler = (e) => {
-    setEmail(e.target.value);
+    setInput(input.email(e.target.value));
   };
   const onPasswordHandler = (e) => {
-    setOnEmail(e.target.value);
+    setInput(input.emailConfirm(e.target.value));
   };
   const onEmailCompleteHandler = (e) => {
-    setPassword(e.target.value);
+    setInput(input.password(e.target.value));
   };
   const onPasswordCompleteHandler = (e) => {
-    setOnPassword(e.target.value);
+    setInput(input.passwordConfirm(e.target.value));
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(name, email, onEmail, password, onPassword);
-
-    if (name === "") {
-      alert("이름");
-      return;
-    }
-    if (email === "") {
-      alert("이메일");
-      return;
-    }
-    if (onEmail === "" || onEmail !== email) {
-      alert("이메일확인하세요.");
-      return;
-    }
-
-    // if (onEmail) {
-    //   alert("이메일체크");
-    //   return;
-    // }
+    console.log(input);
 
     // const a = input.name;
     // if (!a.includes("@") && !a.includes(".")) {
@@ -80,11 +68,11 @@ const SignUp = () => {
     // } else {
     //   setNameCheck(true);
     // }
-  };
+  // };
 
   return (
     <StDiv>
-      <StForm onSubmit={onSubmitHandler}>
+      <StForm onSubmit={handleSubmit(onSubmit)}>
         <StTitle> 등록</StTitle>
         <StAtitle> 지금 등록하시고 내 계정의 혜택을 누리세요</StAtitle>
         <StBtitle> * 필수 항목 </StBtitle>
@@ -92,11 +80,16 @@ const SignUp = () => {
           <StContentBoxOne>
             <StInput
               placeholder="이름 (성 제외)*"
-              type="name"
-              length={name.length}
-              value={name}
+              type="lastName"
+              length={input.lastName.length}
+              value={input.lastName}
               onChange={onNameHandler}
             />
+            {errors.lastName && errors.lastName.type === "required" && (
+          <p> 다시 입력해요 </p>
+        )}
+        {errors.lastName && errors.lastName.type === "maxLength" && <p> 너무 길다 </p>}
+            
 
             <StDropDownContainer>
               <StDropDownHeader onClick={selectMenu}>
@@ -120,13 +113,19 @@ const SignUp = () => {
 
             <StInput
               placeholder="이메일을 통한 *"
-              type="email"
-              onChange={onEmailHandler}
+              name="email"
+              // type="email"
+              // autoComplete="off"
+              // {...register("email", {
+              //   required: "true",
+              //   pattern: /^\S+@\S+$/i,
+              // })}
             />
+            
             <StInput
               placeholder="비밀번호 *"
               type="password"
-              onChange={onPasswordHandler}
+              // onChange={onPasswordHandler}
             />
             <StPaswoordContents>
               비밀번호는 8~16자여야 합니다.
@@ -139,12 +138,12 @@ const SignUp = () => {
             <StInput
               placeholder="이메일 주소 확인 *"
               type="emailcomplete"
-              onChange={onEmailCompleteHandler}
+              // onChange={onEmailCompleteHandler}
             />
             <StInput
               placeholder="비밀번호 확인 *"
               type="password"
-              onChange={onPasswordCompleteHandler}
+              // onChange={onPasswordCompleteHandler}
             />
             <StEyes> 비밀번호 표시 </StEyes>
           </StContentBoxTwo>
