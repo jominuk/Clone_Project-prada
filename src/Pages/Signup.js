@@ -14,6 +14,8 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [nameCheck, setNameCheck] = useState(false);
 
+  console.log(1231231);
+
   const [email, setEmail] = useState("");
   const [onEmail, setOnEmail] = useState("");
   const [password, setPassword] = useState("");
