@@ -132,6 +132,7 @@ margin:0 40px 0 40px;
 /* height:auto;
 width:100%; */
 /* border:2px solid #000; */
+padding-top:10px;
 box-sizing:border-box;
 `
 const StFlexBox = styled.div`

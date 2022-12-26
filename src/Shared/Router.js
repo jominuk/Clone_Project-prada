@@ -5,6 +5,9 @@ import Navbar from "../Components/Navbar";
 import Home from "../Pages/Home";
 import SignUp from "../Pages/Signup";
 import Login from "../Pages/Login";
+
+import Mypage from "../Pages/Mypage";
+
 import Main from "../Pages/Main";
 import Detail from "../Pages/Detail";
 import Footer from "../Components/Footer";
@@ -34,7 +37,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/main" element={<Main />} />
         <Route path="/detail" element={<Detail />} />
-        {/* <Route path="/mypage" element={<Mypage />} /> */}
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<NotFound />} /> */}
