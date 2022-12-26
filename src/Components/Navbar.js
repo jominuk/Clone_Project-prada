@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -6,20 +6,25 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserSolid } from "./AwesomeSolid";
 import { useDispatch, useSelector } from "react-redux";
-import { searching, setAuthenticate } from "../Redux/modules/listSlice";
+import {
+  searchCategory,
+  searching,
+  setAuthenticate,
+} from "../Redux/modules/listSlice";
+import CatergoryNavbar from "./CatergoryNavbar";
 
-const Navbar = ({ }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { authenticate } = useSelector((state) => state.listSlice);
+
   const searched = useSelector((state) => state.listSlice.search);
 
   const menuList = ["여성", "남성", "백", "리네아 로사", "PRADASPHERE"];
   const goToLogin = () => {
     // authenticate ? setAuthenticate(false) : navigate("/login");
-    authenticate
-      ? dispatch(setAuthenticate(false))
-      : dispatch(setAuthenticate(true));
+    authenticate ? dispatch(setAuthenticate(false)) : navigate("/login");
   };
   const search = (e) => {
     if (e.key === "Enter") {
@@ -32,10 +37,11 @@ const Navbar = ({ }) => {
 
   const searchToggle = (sign) => {
     dispatch(searching(sign));
+    dispatch(searchCategory(false));
   };
-
   return (
     <Border>
+      <CatergoryNavbar />
       <Boundary>
         <Fifty>
           <NavSection onClick={goToHome}>
@@ -48,7 +54,7 @@ const Navbar = ({ }) => {
           <MenuList>
             {menuList.map((el, i) => (
               <Menu
-                // onMouseOver={() => }
+                onMouseOver={() => dispatch(searchCategory(true))}
                 key={`menuList-${i}`}
               >
                 {el}
@@ -93,6 +99,7 @@ const Navbar = ({ }) => {
   );
 };
 
+//////// 위부터는 카테고리
 const Fifty = styled.div`
   width: 50%;
   display: flex;
@@ -101,7 +108,6 @@ const Fifty = styled.div`
 const Boundary = styled.div`
   margin: 15px 3vw 10px 3vw;
   display: flex;
-  /* position: fixed; */
 `;
 const NavSection = styled.div`
   cursor: pointer;
@@ -172,7 +178,7 @@ const Modal = styled.div`
   top: 0;
   border-bottom: 1px solid black;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  position: absolute;
+  animation: searchAppear 0.3s;
 `;
 
 const SearchInput = styled.input`
