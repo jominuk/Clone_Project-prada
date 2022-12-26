@@ -9,12 +9,22 @@ import WhishList from "./templates/Mypages/WhishList";
 import Order from "./templates/Mypages/Order";
 
 const Mypage = () => {
+  const isLogedIn = true;
   const [boolMain, setBoolMain] = useState(true)
   const [boolWish, setBoolWish] = useState(false)
   const [boolAcount, setBoolAcount] = useState(false)
 
-  const onClickHandler = () => {
-    setBoolMain(true); setBoolAcount(false); setBoolWish(false);
+  const onClickHandlerMain = () => {
+    setBoolMain(true);
+    setBoolAcount(false); setBoolWish(false);
+  }
+  const onClickHandlerWishList = () => {
+    setBoolWish(true);
+    setBoolMain(false); setBoolAcount(false);
+  }
+  const onClickHandlerAcount = () => {
+    setBoolAcount(true);
+    setBoolMain(false); setBoolWish(false);
   }
 
 
@@ -32,19 +42,19 @@ const Mypage = () => {
       </StHeaderPicWrapper>
 
       <StContainer>
-        <StDashBoard>
-          <StAWrapper>
-            <StA2 onClick={onClickHandler}>대시보드</StA2>
-            <StA onClick={() => { setBoolWish(true); setBoolMain(false) }}>위시리스트</StA>
-            {/* <StA>주문내역</StA> */}
-            {/* <StA>주소 및 매장</StA> */}
-            <StA onClick={() => { setBoolAcount(true); setBoolMain(false) }}>계정 상세 정보</StA>
-            {/* <StA>결제 방법</StA> */}
-          </StAWrapper>
-          <StButton>로그아웃</StButton>
-        </StDashBoard>
-
-
+        {isLogedIn ?
+          (<StDashBoard>
+            <StAWrapper>
+              <StA2 onClick={onClickHandlerMain}>대시보드</StA2>
+              <StA onClick={onClickHandlerWishList}>위시리스트</StA>
+              {/* <StA>주문내역</StA> */}
+              {/* <StA>주소 및 매장</StA> */}
+              <StA onClick={onClickHandlerAcount}>계정 상세 정보</StA>
+              {/* <StA>결제 방법</StA> */}
+            </StAWrapper>
+            <StButton>로그아웃</StButton>
+          </StDashBoard>)
+          : ('')}
         {boolMain ? <MypageMain /> : <></>}
         {boolWish ? <WhishList /> : <></>}
         {boolAcount ? <Acount /> : <></>}
@@ -100,6 +110,7 @@ line-height:50px;
 font-size:13px;
 margin:0 0px 0 20px;
 padding-left:20px;
+justify-content:space-between;
 `
 const StAWrapper = styled.div`
 `
@@ -126,6 +137,6 @@ font-weight:bold;
 font-size:15px;
 height:30px;
 padding:0 20px 0 20px;
-margin:10px 0 0 560px ;
+margin:10px 20px 0 0 ;
 
 `
