@@ -19,7 +19,7 @@ const Home = () => {
                   mode="white"
                   hoverColor="black"
                   fontSize="15px"
-                  onClick={() => navigate("/main")}
+                  onClick={() => navigate("/main/aa")}
                 >
                   여성 제품
                 </HoverButton>
