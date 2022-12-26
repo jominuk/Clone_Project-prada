@@ -4,19 +4,23 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import MypageMain from "./templates/Mypages/MypageMain";
-import Order from "./templates/Mypages/Order";
 import Acount from "./templates/Mypages/Acount";
+import WhishList from "./templates/Mypages/WhishList";
+import Order from "./templates/Mypages/Order";
 
 const Mypage = () => {
   const [boolMain, setBoolMain] = useState(true)
+  const [boolWish, setBoolWish] = useState(false)
   const [boolAcount, setBoolAcount] = useState(false)
 
   const onClickHandler = () => {
-    setBoolMain(true); setBoolAcount(false)
+    setBoolMain(true); setBoolAcount(false); setBoolWish(false);
   }
+
 
   return (
     <>
+
       <StHeaderPicWrapper>
         <StHeaderPic>
           <StTextWrapper>
@@ -31,20 +35,20 @@ const Mypage = () => {
         <StDashBoard>
           <StAWrapper>
             <StA2 onClick={onClickHandler}>대시보드</StA2>
-            <StA>위시리스트</StA>
-            <StA>주문내역</StA>
-            <StA>주소 및 매장</StA>
+            <StA onClick={() => { setBoolWish(true); setBoolMain(false) }}>위시리스트</StA>
+            {/* <StA>주문내역</StA> */}
+            {/* <StA>주소 및 매장</StA> */}
             <StA onClick={() => { setBoolAcount(true); setBoolMain(false) }}>계정 상세 정보</StA>
-            <StA>결제 방법</StA>
+            {/* <StA>결제 방법</StA> */}
           </StAWrapper>
           <StButton>로그아웃</StButton>
         </StDashBoard>
 
 
         {boolMain ? <MypageMain /> : <></>}
-
-        <Order />
+        {boolWish ? <WhishList /> : <></>}
         {boolAcount ? <Acount /> : <></>}
+        {/* <Order /> */}
 
       </StContainer>
     </>)
