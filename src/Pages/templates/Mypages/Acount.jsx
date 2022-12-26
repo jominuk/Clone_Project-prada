@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Acount = () => {
+  const isLogedIn = false
 
   return (
     <>
-      <StItems>
+      {isLogedIn ? ('') : (<StItems>
         <h3>계정 상세 정보</h3>
         <p>모든 계정 정보 관리</p>
         <StAcountInfo>
@@ -41,7 +42,7 @@ const Acount = () => {
           </StDisable>
         </StContain2>
 
-      </StItems>
+      </StItems>)}
     </>
   )
 }

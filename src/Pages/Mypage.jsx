@@ -13,8 +13,17 @@ const Mypage = () => {
   const [boolWish, setBoolWish] = useState(false)
   const [boolAcount, setBoolAcount] = useState(false)
 
-  const onClickHandler = () => {
-    setBoolMain(true); setBoolAcount(false); setBoolWish(false);
+  const onClickHandlerMain = () => {
+    setBoolMain(true);
+    setBoolAcount(false); setBoolWish(false);
+  }
+  const onClickHandlerWishList = () => {
+    setBoolWish(true);
+    setBoolMain(false); setBoolAcount(false);
+  }
+  const onClickHandlerAcount = () => {
+    setBoolAcount(true);
+    setBoolMain(false); setBoolWish(false);
   }
 
 
@@ -34,11 +43,11 @@ const Mypage = () => {
       <StContainer>
         <StDashBoard>
           <StAWrapper>
-            <StA2 onClick={onClickHandler}>대시보드</StA2>
-            <StA onClick={() => { setBoolWish(true); setBoolMain(false) }}>위시리스트</StA>
+            <StA2 onClick={onClickHandlerMain}>대시보드</StA2>
+            <StA onClick={onClickHandlerWishList}>위시리스트</StA>
             {/* <StA>주문내역</StA> */}
             {/* <StA>주소 및 매장</StA> */}
-            <StA onClick={() => { setBoolAcount(true); setBoolMain(false) }}>계정 상세 정보</StA>
+            <StA onClick={onClickHandlerAcount}>계정 상세 정보</StA>
             {/* <StA>결제 방법</StA> */}
           </StAWrapper>
           <StButton>로그아웃</StButton>
