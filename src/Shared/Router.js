@@ -22,6 +22,7 @@ const Router = () => {
   };
 
   const { search, category } = useSelector((state) => state.listSlice);
+
   return (
     <BrowserRouter>
       <Navbar />

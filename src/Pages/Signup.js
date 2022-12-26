@@ -1,384 +1,461 @@
-// import React from "react";
-// import styled from "styled-components";
-// import { useState } from "react";
-// import { HoverButton } from "../Components/HoverButton";
-// import { useDispatch } from "react-redux";
-// import { __nameCheck } from "../Redux/modules/userSlice";
+import React from "react";
+import styled from "styled-components";
+import { useState } from "react";
+import { HoverButton } from "../Components/HoverButton";
+import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { __signUp } from "../Redux/modules/userSlice";
 
-// const SignUp = () => {
-//   const dispatch = useDispatch();
+const SignUp = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [Open, setOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
 
-//   const [Open, setOpen] = useState(false);
-//   const [selectedOption, setSelectedOption] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
-//   //초기값 세팅
-//   const [input, setInput] = useState({
-//     lastName: "",
-//     email: "",
-//     emailConfirm: "",
-//     password: "",
-//     passwordConfirm: "",
-//   });
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const email = useRef();
+  email.current = watch("email");
+  const password = useRef();
+  password.current = watch("password");
 
-//   //오류 메세지 저장
-//   const [nameMessage, setNameMessage] = useState("");
-//   const [emailMessage, setEmailMessage] = useState("");
-//   const [emailConfirmMessage, setEmailConfirmMessage] = useState("");
-//   const [passwordMessage, setPasswordMessage] = useState("");
-//   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const selectMenu = () => setOpen(!Open);
+  const country = ["대한민국", "체코", "독일", "폴란드", "일본"];
 
-//   //유효성 검사
-//   const [isName, setIsName] = useState(false);
-//   const [isEmail, setIsEmail] = useState(false);
-//   const [isEmailConfirm, setIsEmailConfirm] = useState(false);
-//   const [isPassword, setIsPassword] = useState(false);
-//   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const onOptionClicked = (value) => {
+    console.log(value);
+    setSelectedOption(value);
+    setOpen(false);
+  };
 
-//   const selectMenu = () => setOpen(!Open);
-//   const options = ["대한민국", "체코", "독일", "폴란드", "일본"];
+  const showModal = () => {
+    setModalOpen(true);
+  };
 
-//   const onOptionClicked = (value) => {
-//     setSelectedOption(value);
-//     setOpen(false);
-//   };
+  const onSubmit = (data) => {
+    console.log(data);
+    data.country = selectedOption;
+    dispatch(__signUp(data));
+  };
 
-//   const onNameHandler = (e) => {
-//     setInput(input.lastName(e.target.value));
-//   };
-//   const onEmailHandler = (e) => {
-//     setInput(input.email(e.target.value));
-//   };
-//   const onPasswordHandler = (e) => {
-//     setInput(input.emailConfirm(e.target.value));
-//   };
-//   const onEmailCompleteHandler = (e) => {
-//     setInput(input.password(e.target.value));
-//   };
-//   const onPasswordCompleteHandler = (e) => {
-//     setInput(input.passwordConfirm(e.target.value));
-//   };
+  return (
+    <StDiv>
+      <StForm onSubmit={handleSubmit(onSubmit)}>
+        <StTitle> 등록</StTitle>
+        <StAtitle> 지금 등록하시고 내 계정의 혜택을 누리세요</StAtitle>
+        <StBtitle> * 필수 항목 </StBtitle>
+        <StContentBox>
+          <StContentBoxOne>
+            <StInput
+              placeholder="이름 (성 제외)*"
+              name="firstName"
+              type="firstName"
+              autoComplete="off"
+              {...register("firstName", {
+                required: "true",
+                minLength: 2,
+              })}
+            />
+            <StError>
+              {errors.firstName && errors.firstName.type === "required" && (
+                <p> 이름을 입력해 주세요 </p>
+              )}
+              {errors.firstName && errors.firstName.type === "minLength" && (
+                <p> 다시 입력해 주세요 </p>
+              )}
+            </StError>
 
-//   const onSubmitHandler = (e) => {
-//     e.preventDefault();
-//     console.log(input);
+            <StDropDownContainer>
+              <StDropDownHeader onClick={selectMenu}>
+                {selectedOption || "대한민국"}
+              </StDropDownHeader>
+              {Open && (
+                <StDropDownListContainer>
+                  <StDropDownList>
+                    {country.map((option, i) => (
+                      <StListItem
+                        key={`options_${i}`}
+                        value="option"
+                        autoComplete="off"
+                        {...register("country", {
+                          required: "true",
+                        })}
+                        onClick={() => onOptionClicked(option)}
+                      >
+                        {option}
+                      </StListItem>
+                    ))}
+                  </StDropDownList>
+                </StDropDownListContainer>
+              )}
+            </StDropDownContainer>
 
-//     // const a = input.name;
-//     // if (!a.includes("@") && !a.includes(".")) {
-//     //   setNameCheck(false);
-//     // } else {
-//     //   setNameCheck(true);
-//     // }
-//   // };
+            <StInput
+              placeholder="이메일을 통한 *"
+              type="email"
+              name="email"
+              autoComplete="off"
+              {...register("email", {
+                required: "true",
+                pattern: /^\S+@\S+$/i,
+              })}
+            />
+            <StError>{errors.email && <p> 이메일을 확인해 주세요 </p>}</StError>
 
-//   return (
-//     <StDiv>
-//       <StForm onSubmit={handleSubmit(onSubmit)}>
-//         <StTitle> 등록</StTitle>
-//         <StAtitle> 지금 등록하시고 내 계정의 혜택을 누리세요</StAtitle>
-//         <StBtitle> * 필수 항목 </StBtitle>
-//         <StContentBox>
-//           <StContentBoxOne>
-//             <StInput
-//               placeholder="이름 (성 제외)*"
-//               type="lastName"
-//               length={input.lastName.length}
-//               value={input.lastName}
-//               onChange={onNameHandler}
-//             />
-//             {errors.lastName && errors.lastName.type === "required" && (
-//           <p> 다시 입력해요 </p>
-//         )}
-//         {errors.lastName && errors.lastName.type === "maxLength" && <p> 너무 길다 </p>}
-            
+            <StInput
+              placeholder="비밀번호 *"
+              name="password"
+              type="password"
+              autoComplete="off"
+              {...register("password", {
+                required: "true",
+                minLength: 8,
+                maxLength: 16,
+              })}
+            />
+            <StError>
+              {errors.password && errors.password.type === "required" && (
+                <p> 비밀번호를 입력해 주세요 </p>
+              )}
+              {errors.password && errors.password.type === "minLength" && (
+                <p> 8~16자로 입력해 주세요 </p>
+              )}
+              {errors.password && errors.password.type === "maxLength" && (
+                <p> 8~16자로 입력해 주세요 </p>
+              )}
+            </StError>
 
-//             <StDropDownContainer>
-//               <StDropDownHeader onClick={selectMenu}>
-//                 {selectedOption || "대한민국"}
-//               </StDropDownHeader>
-//               {Open && (
-//                 <StDropDownListContainer>
-//                   <StDropDownList>
-//                     {options.map((option, i) => (
-//                       <StListItem
-//                         key={`options_${i}`}
-//                         onClick={() => onOptionClicked(option)}
-//                       >
-//                         {option}
-//                       </StListItem>
-//                     ))}
-//                   </StDropDownList>
-//                 </StDropDownListContainer>
-//               )}
-//             </StDropDownContainer>
+            <StPaswoordContents>
+              비밀번호는 8~16자여야 합니다.
+            </StPaswoordContents>
+          </StContentBoxOne>
 
-//             <StInput
-//               placeholder="이메일을 통한 *"
-//               name="email"
-//               // type="email"
-//               // autoComplete="off"
-//               // {...register("email", {
-//               //   required: "true",
-//               //   pattern: /^\S+@\S+$/i,
-//               // })}
-//             />
-            
-//             <StInput
-//               placeholder="비밀번호 *"
-//               type="password"
-//               // onChange={onPasswordHandler}
-//             />
-//             <StPaswoordContents>
-//               비밀번호는 8~16자여야 합니다.
-//             </StPaswoordContents>
-//           </StContentBoxOne>
+          <StContentBoxTwo>
+            <StInput
+              placeholder="성"
+              type="lastName"
+              name="lastName"
+              autoComplete="off"
+              {...register("lastName", {
+                required: "true",
+              })}
+            />
+            <Stdiv> </Stdiv>
+            <StInput
+              placeholder="이메일 주소 확인 *"
+              type="emailConfirm"
+              name="emailConfirm"
+              autoComplete="off"
+              {...register("emailConfirm", {
+                required: "true",
+                validate: (value) => value === email.current,
+              })}
+            />
+            <StError>
+              {errors.emailConfirm &&
+                errors.emailConfirm.type === "required" && (
+                  <p> 이메일을 확인해주세요. </p>
+                )}
+              {errors.emailConfirm &&
+                errors.emailConfirm.type === "validate" && (
+                  <p> 이메일을 확인해주세요. </p>
+                )}
+            </StError>
 
-//           <StContentBoxTwo>
-//             <StInput placeholder="성" />
-//             <Stdiv> </Stdiv>
-//             <StInput
-//               placeholder="이메일 주소 확인 *"
-//               type="emailcomplete"
-//               // onChange={onEmailCompleteHandler}
-//             />
-//             <StInput
-//               placeholder="비밀번호 확인 *"
-//               type="password"
-//               // onChange={onPasswordCompleteHandler}
-//             />
-//             <StEyes> 비밀번호 표시 </StEyes>
-//           </StContentBoxTwo>
-//         </StContentBox>
+            <StInput
+              placeholder="비밀번호 확인 *"
+              type="password"
+              name="passwordConfirm"
+              autoComplete="off"
+              {...register("passwordConfirm", {
+                required: "true",
+                validate: (value) => value === password.current,
+              })}
+            />
+            <StError>
+              {errors.passWordConfirm &&
+                errors.passWordConfirm.type === "required" && (
+                  <p> 비밀번호를 확인해 주세요. </p>
+                )}
+              {errors.passWordConfirm &&
+                errors.passWordConfirm.type === "validate" && (
+                  <p> 비밀번호를 확인해 주세요. </p>
+                )}
+            </StError>
 
-//         <StCheckBoxOne>
-//           <StInputCheck type="checkbox" />
-//           <StAgreeMent> 본인은 </StAgreeMent>
-//           <StAgreeMentOne> 개인정보처리방침</StAgreeMentOne>
-//           <StAgreeMent>
-//             을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다.
-//           </StAgreeMent>
-//         </StCheckBoxOne>
+            <StEyes> 비밀번호 표시 </StEyes>
+          </StContentBoxTwo>
+        </StContentBox>
 
-//         <StCheckBoxTwo>
-//           <StInputCheck type="checkbox" />
-//           <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
-//           <StAgreeMentOne> 상세보기 </StAgreeMentOne>
-//         </StCheckBoxTwo>
-//         <StSubmit type="submit">등록</StSubmit>
-//       </StForm>
+        <StCheckBoxOne>
+          <StInputCheck type="checkbox" />
+          <StAgreeMent> 본인은 </StAgreeMent>
+          <StAgreeMentOne> 개인정보처리방침</StAgreeMentOne>
 
-//       <StRigthBox>
-//         <StRigthTitle>소셜 미디어 계정을 사용하여 등록</StRigthTitle>
-//         <StRigthContents> 계정을 사용하여 등록하 십시오. </StRigthContents>
-//         <StRigthTitleOne> 이미 등록 하셨나요?</StRigthTitleOne>
-//         <StRigthContentsOne>
-//           로그인을 하시면 빠른 결제가 가능합니다.
-//         </StRigthContentsOne>
+          <StAgreeMent>
+            을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다. //{" "}
+          </StAgreeMent>
+        </StCheckBoxOne>
+        <StCheckBoxTwo>
+          <StInputCheck type="checkbox" />
+          <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
+          <StAgreeMentOne type="button" onClick={showModal}>
+            {" "}
+            상세보기{" "}
+          </StAgreeMentOne>
+          {modalOpen && <StModal setModalOpen={setModalOpen} />}
+        </StCheckBoxTwo>
+        <StSubmit type="submit">등록</StSubmit>
+      </StForm>
 
-//         <HoverButton> 로그인 </HoverButton>
-//       </StRigthBox>
-//     </StDiv>
-//   );
-// };
+      <StRigthBox>
+        <StRigthTitle>소셜 미디어 계정을 사용하여 등록</StRigthTitle>
+        <StRigthContents> 계정을 사용하여 등록하 십시오. </StRigthContents>
+        <StRigthTitleOne> 이미 등록 하셨나요?</StRigthTitleOne>
 
-// export default SignUp;
+        <StRigthContentsOne>
+          로그인을 하시면 빠른 결제가 가능합니다.
+        </StRigthContentsOne>
+        <HoverButton
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          로그인
+        </HoverButton>
+      </StRigthBox>
+    </StDiv>
+  );
+};
 
-// const StDiv = styled.div`
-//   display: flex;
-//   height: 100vh;
-//   margin: 0 200px 0 200px;
-// `;
+export default SignUp;
 
-// const StForm = styled.form`
-//   margin: 80px 0 0 10px;
-//   width: 60%;
-// `;
+const StDiv = styled.div`
+  display: flex;
+  // height: 100vh;
+  margin: 0 200px 0 200px;
+`;
 
-// const StRigthBox = styled.div`
-//   margin: 80px 10px 0 0px;
-//   width: 40%;
-// `;
+const StForm = styled.form`
+  margin: 80px 0 0 10px;
+  width: 60%;
+`;
 
-// const StTitle = styled.div`
-//   font-size: 40px;
-//   margin: 55px 0 0 0;
-//   font-weight: bold;
-// `;
+const StRigthBox = styled.div`
+  margin: 80px 10px 0 0px;
+  width: 40%;
+`;
 
-// const StAtitle = styled.div`
-//   margin: 10px;
-// `;
+const StTitle = styled.div`
+  font-size: 40px;
+  margin: 55px 0 0 0;
+  font-weight: bold;
+`;
 
-// const StBtitle = styled.div`
-//   font-size: 13px;
-//   margin: 20px 0 0 10px;
-// `;
+const StAtitle = styled.div`
+  margin: 10px;
+`;
 
-// const StContentBox = styled.div`
-//   display: flex;
-// `;
-// const StContentBoxOne = styled.div`
-//   margin: 50px 10px 0 20px;
-//   height: 350px;
-//   width: 50%;
-// `;
+const StBtitle = styled.div`
+  font-size: 13px;
+  margin: 20px 0 0 10px;
+`;
 
-// const StContentBoxTwo = styled.div`
-//   margin: 50px 20px 0 0;
-//   height: 400px;
-//   width: 50%;
-// `;
+const StContentBox = styled.div`
+  display: flex;
+`;
+const StContentBoxOne = styled.div`
+  margin: 50px 10px 0 20px;
+  height: 350px;
+  width: 50%;
+`;
 
-// const StInput = styled.input`
-//   border: none;
-//   border-bottom: 2px solid
-//     ${({ length }) => (length >= 1 && length <= 2 ? "red" : "#ccc")};
-//   width: 90%;
-//   height: 30px;
-//   margin-top: 25px;
-//   font-size: 20px;
-//   &:focus {
-//     outline: none;
-//   }
-// `;
+const StContentBoxTwo = styled.div`
+  margin: 50px 20px 0 0;
+  height: 400px;
+  width: 50%;
+`;
 
-// const StPaswoordContents = styled.div`
-//   font-size: 13px;
-//   margin: 10px 0 0 0;
-// `;
+const StInput = styled.input`
+  border: none;
+  border-bottom: 2px solid
+    ${({ length }) => (length >= 1 && length <= 2 ? "red" : "#ccc")};
+  width: 90%;
+  height: 30px;
+  margin-top: 25px;
+  font-size: 20px;
+  &:focus {
+    outline: none;
+  }
+`;
 
-// const StDropDownContainer = styled.div`
-//   width: 90%;
-//   margin-top: 25px;
-// `;
+const StPaswoordContents = styled.div`
+  font-size: 13px;
+  margin: 10px 0 0 0;
+`;
 
-// const StDropDownHeader = styled.div`
-//   background-image: url("https://w7.pngwing.com/pngs/924/923/png-transparent-arrow-computer-icons-drop-down-list-symbol-arrow-love-angle-heart.png");
-//   background-size: cover;
-//   background-size: 15px;
-//   background-repeat: no-repeat;
-//   background-position: right;
-//   margin: 30px 0 0 0;
-//   font-size: 20px;
-//   border: none;
-//   border-bottom: 2px solid #ccc;
-//   cursor: pointer;
-// `;
+const StDropDownContainer = styled.div`
+  width: 90%;
+  margin-top: 25px;
+`;
 
-// const StDropDownListContainer = styled.div`
-//   width: 100%;
-// `;
+const StDropDownHeader = styled.div`
+  background-image: url("https://w7.pngwing.com/pngs/924/923/png-transparent-arrow-computer-icons-drop-down-list-symbol-arrow-love-angle-heart.png");
+  background-size: cover;
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-position: right;
+  margin: 30px 0 0 0;
+  font-size: 20px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  cursor: pointer;
+`;
 
-// const StDropDownList = styled.div`
-//   padding: 10px 0 0 0;
-//   background: lightcyan;
-//   font-size: 20px;
-//   z-index: 10px;
-// `;
+const StDropDownListContainer = styled.div`
+  width: 100%;
+`;
 
-// const StListItem = styled.div`
-//   margin: 8px;
-//   cursor: pointer;
-// `;
+const StDropDownList = styled.div`
+  padding: 10px 0 0 0;
+  background: lightcyan;
+  font-size: 20px;
+  z-index: 10px;
+`;
 
-// const StRigthTitle = styled.div`
-//   font-size: 25px;
-//   margin: 20px 0 0 0;
-//   font-weight: bold;
-// `;
+const StListItem = styled.div`
+  margin: 8px;
+  cursor: pointer;
+`;
 
-// const StRigthContents = styled.div`
-//   margin: 20px 0 0 0;
-//   font-size: 18px;
-// `;
+const StRigthTitle = styled.div`
+  font-size: 25px;
+  margin: 20px 0 0 0;
+  font-weight: bold;
+`;
 
-// const StEyes = styled.button`
-//   background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8");
-//   background-size: cover;
-//   background-size: 27px;
-//   background-repeat: no-repeat;
-//   font-size: 17px;
-//   margin: 5px 0 0 0;
-//   border: none;
-//   background-color: white;
-//   width: 180px;
-//   cursor: pointer;
-// `;
+const StRigthContents = styled.div`
+  margin: 20px 0 0 0;
+  font-size: 18px;
+`;
 
-// const StRigthTitleOne = styled.div`
-//   font-size: 25px;
-//   margin: 200px 0 0 0;
-//   font-weight: bold;
-// `;
+const StEyes = styled.button`
+  background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8");
+  background-size: cover;
+  background-size: 27px;
+  background-repeat: no-repeat;
+  font-size: 17px;
+  margin: 5px 0 0 0;
+  border: none;
+  background-color: white;
+  width: 180px;
+  cursor: pointer;
+`;
 
-// const StRigthContentsOne = styled.div`
-//   margin: 20px 0 0 0;
-//   font-size: 18px;
-// `;
+const StRigthTitleOne = styled.div`
+  font-size: 25px;
+  margin: 200px 0 0 0;
+  font-weight: bold;
+`;
 
-// const Stdiv = styled.div`
-//   height: 60px;
-// `;
+const StRigthContentsOne = styled.div`
+  margin: 20px 0 0 0;
+  font-size: 18px;
+`;
 
-// const StCheckBoxOne = styled.div`
-//   display: flex;
-// `;
+const Stdiv = styled.div`
+  height: 60px;
+`;
 
-// const StInputCheck = styled.input`
-//   width: 25px;
-//   height: 25px;
-// `;
+const StCheckBoxOne = styled.div`
+  display: flex;
+`;
 
-// const StAgreeMent = styled.div`
-//   margin: 0 0 0 10px;
-//   font-size: 17px;
-// `;
+const StInputCheck = styled.input`
+  width: 25px;
+  height: 25px;
+`;
 
-// const StAgreeMentOne = styled.button`
-//   position: relative;
-//   margin: 50px 0 0 0;
-//   font-weight: bold;
-//   font-size: 18px;
-//   background-color: transparent;
-//   border: none;
-//   border-bottom: 1px solid black;
-//   transition: all 0.5s;
-//   overflow: hidden;
-//   cursor: pointer;
-//   :focus {
-//     outline: none;
-//   }
-//   :before {
-//     content: "";
-//     position: absolute;
-//     height: 100%;
-//     width: 100%;
-//     background-color: black;
-//     top: 100%;
-//     left: 0%;
-//     transition: all 0.5s;
-//     z-index: -1;
-//   }
-//   :hover:before {
-//     transform: translateY(-100%);
-//   }
-//   :hover {
-//     color: white;
-//   }
-//   margin: -5px 5px 0 0;
-// `;
+const StAgreeMent = styled.div`
+  margin: 0 0 0 10px;
+  font-size: 17px;
+`;
 
-// const StCheckBoxTwo = styled.div`
-//   display: flex;
-//   margin: 50px 0 0 0;
-// `;
+const StAgreeMentOne = styled.button`
+  position: relative;
+  margin: 50px 0 0 0;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  transition: all 0.5s;
+  overflow: hidden;
+  cursor: pointer;
+  :focus {
+    outline: none;
+  }
+  :before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    top: 100%;
+    left: 0%;
+    transition: all 0.5s;
+    z-index: -1;
+  }
+  :hover:before {
+    transform: translateY(-100%);
+  }
+  :hover {
+    color: white;
+  }
+  margin: -5px 5px 0 0;
+`;
 
-// const StSubmit = styled.button`
-//   margin: 50px 0 0 0;
-//   font-size: 20px;
-//   width: 95%;
-//   height: 50px;
-//   font-weight: 600;
-//   color: #c6c6c6;
-//   background-color: gray;
-//   cursor: pointer;
-// `;
+const StCheckBoxTwo = styled.div`
+  display: flex;
+  margin: 50px 0 0 0;
+`;
+
+const StSubmit = styled.button`
+  margin: 50px 0 0 0;
+  font-size: 20px;
+  width: 95%;
+  height: 50px;
+  font-weight: 600;
+  color: #c6c6c6;
+  background-color: gray;
+  cursor: pointer;
+  :hover {
+    color: blue;
+  }
+`;
+
+const StError = styled.div`
+  font-size: 12px;
+  color: red;
+`;
+
+const StModal = styled.div`
+  width: 300px;
+  height: 200px;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: gray;
+  border: 1px solid black;
+  border-radius: 8px;
+`;
