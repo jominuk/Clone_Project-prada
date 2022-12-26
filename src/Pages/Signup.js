@@ -199,11 +199,11 @@ const SignUp = () => {
           <StInputCheck type="checkbox" />
           <StAgreeMent> 본인은 </StAgreeMent>
           <StAgreeMentOne> 개인정보처리방침</StAgreeMentOne>
+
           <StAgreeMent>
-            을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다.
+            을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다. //{" "}
           </StAgreeMent>
         </StCheckBoxOne>
-
         <StCheckBoxTwo>
           <StInputCheck type="checkbox" />
           <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
@@ -220,17 +220,16 @@ const SignUp = () => {
         <StRigthTitle>소셜 미디어 계정을 사용하여 등록</StRigthTitle>
         <StRigthContents> 계정을 사용하여 등록하 십시오. </StRigthContents>
         <StRigthTitleOne> 이미 등록 하셨나요?</StRigthTitleOne>
+
         <StRigthContentsOne>
           로그인을 하시면 빠른 결제가 가능합니다.
         </StRigthContentsOne>
-
         <HoverButton
           onClick={() => {
             navigate("/login");
           }}
         >
-          {" "}
-          로그인{" "}
+          로그인
         </HoverButton>
       </StRigthBox>
     </StDiv>
@@ -291,7 +290,7 @@ const StInput = styled.input`
     ${({ length }) => (length >= 1 && length <= 2 ? "red" : "#ccc")};
   width: 90%;
   height: 30px;
-  margin-top: 20px;
+  margin-top: 25px;
   font-size: 20px;
   &:focus {
     outline: none;
