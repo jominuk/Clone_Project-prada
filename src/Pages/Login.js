@@ -1,22 +1,82 @@
 import React from "react";
 import styled from "styled-components";
 import { HoverButton } from "../Components/HoverButton";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState(false);
+  const [password, setPassword] = useState(false);
+  const [em, setId] = useState("");
+  const [pw, setPw] = useState("");
+
+  const handleId = (e) => {
+    if (em.includes("@") && em.includes(".")) {
+      setEmail(true);
+    } else {
+      setEmail(false);
+    }
+    setId(e.target.value);
+  };
+
+  const handlePw = (e) => {
+    setPw(e.target.value);
+  };
+
+  const loginHandler = (event) => {
+    event.preventDefault();
+    console.log(em, pw);
+    // dispatch(
+    //   __loginUser({
+    //     email: em,
+    //     password: pw,
+    //   })
+    // );
+    // setId("");
+    // setPw("");
+  };
+
+  useEffect(() => {
+    if (pw.length > 7) {
+      setPassword(true);
+    } else {
+      setPassword(false);
+    }
+  }, [pw]);
+
   return (
     <StDiv>
       <StForm>
         <StTitle> login</StTitle>
         <StAtitle> 로그인을 하시면 빠른 결제가 가능합니다.</StAtitle>
-        <StInput placeholder=" 이메일 / 사용자 이름 *" />
-        <StInput placeholder=" 비밀번호 * " />
+
+        <StInput
+          placeholder=" 이메일 *"
+          onChange={(e) => handleId(e)}
+          value={em}
+        />
+        <StError>
+          {!email && em.length > 0 && <div>올바른 이메일을 입력해주세요.</div>}
+        </StError>
+
+        <StInput
+          placeholder=" 비밀번호 * "
+          type="password"
+          onChange={(e) => handlePw(e)}
+          value={pw}
+        />
+        <StError>
+          {!password && <div>영문, 숫자 포함 8자 이상 입력해주세요.</div>}
+        </StError>
 
         <StCheckBoxTwo>
           <StInputCheck type="checkbox" />
           <StAgreeMent> Remember me </StAgreeMent>
           <StAgreeMentOne> 비밀번호 찾기 </StAgreeMentOne>
         </StCheckBoxTwo>
-        <StSubmit>로그인</StSubmit>
+        <StSubmit onClick={loginHandler}>로그인</StSubmit>
       </StForm>
 
       <StRigthBox>
@@ -27,7 +87,7 @@ const Login = () => {
           로그인을 하시면 빠른 결제가 가능합니다.
         </StRigthContentsOne>
 
-        <HoverButton> 등록 </HoverButton>
+        <HoverButton onClick={() => navigate("/signup")}> 등록 </HoverButton>
       </StRigthBox>
     </StDiv>
   );
@@ -153,4 +213,9 @@ const StRigthTitleOne = styled.div`
 const StRigthContentsOne = styled.div`
   margin: 20px 0 0 0;
   font-size: 18px;
+`;
+
+const StError = styled.div`
+  color: red;
+  font-size: 12px;
 `;

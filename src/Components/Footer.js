@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const Footer = () => {
-  console.log("태현");
   return (
     <StFooter>
       <StWrapper>

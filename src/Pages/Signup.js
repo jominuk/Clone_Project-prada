@@ -2,77 +2,53 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { HoverButton } from "../Components/HoverButton";
+import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { __nameCheck } from "../Redux/modules/userSlice";
+import { __signUp } from "../Redux/modules/userSlice";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [Open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  //초기값 세팅
-  const [input, setInput] = useState({
-    lastName: "",
-    email: "",
-    emailConfirm: "",
-    password: "",
-    passwordConfirm: "",
-  });
+  const [modalOpen, setModalOpen] = useState(false);
 
-  //오류 메세지 저장
-  const [nameMessage, setNameMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [emailConfirmMessage, setEmailConfirmMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-
-  //유효성 검사
-  const [isName, setIsName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isEmailConfirm, setIsEmailConfirm] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const email = useRef();
+  email.current = watch("email");
+  const password = useRef();
+  password.current = watch("password");
 
   const selectMenu = () => setOpen(!Open);
-  const options = ["대한민국", "체코", "독일", "폴란드", "일본"];
+  const country = ["대한민국", "체코", "독일", "폴란드", "일본"];
 
   const onOptionClicked = (value) => {
+    console.log(value);
     setSelectedOption(value);
     setOpen(false);
   };
 
-  const onNameHandler = (e) => {
-    setInput(input.lastName(e.target.value));
-  };
-  const onEmailHandler = (e) => {
-    setInput(input.email(e.target.value));
-  };
-  const onPasswordHandler = (e) => {
-    setInput(input.emailConfirm(e.target.value));
-  };
-  const onEmailCompleteHandler = (e) => {
-    setInput(input.password(e.target.value));
-  };
-  const onPasswordCompleteHandler = (e) => {
-    setInput(input.passwordConfirm(e.target.value));
+  const showModal = () => {
+    setModalOpen(true);
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(input);
-
-    // const a = input.name;
-    // if (!a.includes("@") && !a.includes(".")) {
-    //   setNameCheck(false);
-    // } else {
-    //   setNameCheck(true);
-    // }
+  const onSubmit = (data) => {
+    console.log(data);
+    data.country = selectedOption;
+    dispatch(__signUp(data));
   };
 
   return (
     <StDiv>
-      <StForm onSubmit={onSubmitHandler}>
+      <StForm onSubmit={handleSubmit(onSubmit)}>
         <StTitle> 등록</StTitle>
         <StAtitle> 지금 등록하시고 내 계정의 혜택을 누리세요</StAtitle>
         <StBtitle> * 필수 항목 </StBtitle>
@@ -80,11 +56,22 @@ const SignUp = () => {
           <StContentBoxOne>
             <StInput
               placeholder="이름 (성 제외)*"
-              type="lastName"
-              length={input.lastName.length}
-              value={input.lastName}
-              onChange={onNameHandler}
+              name="firstName"
+              type="firstName"
+              autoComplete="off"
+              {...register("firstName", {
+                required: "true",
+                minLength: 2,
+              })}
             />
+            <StError>
+              {errors.firstName && errors.firstName.type === "required" && (
+                <p> 이름을 입력해 주세요 </p>
+              )}
+              {errors.firstName && errors.firstName.type === "minLength" && (
+                <p> 다시 입력해 주세요 </p>
+              )}
+            </StError>
 
             <StDropDownContainer>
               <StDropDownHeader onClick={selectMenu}>
@@ -93,9 +80,14 @@ const SignUp = () => {
               {Open && (
                 <StDropDownListContainer>
                   <StDropDownList>
-                    {options.map((option, i) => (
+                    {country.map((option, i) => (
                       <StListItem
                         key={`options_${i}`}
+                        value="option"
+                        autoComplete="off"
+                        {...register("country", {
+                          required: "true",
+                        })}
                         onClick={() => onOptionClicked(option)}
                       >
                         {option}
@@ -109,31 +101,96 @@ const SignUp = () => {
             <StInput
               placeholder="이메일을 통한 *"
               type="email"
-              onChange={onEmailHandler}
+              name="email"
+              autoComplete="off"
+              {...register("email", {
+                required: "true",
+                pattern: /^\S+@\S+$/i,
+              })}
             />
+            <StError>{errors.email && <p> 이메일을 확인해 주세요 </p>}</StError>
+
             <StInput
               placeholder="비밀번호 *"
+              name="password"
               type="password"
-              onChange={onPasswordHandler}
+              autoComplete="off"
+              {...register("password", {
+                required: "true",
+                minLength: 8,
+                maxLength: 16,
+              })}
             />
+            <StError>
+              {errors.password && errors.password.type === "required" && (
+                <p> 비밀번호를 입력해 주세요 </p>
+              )}
+              {errors.password && errors.password.type === "minLength" && (
+                <p> 8~16자로 입력해 주세요 </p>
+              )}
+              {errors.password && errors.password.type === "maxLength" && (
+                <p> 8~16자로 입력해 주세요 </p>
+              )}
+            </StError>
+
             <StPaswoordContents>
               비밀번호는 8~16자여야 합니다.
             </StPaswoordContents>
           </StContentBoxOne>
 
           <StContentBoxTwo>
-            <StInput placeholder="성" />
+            <StInput
+              placeholder="성"
+              type="lastName"
+              name="lastName"
+              autoComplete="off"
+              {...register("lastName", {
+                required: "true",
+              })}
+            />
             <Stdiv> </Stdiv>
             <StInput
               placeholder="이메일 주소 확인 *"
-              type="emailcomplete"
-              onChange={onEmailCompleteHandler}
+              type="emailConfirm"
+              name="emailConfirm"
+              autoComplete="off"
+              {...register("emailConfirm", {
+                required: "true",
+                validate: (value) => value === email.current,
+              })}
             />
+            <StError>
+              {errors.emailConfirm &&
+                errors.emailConfirm.type === "required" && (
+                  <p> 이메일을 확인해주세요. </p>
+                )}
+              {errors.emailConfirm &&
+                errors.emailConfirm.type === "validate" && (
+                  <p> 이메일을 확인해주세요. </p>
+                )}
+            </StError>
+
             <StInput
               placeholder="비밀번호 확인 *"
               type="password"
-              onChange={onPasswordCompleteHandler}
+              name="passwordConfirm"
+              autoComplete="off"
+              {...register("passwordConfirm", {
+                required: "true",
+                validate: (value) => value === password.current,
+              })}
             />
+            <StError>
+              {errors.passWordConfirm &&
+                errors.passWordConfirm.type === "required" && (
+                  <p> 비밀번호를 확인해 주세요. </p>
+                )}
+              {errors.passWordConfirm &&
+                errors.passWordConfirm.type === "validate" && (
+                  <p> 비밀번호를 확인해 주세요. </p>
+                )}
+            </StError>
+
             <StEyes> 비밀번호 표시 </StEyes>
           </StContentBoxTwo>
         </StContentBox>
@@ -150,7 +207,11 @@ const SignUp = () => {
         <StCheckBoxTwo>
           <StInputCheck type="checkbox" />
           <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
-          <StAgreeMentOne> 상세보기 </StAgreeMentOne>
+          <StAgreeMentOne type="button" onClick={showModal}>
+            {" "}
+            상세보기{" "}
+          </StAgreeMentOne>
+          {modalOpen && <StModal setModalOpen={setModalOpen} />}
         </StCheckBoxTwo>
         <StSubmit type="submit">등록</StSubmit>
       </StForm>
@@ -163,7 +224,14 @@ const SignUp = () => {
           로그인을 하시면 빠른 결제가 가능합니다.
         </StRigthContentsOne>
 
-        <HoverButton> 로그인 </HoverButton>
+        <HoverButton
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          {" "}
+          로그인{" "}
+        </HoverButton>
       </StRigthBox>
     </StDiv>
   );
@@ -175,7 +243,6 @@ const StDiv = styled.div`
   display: flex;
   // height: 100vh;
   margin: 0 200px 0 200px;
-  border: 2px solid black;
 `;
 
 const StForm = styled.form`
@@ -224,7 +291,7 @@ const StInput = styled.input`
     ${({ length }) => (length >= 1 && length <= 2 ? "red" : "#ccc")};
   width: 90%;
   height: 30px;
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 20px;
   &:focus {
     outline: none;
@@ -371,4 +438,25 @@ const StSubmit = styled.button`
   color: #c6c6c6;
   background-color: gray;
   cursor: pointer;
+  :hover {
+    color: blue;
+  }
+`;
+
+const StError = styled.div`
+  font-size: 12px;
+  color: red;
+`;
+
+const StModal = styled.div`
+  width: 300px;
+  height: 200px;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: gray;
+  border: 1px solid black;
+  border-radius: 8px;
 `;
