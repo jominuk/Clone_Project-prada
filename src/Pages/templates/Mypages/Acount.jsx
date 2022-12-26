@@ -3,18 +3,24 @@ import styled from "styled-components";
 
 const Acount = () => {
   const isLogedIn = false
+  const MokData = {
+    email: 'test@test.com',
+    firstName: '수현',
+    lastName: '김',
+    country: '대한민국',
+  }
 
   return (
     <>
-      {isLogedIn ? ('') : (<StItems>
+      <StItems>
         <h3>계정 상세 정보</h3>
         <p>모든 계정 정보 관리</p>
         <StAcountInfo>
           <StFlex>
-            <StPwrapper><Stp1>이름(성 제외)</Stp1><Stp2>수현</Stp2></StPwrapper>
-            <StPwrapper><Stp1>성</Stp1><Stp2>김</Stp2></StPwrapper>
-            <StPwrapper><Stp1>지역</Stp1><Stp2>KR</Stp2></StPwrapper>
-            <StPwrapper><Stp1>이메일을 통한</Stp1><Stp2>heypitcher@hanmail.net</Stp2></StPwrapper>
+            <StPwrapper><Stp1>이름(성 제외)</Stp1><Stp2>{MokData.firstName}</Stp2></StPwrapper>
+            <StPwrapper><Stp1>성</Stp1><Stp2>{MokData.lastName}</Stp2></StPwrapper>
+            <StPwrapper><Stp1>지역</Stp1><Stp2>{MokData.country}</Stp2></StPwrapper>
+            <StPwrapper><Stp1>이메일을 통한</Stp1><Stp2>{MokData.email}</Stp2></StPwrapper>
           </StFlex>
           <StButton>
             수정
@@ -25,7 +31,7 @@ const Acount = () => {
           <Stcontain>
             <h2>사용자 이메일</h2>
             <Stp3>이 이메일을 사용하여 귀하의 계정에 로그인할 수 있습니다</Stp3>
-            <StUnderLine>heypitcher@hanmail.net</StUnderLine>
+            <StUnderLine>{MokData.email}</StUnderLine>
           </Stcontain>
           <Stcontain>
             <h2>사용자 비밀번호</h2>
@@ -42,7 +48,7 @@ const Acount = () => {
           </StDisable>
         </StContain2>
 
-      </StItems>)}
+      </StItems>
     </>
   )
 }
