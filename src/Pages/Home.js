@@ -1,20 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { HoverButton } from "../Components/HoverButton";
-import { searching } from "../Redux/modules/listSlice";
 import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const { search } = useSelector((state) => state.listSlice);
-
-  const onToggleSearch = () => {
-    dispatch(searching(false));
-  };
+  const navigate = useNavigate();
   return (
     <>
-      <StDark search={search} onClick={onToggleSearch} />
       <Stdiv>
         <HomeLayout>
           <Box></Box>
@@ -22,7 +15,12 @@ const Home = () => {
             <InsideFirstImage>
               <div>여성 선물</div>
               <Gap>
-                <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                <HoverButton
+                  mode="white"
+                  hoverColor="black"
+                  fontSize="15px"
+                  onClick={() => navigate("/main")}
+                >
                   여성 제품
                 </HoverButton>
                 <HoverButton mode="white" hoverColor="black" fontSize="15px">
@@ -31,7 +29,6 @@ const Home = () => {
               </Gap>
             </InsideFirstImage>
           </StFirstImage>
-
           <StSecondImage>
             <SmallImageFirst>
               <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
@@ -87,17 +84,6 @@ const Home = () => {
     </>
   );
 };
-
-const StDark = styled.div`
-  display: ${({ search }) => {
-    return search ? "block" : "none";
-  }};
-  width: 100%;
-  height: 400vh;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1;
-`;
 
 const Test = styled.div`
   color: white;
