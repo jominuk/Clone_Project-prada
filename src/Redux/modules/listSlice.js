@@ -19,6 +19,7 @@ const initialState = {
   postList: [],
   search: false,
   authenticate: false,
+  category: false,
 };
 
 const listSlice = createSlice({
@@ -30,6 +31,9 @@ const listSlice = createSlice({
     },
     searching: (state, action) => {
       state.search = action.payload;
+    },
+    searchCategory: (state, action) => {
+      state.category = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -48,5 +52,5 @@ const listSlice = createSlice({
   },
 });
 
-export const { searching, setAuthenticate } = listSlice.actions;
+export const { searching, setAuthenticate, searchCategory } = listSlice.actions;
 export default listSlice.reducer;

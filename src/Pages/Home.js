@@ -1,27 +1,56 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { HoverButton } from "../Components/HoverButton";
-import { searching } from "../Redux/modules/listSlice";
 import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const { search } = useSelector((state) => state.listSlice);
-
-  const onToggleSearch = () => {
-    dispatch(searching(false));
-  };
+  const navigate = useNavigate();
   return (
     <>
-      <StDark search={search} onClick={onToggleSearch} />
       <Stdiv>
         <HomeLayout>
           <Box></Box>
+          <StFirstImage>
+            <InsideFirstImage>
+              <div>여성 선물</div>
+              <Gap>
+                <HoverButton
+                  mode="white"
+                  hoverColor="black"
+                  fontSize="15px"
+                  onClick={() => navigate("/main")}
+                >
+                  여성 제품
+                </HoverButton>
+                <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                  남성 제품
+                </HoverButton>
+              </Gap>
+            </InsideFirstImage>
+          </StFirstImage>
+          <StSecondImage>
+            <SmallImageFirst>
+              <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
+              <div>
+                <HoverButton margin="20px 13px 0 0 " fontSize="15px">
+                  구매 하기
+                </HoverButton>
+              </div>
+            </SmallImageFirst>
+            <SmallImageSecond>
+              <SmallImageText>남성 홀리데이 컬렉션</SmallImageText>
+              <div>
+                <HoverButton margin="20px 13px 0 0 " fontSize="13px">
+                  구매 하기
+                </HoverButton>
+              </div>
+            </SmallImageSecond>
+          </StSecondImage>
           <div>
             <Test>
               <InsideFirstImage>
-                <div>여성 선물</div>
+                <div>남성 선물</div>
                 <Gap>
                   <HoverButton mode="white" hoverColor="black" fontSize="15px">
                     여성 제품
@@ -35,7 +64,7 @@ const Home = () => {
 
             <FirstVideo>
               <ReactPlayer
-                url="img/prada.mp4"
+                url="img/prada2.mp4"
                 width="100%"
                 height="70%"
                 muted={true} //chrome정책으로 인해 자동 재생을 위해 mute 옵션을 true로 해주었다.
@@ -44,37 +73,6 @@ const Home = () => {
               />
             </FirstVideo>
           </div>
-          <StSecondImage>
-            <SmallImageFirst>
-              <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
-              <div>
-                <HoverButton margin="20px 13px 0 0 " fontSize="15px">
-                  구매하기
-                </HoverButton>
-              </div>
-            </SmallImageFirst>
-            <SmallImageSecond>
-              <SmallImageText>남성 홀리데이 컬렉션</SmallImageText>
-              <div>
-                <HoverButton margin="20px 13px 0 0 " fontSize="15px">
-                  구매하기
-                </HoverButton>
-              </div>
-            </SmallImageSecond>
-          </StSecondImage>
-          <StFirstImage>
-            <InsideFirstImage>
-              <div>가방 제품</div>
-              <Gap>
-                <HoverButton mode="white" hoverColor="black" fontSize="15px">
-                  여성 제품
-                </HoverButton>
-                <HoverButton mode="white" hoverColor="black" fontSize="15px">
-                  남성 제품
-                </HoverButton>
-              </Gap>
-            </InsideFirstImage>
-          </StFirstImage>
           <StThirdImage>
             <ThirdImageBox>
               <div></div>
@@ -86,17 +84,6 @@ const Home = () => {
     </>
   );
 };
-
-const StDark = styled.div`
-  display: ${({ search }) => {
-    return search ? "block" : "none";
-  }};
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1;
-`;
 
 const Test = styled.div`
   color: white;
@@ -120,7 +107,7 @@ const FirstVideo = styled.div`
 
 const Box = styled.div`
   width: 100%;
-  height: 70px;
+  height: 50px;
 `;
 
 const Stdiv = styled.div`

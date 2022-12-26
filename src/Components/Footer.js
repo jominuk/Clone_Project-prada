@@ -2,43 +2,43 @@ import React from "react";
 import styled from "styled-components";
 
 const Footer = () => {
-  console.log("태현");
   return (
     <StFooter>
       <StWrapper>
         <StInfo>
-          <h5>도와드릴까요?</h5>
-          <p>전화문의 &nbsp;0805227199</p>
-          <p>문의하기</p>
-          <StP>매장찾기</StP>
-          <p>주문추적</p>
-          <p>반품</p>
-          <p>FAQ</p>
+          <StTitle>도와드릴까요?</StTitle>
+          <StParagraph>전화문의 &nbsp;0805227199</StParagraph>
+          <StParagraph>문의하기</StParagraph>
+          <StParagraph>매장찾기</StParagraph>
+          <Box></Box>
+          <StParagraph>주문추적</StParagraph>
+          <StParagraph>반품</StParagraph>
+          <StParagraph>FAQ</StParagraph>
         </StInfo>
         <StInfo>
-          <h5>회사</h5>
-          <p>Prade &nbsp; Group</p>
-          <p>Fondazione &nbsp; Prada</p>
-          <p>Luna &nbsp; Rossa</p>
-          <p>사외적 &nbsp; 책임</p>
-          <p>해용정보</p>
+          <StTitle>회사</StTitle>
+          <StParagraph>Prade &nbsp; Group</StParagraph>
+          <StParagraph>Fondazione &nbsp; Prada</StParagraph>
+          <StParagraph>Luna &nbsp; Rossa</StParagraph>
+          <StParagraph>사외적 &nbsp; 책임</StParagraph>
+          <StParagraph>해용정보</StParagraph>
         </StInfo>
         <StInfo>
-          <h5>법적 고지 및 이용약관</h5>
-          <p>이용&nbsp;약관</p>
-          <p>개인정보&nbsp;처리방침</p>
-          <p>쿠키&nbsp;정책</p>
-          <p>판매&nbsp;약관</p>
-          <p>사이트맵</p>
+          <StTitle>법적 고지 및 이용약관</StTitle>
+          <StParagraph>이용&nbsp;약관</StParagraph>
+          <StParagraph>개인정보&nbsp;처리방침</StParagraph>
+          <StParagraph>쿠키&nbsp;정책</StParagraph>
+          <StParagraph>판매&nbsp;약관</StParagraph>
+          <StParagraph>사이트맵</StParagraph>
         </StInfo>
         <StInfo>
-          <h5>뉴스레터&nbsp;구독</h5>
+          <StTitle>뉴스레터&nbsp;구독</StTitle>
           <StInput placeholder="이메일 주소를 입력하세요" />
         </StInfo>
       </StWrapper>
       <StPWrapper>
-        <p>©PRADA 2007 - 2022 | 부가가치세213-86-18599</p>
-        <p>Shipping to Korea, Republic Of/Korean</p>
+        <StParagraph>©PRADA 2007 - 2022 | 부가가치세213-86-18599</StParagraph>
+        <StTitle>Shipping to Korea, Republic Of/Korean</StTitle>
       </StPWrapper>
       <StFlex>
         <div>
@@ -60,7 +60,6 @@ const Footer = () => {
             본 웹사이트에서 계좌이체를 통해 이루어진 구매는 HSBC은행에서
             제공하는 채무지급보증서비스를 통해 보호됩니다.
           </Stp3>
-          <StA>은행보증 확인 페이지</StA>
         </StDiv>
       </StFlex>
     </StFooter>
@@ -69,44 +68,63 @@ const Footer = () => {
 
 export default Footer;
 
-const StFooter = styled.div``;
+const StFooter = styled.div`
+  font-size: 15px;
+  border-top: 1.5px solid #ebebeb;
+  margin: 15px 3vw 10px 3vw;
+`;
 const StWrapper = styled.div`
   display: flex;
 `;
+const Box = styled.div`
+  height: 20px;
+`;
+
+const StParagraph = styled.p`
+  font-size: 13px;
+  font-weight: 400;
+`;
 
 const StInfo = styled.div`
-  border: 2px solid #000;
   width: 25%;
 `;
 
-const StP = styled.p`
-  margin-bottom: 40px;
+const StTitle = styled.h5`
+  font-weight: 550;
 `;
+
 const StInput = styled.input`
-  border-bottom: 1px solid #000;
+  border: none;
+  border-bottom: 1px solid black;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const StPWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #000;
 `;
 const Stp2 = styled.p`
   font-size: 10px;
 `;
 
 const StFlex = styled.div`
+  border-top: 1px solid black;
   display: flex;
-  justify-content: space-around; ;
+  justify-content: space-between;
 `;
+
 const StDiv = styled.div`
-  margin: 0;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  width: 300px;
 `;
 
 const Stp3 = styled.p`
-  width: 30%;
-  font-size: 13px;
+  width: 100%;
+  font-size: 10px;
 `;
 
 const StA = styled.a`

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router from "./Shared/Router";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
 function App() {
   // useEffect(() => {
   //   console.log(authenticate);
