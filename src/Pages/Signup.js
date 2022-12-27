@@ -36,10 +36,6 @@ const SignUp = () => {
     setOpen(false);
   };
 
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
   const onSubmit = (data) => {
     console.log(data);
     data.country = selectedOption;
@@ -198,19 +194,16 @@ const SignUp = () => {
         <StCheckBoxOne>
           <StInputCheck type="checkbox" />
           <StAgreeMent> 본인은 </StAgreeMent>
-          <StAgreeMentOne> 개인정보처리방침</StAgreeMentOne>
+          <StAgreeMentOne type="button"> 개인정보처리방침</StAgreeMentOne>
 
           <StAgreeMent>
-            을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다. //{" "}
+            을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다.
           </StAgreeMent>
         </StCheckBoxOne>
         <StCheckBoxTwo>
           <StInputCheck type="checkbox" />
           <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
-          <StAgreeMentOne type="button" onClick={showModal}>
-            {" "}
-            상세보기{" "}
-          </StAgreeMentOne>
+          <StAgreeMentOne type="button">상세보기</StAgreeMentOne>
           {modalOpen && <StModal setModalOpen={setModalOpen} />}
         </StCheckBoxTwo>
         <StSubmit type="submit">등록</StSubmit>
@@ -218,7 +211,7 @@ const SignUp = () => {
 
       <StRigthBox>
         <StRigthTitle>소셜 미디어 계정을 사용하여 등록</StRigthTitle>
-        <StRigthContents> 계정을 사용하여 등록하 십시오. </StRigthContents>
+        <StRigthContents> 계정을 사용하여 등록하십시오. </StRigthContents>
         <StRigthTitleOne> 이미 등록 하셨나요?</StRigthTitleOne>
 
         <StRigthContentsOne>
@@ -273,6 +266,7 @@ const StContentBox = styled.div`
   display: flex;
 `;
 const StContentBoxOne = styled.div`
+  position: relative;
   margin: 50px 10px 0 20px;
   height: 350px;
   width: 50%;
@@ -313,6 +307,7 @@ const StDropDownHeader = styled.div`
   background-size: 15px;
   background-repeat: no-repeat;
   background-position: right;
+
   margin: 30px 0 0 0;
   font-size: 20px;
   border: none;
@@ -325,8 +320,11 @@ const StDropDownListContainer = styled.div`
 `;
 
 const StDropDownList = styled.div`
+  position: absolute;
+  width: 90%;
   padding: 10px 0 0 0;
   background: lightcyan;
+  border-radius: 20px;
   font-size: 20px;
   z-index: 10px;
 `;
@@ -434,12 +432,9 @@ const StSubmit = styled.button`
   width: 95%;
   height: 50px;
   font-weight: 600;
-  color: #c6c6c6;
-  background-color: gray;
+  color: white;
+  background-color: black;
   cursor: pointer;
-  :hover {
-    color: blue;
-  }
 `;
 
 const StError = styled.div`

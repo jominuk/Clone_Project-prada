@@ -28,18 +28,16 @@ const Login = () => {
   const loginHandler = (event) => {
     event.preventDefault();
     console.log(em, pw);
-    // dispatch(
-    //   __loginUser({
-    //     email: em,
-    //     password: pw,
-    //   })
-    // );
-    // setId("");
-    // setPw("");
+    dispatch(
+      __loginUser({
+        email: em,
+        password: pw,
+      })
+    );
   };
 
   useEffect(() => {
-    if (pw.length > 7) {
+    if (pw.length > 8 || pw.length < 16) {
       setPassword(true);
     } else {
       setPassword(false);
@@ -49,7 +47,7 @@ const Login = () => {
   return (
     <StDiv>
       <StForm>
-        <StTitle> login</StTitle>
+        <StTitle> login </StTitle>
         <StAtitle> 로그인을 하시면 빠른 결제가 가능합니다.</StAtitle>
 
         <StInput
@@ -183,8 +181,8 @@ const StSubmit = styled.button`
   width: 40%;
   height: 50px;
   font-weight: 600;
-  color: #c6c6c6;
-  background-color: gray;
+  color: white;
+  background-color: black;
   cursor: pointer;
 `;
 
