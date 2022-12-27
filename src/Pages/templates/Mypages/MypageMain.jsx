@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import WhishList from "./WhishList";
 const MypageMain = () => {
+  // const isLogedIn = false; 
+  const MokData = []
 
   return (
     <>
@@ -14,10 +16,16 @@ const MypageMain = () => {
         </StLastOrder>
         <h2>최근 관심상품</h2>
       </StItems>
-      <StWishListWrapper>
-        <p>위시리스트가 비어 있습니다</p>
-        <StA2Box><a>완벽한 스타일을 만나보세요</a></StA2Box>
-      </StWishListWrapper>
+
+      {MokData == '' ? (
+        <StWishListWrapper>
+          <p>위시리스트가 비어 있습니다</p>
+          <StA2Box><a>완벽한 스타일을 만나보세요</a></StA2Box>
+        </StWishListWrapper>
+      ) :
+        <WhishList />}
+
+
       <StItems>
         <h2>최근 배송지</h2>
         <StLastOrder>

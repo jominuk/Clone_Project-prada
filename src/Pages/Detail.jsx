@@ -1,29 +1,46 @@
 import React from "react";
 import styled from "styled-components";
 const Detail = () => {
+  const MokData = {
+    title: '싱글브레스티드 캐시미어 재킷',
+    price: '6,950,000',
+    color: '화이트',
+    size: String,
+    content: '레트로한 매력이 가득한 디테일과 테일러링이 특징인 싱글 브레스티드 캐시미어 재킷입니다. 프라다가 혁신적인 정신과 이탈리아의 노하우를 결합하여 감촉이 부드럽고 포근한 고품질의 캐시미어를 완성했습니다.',
+    material: '캐시미어',
+    OptionImage: [
+      { src: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_SLF.jpg/jcr:content/renditions/cq5dam.web.hebebed.1500.1500.crop.jpg' },
+      { src: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg' },
+      { src: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDD.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg' },
+      { src: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDDA.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg' },
+      { src: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDB.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg' },
+    ]
+  }
+  console.log('a', MokData.OptionImage[0].src)
+
+
   return (
     <StContainer>
       <StFlexBox>
         <StImageWrapper>
-          <StImageMain>
-            첫번째 사진
-            <img src={''} />
+          <StImageMain >
+            <Stimg src={MokData.OptionImage[0].src} />
           </StImageMain>
           <StImageSub>
             <StImageRow>
-              <StItem>1번사진
-                <img src={''} />
+              <StItem>
+                <Stimg src={MokData.OptionImage[1].src} />
               </StItem>
-              <StItem>2번사진
-                <img src={''} />
+              <StItem>
+                <Stimg src={MokData.OptionImage[2].src} />
               </StItem>
             </StImageRow>
             <StImageRow>
-              <StItem>3번사진
-                <img src={''} />
+              <StItem>
+                <Stimg src={MokData.OptionImage[3].src} />
               </StItem>
-              <StItem>4번사진
-                <img src={''} />
+              <StItem>
+                <Stimg src={MokData.OptionImage[4].src} />
               </StItem>
             </StImageRow>
           </StImageSub>
@@ -31,13 +48,13 @@ const Detail = () => {
 
         <StContentBox>
           <StContentTitle>
-            싱글브레스티드 캐시미어 재킷
+            {MokData.title}
           </StContentTitle>
           <StContentPrice>
-            ₩ &nbsp; 6,950,000{ }
+            ₩ {MokData.price}
           </StContentPrice>
           <StContentColor>
-            색상:화이트{ }
+            색상:{MokData.color}
           </StContentColor>
           <StContentSize>
             사이즈:사이즈 선택
@@ -52,14 +69,14 @@ const Detail = () => {
             매장에서 찾기
           </StMap>
           <StP>
-            레트로한 매력이 가득한 디테일과 테일러링이 특징인 싱글 브레스티드 캐시미어 재킷입니다. 프라다가 혁신적인 정신과 이탈리아의 노하우를 결합하여 감촉이 부드럽고 포근한 고품질의 캐시미어를 완성했습니다.
+            {MokData.content}
           </StP>
           <StH3>
             소재
           </StH3>
 
           <StP>
-            캐시미어
+            {MokData.material}
           </StP>
           <StH3>
             무료 배송 및 반품
@@ -77,6 +94,7 @@ const Detail = () => {
         </StContentBox>
       </StFlexBox>
 
+      {/* 관련항목은 보고 있는 상품과 같은 카테고리 상품(시간있으면 api추가) */}
       <StAnotherList>
         <StHeader>
           <StH2>관련항목</StH2>
@@ -132,7 +150,7 @@ margin:0 40px 0 40px;
 /* height:auto;
 width:100%; */
 /* border:2px solid #000; */
-padding-top:10px;
+padding-top:40px;
 box-sizing:border-box;
 `
 const StFlexBox = styled.div`
@@ -157,6 +175,11 @@ border:2px solid #000;
 box-sizing:border-box;
 
 `
+const Stimg = styled.img`
+  width:100%;
+  height:100%;
+`
+
 const StImageSub = styled.div`
 width:100%;
 height:50%;
