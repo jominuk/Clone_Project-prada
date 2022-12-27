@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import WhishList from "./WhishList";
+import { useDispatch, useSelector } from "react-redux";
+import { __getWishLish } from "../../../Redux/modules/detailSlice";
+
 const MypageMain = () => {
   // const isLogedIn = false; 
+  const dispatch = useDispatch();
   const MokData = []
+  // const realData = useSelector((state) => state.detailSlice.wishData)
+  // const ckRealData = useSelector((state) => console.log('realData:',state.detailSlice.wishData))
+
+  // useEffect(() => {
+  //   dispatch(__getWishLish());
+  // }, [dispatch]);
 
   return (
     <>
