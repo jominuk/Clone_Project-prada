@@ -53,7 +53,8 @@ const CatergoryNavbar = () => {
     "선글라스",
     "향수",
   ];
-  const arr6 = ["게임 및 홈 악세사리", "반려동물 악세사리", "스포츠 및 레저"];
+  const arr6 = ["게임 및 홈 악세사리", "반려동물 악세사리", "스포츠 및 레져"];
+  const arr7 = ["트러블 백", "러기지 및 트롤리", "파우치 및 트래블 악세사리"];
   return (
     <>
       {category ? (
@@ -85,6 +86,18 @@ const CatergoryNavbar = () => {
           <FirstCategoryBox>
             <Highlight>악세사리</Highlight>
             {arr5.map((el, i) => {
+              return <div key={`슈즈_${i}`}>{el}</div>;
+            })}
+          </FirstCategoryBox>
+          <FirstCategoryBox>
+            <Highlight>라이프 스타일 악세사리</Highlight>
+            {arr6.map((el, i) => {
+              return <div key={`슈즈_${i}`}>{el}</div>;
+            })}
+          </FirstCategoryBox>
+          <FirstCategoryBox>
+            <Highlight>여행</Highlight>
+            {arr7.map((el, i) => {
               return <div key={`슈즈_${i}`}>{el}</div>;
             })}
           </FirstCategoryBox>
