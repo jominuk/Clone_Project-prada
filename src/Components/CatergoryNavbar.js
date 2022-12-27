@@ -26,6 +26,34 @@ const CatergoryNavbar = () => {
     "가족 의류",
     "파자마 및 언더웨어",
   ];
+  const arr3 = [
+    "숄더백",
+    "탑 핸들",
+    "호보백",
+    "토트백",
+    "미니백",
+    "백팩 및 벨트백",
+    "브리프케이스",
+  ];
+  const arr4 = [
+    "로퍼",
+    "펌프스 및 발레리나",
+    "스니커즈",
+    "샌들",
+    "레이스업",
+    "앵글 부츠 및 부츠",
+  ];
+  const arr5 = [
+    "지갑 및 카드홀더",
+    "하이테크 악세사리 및 키체인",
+    "모자 및 장갑",
+    "헤어 악세사리",
+    "벨트",
+    "실크 및 스카프",
+    "선글라스",
+    "향수",
+  ];
+  const arr6 = ["게임 및 홈 악세사리", "반려동물 악세사리", "스포츠 및 레저"];
   return (
     <>
       {category ? (
@@ -44,16 +72,23 @@ const CatergoryNavbar = () => {
           </FirstCategoryBox>
           <FirstCategoryBox>
             <Highlight>백</Highlight>
-            {arr1.map((el, i) => {
+            {arr3.map((el, i) => {
               return <div key={`백_${i}`}>{el}</div>;
             })}
           </FirstCategoryBox>
           <FirstCategoryBox>
             <Highlight>슈즈</Highlight>
-            {arr1.map((el, i) => {
+            {arr4.map((el, i) => {
               return <div key={`슈즈_${i}`}>{el}</div>;
             })}
           </FirstCategoryBox>
+          <FirstCategoryBox>
+            <Highlight>악세사리</Highlight>
+            {arr5.map((el, i) => {
+              return <div key={`슈즈_${i}`}>{el}</div>;
+            })}
+          </FirstCategoryBox>
+
           <ImageBox />
         </Category>
       ) : null}
@@ -108,6 +143,9 @@ const Category = styled.div`
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   transition-duration: 0.5s;
   animation: smoothAppear 0.6s;
+  & div div:hover {
+    color: #71797f;
+  }
 `;
 
 export default CatergoryNavbar;

@@ -23,7 +23,6 @@ const Navbar = () => {
 
   const menuList = ["여성", "남성", "백", "리네아 로사", "PRADASPHERE"];
   const goToLogin = () => {
-    // authenticate ? setAuthenticate(false) : navigate("/login");
     authenticate ? dispatch(setAuthenticate(false)) : navigate("/login");
   };
   const search = (e) => {

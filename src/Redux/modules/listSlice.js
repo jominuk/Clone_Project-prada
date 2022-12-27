@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../Instance/instance";
 
-export const __getPostBox = createAsyncThunk(
+export const __getProducts = createAsyncThunk(
   "GET_POST",
   async ({ num, page }, thunkAPI) => {
     try {
       const { data } = await instance.get(
-        `/posts?categoryId=${num}&page=${page}`
+        `items/women/ready_to_wear?category=skirts`
       );
+      //data 안에는 [] title,price,color
       return thunkAPI.fulfillWithValue({ ...data, num, page });
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -39,13 +40,13 @@ const listSlice = createSlice({
   extraReducers: (builder) => {
     builder
       //
-      .addCase(__getPostBox.pending, (state) => {
+      .addCase(__getProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(__getPostBox.fulfilled, (state, action) => {
+      .addCase(__getProducts.fulfilled, (state, action) => {
         state.isLoading = false;
       })
-      .addCase(__getPostBox.rejected, (state, action) => {
+      .addCase(__getProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
