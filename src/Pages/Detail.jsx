@@ -1,6 +1,16 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { __getItems } from "../Redux/modules/detailSlice";
+import { createGlobalStyle } from "styled-components";
 const Detail = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  // const realData = useSelector((state) => state.detailSlice.itemData)
+  // const ckRealData = useSelector((state) => console.log('realData:',state.detailSlice.itemData))
+
+
   const MokData = {
     title: '싱글브레스티드 캐시미어 재킷',
     price: '6,950,000',
@@ -16,7 +26,11 @@ const Detail = () => {
       { src: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDB.jpg/_jcr_content/renditions/cq5dam.web.hebebed.500.500.jpg' },
     ]
   }
-  console.log('a', MokData.OptionImage[0].src)
+
+
+  // useEffect(() => {
+  //   dispatch(__getItems(id));
+  // }, [dispatch]);
 
 
   return (
@@ -106,28 +120,28 @@ const Detail = () => {
         <StTestItemContainer>
           <StTestItemBox>
             <StItems>
-              테스트 사진
+              <StPic src="https://www.prada.com/content/dam/pradabkg_products/U/UGD/UGD213/G54F0002/UGD213_G54_F0002_S_231_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
             </StItems>
             <StP2>캐시고라 코트</StP2>
             <StP2>₩ &nbsp; 5,750,000</StP2>
           </StTestItemBox>
           <StTestItemBox>
             <StItems>
-              테스트 사진
+              <StPic src="https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
             </StItems>
             <StP2>싱클브레스트 캐시고라 베스트</StP2>
             <StP2>₩ &nbsp; 4,790,000</StP2>
           </StTestItemBox>
           <StTestItemBox>
             <StItems>
-              테스트 사진
+              <StPic src="https://www.prada.com/content/dam/pradabkg_products/U/UPW/UPW404/1Y7QF0806/UPW404_1Y7Q_F0806_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
             </StItems>
             <StP2>크롭 스트레티 포플린 재킷</StP2>
             <StP2>₩ &nbsp;2,410,000</StP2>
           </StTestItemBox>
           <StTestItemBox>
             <StItems>
-              테스트 사진
+              <StPic src="https://www.prada.com/content/dam/pradanux_products/S/SGM/SGM346/1WQ8F0002/SGM346_1WQ8_F0002_S_202_MDF.png/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
             </StItems>
             <StP2>싱글 브레스티드 울 재킷</StP2>
             <StP2>₩ &nbsp; 5,250,000</StP2>
@@ -144,6 +158,7 @@ const Detail = () => {
 };
 
 export default Detail;
+
 
 const StContainer = styled.div`
 margin:0 40px 0 40px;
@@ -171,7 +186,6 @@ box-sizing:border-box;
 const StImageMain = styled.div`
 width:100%;
 height:49%;
-border:2px solid #000;
 box-sizing:border-box;
 
 `
@@ -190,7 +204,6 @@ const StImageRow = styled.div`
 width:100%;
 height:50%;
 margin-top:6px;
-/* border:2px solid #000; */
 box-sizing:border-box;
 display:flex
 
@@ -198,7 +211,6 @@ display:flex
 const StItem = styled.div`
 width:50%;
 height:100%;
-border:2px solid #000;
 box-sizing:border-box;
 &:nth-child(1){
   margin-right:6px;
@@ -209,7 +221,6 @@ box-sizing:border-box;
 const StContentBox = styled.div`
 width:40%;
 /* height:auto; */
-border:2px solid #000;
 box-sizing:border-box;
 `
 const StContentTitle = styled.div`
@@ -239,6 +250,7 @@ color:#fff;
 width:100%;
 height:50px;
 margin:0 0 40px 0;
+cursor: pointer;
 `
 const StMap = styled.div`
 text-decoration:underline;
@@ -252,6 +264,10 @@ const StH3 = styled.h3`
 margin:0 0 10px 0;
 
 `
+const StPic = styled.img`
+  height:100%;
+  width:100%;
+`
 
 const StInfoLink = styled.a`
 text-decoration:underline;
@@ -261,7 +277,7 @@ text-decoration:underline;
 //  <  관련 항목  >
 const StAnotherList = styled.div`
 width:100%;
-height:500px;
+/* height:500px; */
 /* border:2px solid #000; */
 box-sizing:border-box;
 margin:100px 0 0 0;
@@ -294,7 +310,6 @@ const StTestItemContainer = styled.div`
 display:flex;
 `
 const StTestItemBox = styled.div`
-width:30%;
 /* border:2px solid #000; */
 margin-right:20px;
 `
@@ -302,9 +317,10 @@ const StP2 = styled.p`
 padding-left:20px`
 
 const StItems = styled.div`
-height:35vh;
+height:80vh;
+/* width:50%; */
 border:2px solid #000;
-background-color:#EBEBED;
+box-sizing:border-box;
 
 `
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -7,12 +7,26 @@ import MypageMain from "./templates/Mypages/MypageMain";
 import Acount from "./templates/Mypages/Acount";
 import WhishList from "./templates/Mypages/WhishList";
 import Order from "./templates/Mypages/Order";
+import { useDispatch, useSelector } from "react-redux";
+import { __getUserData } from "../Redux/modules/detailSlice";
 
 const Mypage = () => {
   const isLogedIn = true;
   const [boolMain, setBoolMain] = useState(true)
   const [boolWish, setBoolWish] = useState(false)
   const [boolAcount, setBoolAcount] = useState(false)
+  const dispatch = useDispatch();
+
+  const MokData = {
+    token: '',
+    result: true,
+    admin: false,
+    firstName: '수현'
+  }
+  // const realData = useSelector((state)=>state.userSlice.MokFirstName)
+  // const ckRealData = useSelector((state)=>state.userSlice.MokFirstName)
+
+
 
   const onClickHandlerMain = () => {
     setBoolMain(true);
@@ -27,6 +41,9 @@ const Mypage = () => {
     setBoolMain(false); setBoolWish(false);
   }
 
+  // useEffect(() => {
+  //   dispatch(__getUserData());
+  // }, [dispatch]);
 
   return (
     <>
@@ -34,8 +51,7 @@ const Mypage = () => {
       <StHeaderPicWrapper>
         <StHeaderPic>
           <StTextWrapper>
-            <h1>수현</h1>
-            {/* <h2>수현{ }</h2> */}
+            <h1>{MokData?.firstName}</h1>
             {`님  환 영 합 니 다`}
           </StTextWrapper>
         </StHeaderPic>
