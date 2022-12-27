@@ -4,9 +4,9 @@ import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { UserSolid } from "./AwesomeSolid";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import {
   searchCategory,
   searching,
@@ -42,6 +42,7 @@ const Navbar = () => {
     dispatch(searching(sign));
     dispatch(searchCategory(false));
   };
+
   return (
     <Border>
       <CatergoryNavbar />
@@ -70,7 +71,6 @@ const Navbar = () => {
             <Mypage onClick={goToLogin}>
               {authenticate ? <UserSolid /> : <FontAwesomeIcon icon={faUser} />}
             </Mypage>
-
             {isOpen ? (
               <ModalBackdrop>
                 <StModal>
@@ -78,7 +78,7 @@ const Navbar = () => {
                     <h1>login</h1>
                     <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
                     <StInput placeholder="이메일 *" />
-                    <StInput type="password" placeholder="비밀 번호 *" />
+                    <StInput placeholder="비밀 번호 *" />
                   </ModalLogin>
 
                   <MdadalView>
@@ -100,7 +100,6 @@ const Navbar = () => {
             <Cart>
               <FontAwesomeIcon icon={faCartShopping} />
             </Cart>
-
             <SearchBox>
               <FontAwesomeIcon
                 icon={faSearch}
@@ -194,18 +193,12 @@ const Mypage = styled.div`
 `;
 
 const Modal = styled.div`
-  padding: 30px;
   background-color: #fff;
-  width: 100vw;
-  z-index: 5;
+  width: 100%;
   position: absolute;
   display: flex;
   justify-content: row;
   align-items: center;
-  left: 0;
-  top: 0;
-  border-bottom: 1px solid black;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   animation: searchAppear 0.3s;
 `;
 
@@ -226,7 +219,7 @@ const CloseButton = styled.div`
   background-color: #fff;
   font-size: 0.8em;
 `;
-// == login 스타일
+
 const ModalBackdrop = styled.div`
   display: flex;
   position: fixed;
@@ -293,7 +286,6 @@ const StInput = styled.input`
   height: 30px;
   margin-top: 40px;
   font-size: 20px;
-  color: white;
   &:focus {
     outline: none;
   }
@@ -339,5 +331,4 @@ const StSignup = styled.button`
     color: black;
   }
 `;
-
 export default Navbar;

@@ -10,6 +10,5 @@ const setToken = (accessToken) => {
 
 export default setToken;
 
-//
 // const accessToken = getCookie("token");
 //       setToken(accessToken);
