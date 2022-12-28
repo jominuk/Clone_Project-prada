@@ -31,12 +31,12 @@ const Login = ({ text }) => {
   const loginHandler = (event) => {
     event.preventDefault();
     console.log(em, pw);
-    dispatch(
-      __loginUser({
-        email: em,
-        password: pw,
-      })
-    );
+    // dispatch(
+    //   __loginUser({
+    //     email: em,
+    //     password: pw,
+    //   })
+    // );
   };
 
   useEffect(() => {

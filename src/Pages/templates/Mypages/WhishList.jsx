@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
-const WhishList = () => {
+import { __getWishLish, __deleteWish, __addBasket } from "../../../Redux/modules/detailSlice";
 
+
+const WhishList = () => {
   const isLogedIn = true;
+  const dispatch = useDispatch();
   const [view, setView] = useState(false)
 
+  // const realData = useSelector((state) => state.detailSlice.wishData)
+  // const ckRealData = useSelector((state) => console.log('realData:',state.detailSlice.wishData))
+
   const MokWish1 = {
+    wishListId: 1,
     title: '리나일론 크롭 후디드 다운 재킷',
     price: '4,140,000',
     itemColor: { color: '블랙' },
@@ -16,14 +24,27 @@ const WhishList = () => {
   }//위시 리스트 1
 
   const MokWish2 = {
+    wishListId: 2,
     title: '라인스톤 장식의 메쉬 드레스',
     price: '9,200,000',
     itemColor: { color: '골드' },
     OptionSize: { size: ['사이즈', 36, 37] },
     OptionImage: { scr: 'https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1200.1500.webp' }
-
   }// 위시 리스트 2
   const MokData = [MokWish1, MokWish2];
+
+  const deleteWish = (id) => {
+    dispatch(__deleteWish(parseInt(id)))
+  }
+
+  const addBucket = (id) => {
+    dispatch(__addBasket(parseInt(id)))
+  }
+
+  // useEffect(() => {
+  //   dispatch(__getWishLish());
+  // }, [dispatch]);
+
 
   return (
     <>
@@ -32,8 +53,10 @@ const WhishList = () => {
           {/* <p>{MokData.length}개의 결과</p> */}
           <StContainer>
             {MokData.map((wish) => {
+              // { realData.map((wish))=>{
               return (
                 <StItem>
+                  <StCancelButton onClick={() => deleteWish(wish.wishListId)}>X</StCancelButton>
                   <StPic>
                     <Stimg src={wish.OptionImage.scr}></Stimg>
                   </StPic>
@@ -46,7 +69,7 @@ const WhishList = () => {
                         {wish.OptionSize.size.map((size) => <option>{size}</option>)}
                       </StSize>
                     </StSizeWrapper>
-                    <StButton>장바구니에 추가하기</StButton>
+                    <StButton onClick={() => addBucket(wish.wishListId)}>장바구니에 추가하기</StButton>
                   </StInfo>
                 </StItem>)
 
@@ -87,15 +110,25 @@ const StContainer = styled.div`
 `
 const StItem = styled.div`
   box-sizing:border-box;
-  border:1px solid #000;
-  width:25%;
+  width:27%;
   padding:20px;
 `
+const StCancelButton = styled.button`
+  background-color:transparent;
+  border:none;
+  position:relative;
+  margin:0;
+  padding-right:10px;
+  float:right;
+  font-size:18px;
+  transform:translateY(45px);
+  cursor: pointer;
+`
+
 
 const StPic = styled.div`
 height:381px;
 box-sizing:border-box;
-border:1px solid #000;
 `
 const Stimg = styled.img`
   width:100%;
@@ -103,7 +136,6 @@ const Stimg = styled.img`
 `
 const StInfo = styled.div`
 box-sizing:border-box;
-border:1px solid #000;
 padding:20px 27px 20px 27px;
 height:271px;
 `
