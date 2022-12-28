@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { __getItems } from "../Redux/modules/detailSlice";
 import { createGlobalStyle } from "styled-components";
+import Carousel from "./templates/Details/carousel";
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -109,46 +110,7 @@ const Detail = () => {
       </StFlexBox>
 
       {/* 관련항목은 보고 있는 상품과 같은 카테고리 상품(시간있으면 api추가) */}
-      <StAnotherList>
-        <StHeader>
-          <StH2>관련항목</StH2>
-          <StButtonWrapper>
-            <StArrowButton>←</StArrowButton>
-            <StArrowButton>→</StArrowButton>
-          </StButtonWrapper>
-        </StHeader>
-        <StTestItemContainer>
-          <StTestItemBox>
-            <StItems>
-              <StPic src="https://www.prada.com/content/dam/pradabkg_products/U/UGD/UGD213/G54F0002/UGD213_G54_F0002_S_231_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
-            </StItems>
-            <StP2>캐시고라 코트</StP2>
-            <StP2>₩ &nbsp; 5,750,000</StP2>
-          </StTestItemBox>
-          <StTestItemBox>
-            <StItems>
-              <StPic src="https://www.prada.com/content/dam/pradabkg_products/S/SD0/SD099/1WQ8F0002/SD099_1WQ8_F0002_S_202_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
-            </StItems>
-            <StP2>싱클브레스트 캐시고라 베스트</StP2>
-            <StP2>₩ &nbsp; 4,790,000</StP2>
-          </StTestItemBox>
-          <StTestItemBox>
-            <StItems>
-              <StPic src="https://www.prada.com/content/dam/pradabkg_products/U/UPW/UPW404/1Y7QF0806/UPW404_1Y7Q_F0806_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
-            </StItems>
-            <StP2>크롭 스트레티 포플린 재킷</StP2>
-            <StP2>₩ &nbsp;2,410,000</StP2>
-          </StTestItemBox>
-          <StTestItemBox>
-            <StItems>
-              <StPic src="https://www.prada.com/content/dam/pradanux_products/S/SGM/SGM346/1WQ8F0002/SGM346_1WQ8_F0002_S_202_MDF.png/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp" />
-            </StItems>
-            <StP2>싱글 브레스티드 울 재킷</StP2>
-            <StP2>₩ &nbsp; 5,250,000</StP2>
-          </StTestItemBox>
-
-        </StTestItemContainer>
-      </StAnotherList>
+      <Carousel />
 
       <StTitle>
         여성 / 레디 투 웨어/재킷 및 코트
@@ -286,57 +248,6 @@ const StPic = styled.img`
 const StInfoLink = styled.a`
 text-decoration:underline;
 `
-
-
-//  <  관련 항목  >
-const StAnotherList = styled.div`
-width:100%;
-/* height:500px; */
-/* border:2px solid #000; */
-box-sizing:border-box;
-margin:100px 0 0 0;
-`
-
-const StHeader = styled.div`
-justify-content: space-between;
-display:flex`
-
-const StButtonWrapper = styled.div`
-
-`
-const StH2 = styled.h2`
-`
-
-const StArrowButton = styled.button`
-background-color:#fff;
-border:none;
-font-size:20px;
-cursor: pointer;
-&:nth-child(1){
-  margin-right:10px;
-  /* color:rgb(255,255,255,) */
-  opacity:0.5;
-}
-`
-
-const StTestItemContainer = styled.div`
-/* border:2px solid #000; */
-display:flex;
-`
-const StTestItemBox = styled.div`
-/* border:2px solid #000; */
-margin-right:20px;
-`
-const StP2 = styled.p`
-padding-left:20px`
-
-const StItems = styled.div`
-height:80vh;
-/* border:2px solid #000; */
-box-sizing:border-box;
-
-`
-
 const StTitle = styled.div`
 height:10vh;
 border:2px solid rgb(0,0,0,0.2);
@@ -345,3 +256,6 @@ border-left:none;
 text-align:center;
 line-height:10vh;
 `
+
+
+//  <  관련 항목  >
