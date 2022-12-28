@@ -261,8 +261,8 @@ const StModal = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 690px;
-  background-color: #051f1dff;
+  height: 75%;
+  background-color: #1b1b1b;
   left: 0;
   top: -15px;
   animation: modal 0.8s;
