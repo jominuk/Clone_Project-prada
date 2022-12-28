@@ -107,7 +107,7 @@ const SignUp = ({ text }) => {
             <StError>{errors.email && <p> 이메일을 확인해 주세요 </p>}</StError>
 
             <StInput
-              placeholder="비밀번호 *"
+              placeholder="비밀번호 * "
               name="password"
               type="password"
               autoComplete="off"
