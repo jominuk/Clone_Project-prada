@@ -4,11 +4,15 @@ import { instance } from "../../Instance/instance";
 export const __signUp = createAsyncThunk(
   "SIGN_UP",
   async (payload, thunkAPI) => {
-    console.log(payload);
+    console.log("함수 작동 됨");
     try {
-      await instance.post(" ", payload);
-      return thunkAPI.fulfillWithValue(payload);
+      const data = await instance.post(" ", payload);
+      // console.log(data) = {message:회원가입성공, result : true}
+      // console.log("서버로 부터 값을 받아옴")
+      alert("회원가입 성공");
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      alert("아이디와 패스워드를 확인해 주세요.");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -44,5 +48,4 @@ const userSlice = createSlice({
   },
 });
 
-export const { data } = userSlice.actions;
 export default userSlice.reducer;

@@ -9,7 +9,6 @@ import Mypage from "../Pages/Mypage";
 import Main from "../Pages/Main";
 import Detail from "../Pages/Detail";
 import Footer from "../Components/Footer";
-import LoginModal from "../Components/LoginModal";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { searchCategory, searching } from "../Redux/modules/listSlice";
@@ -40,7 +39,6 @@ const Router = () => {
         {/* <Route path="/detail/:id" element={<Detail />} /> */}
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/modal" element={<LoginModal />} />
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
