@@ -4,31 +4,29 @@ import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { UserSolid } from "./AwesomeSolid";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import {
   searchCategory,
   searching,
   setAuthenticate,
 } from "../Redux/modules/listSlice";
 import CategoryNavbar from "./CategoryNavbar";
-import CategoryNavbar2 from "./CategoryNavbar2";
-import CategoryNavbar3 from "./CategoryNavbar3";
-import CategoryNavbar4 from "./CategoryNavBar4";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
-  const { category } = useSelector((state) => state.listSlice);
+
   const { authenticate } = useSelector((state) => state.listSlice);
 
   const searched = useSelector((state) => state.listSlice.search);
 
   const menuList = ["여성", "남성", "백", "리네아 로사", "PRADASPHERE"];
   const goToLogin = () => {
+    // authenticate ? setAuthenticate(false) : navigate("/login");
     authenticate ? dispatch(setAuthenticate(false)) : setIsOpen(true);
   };
   const search = (e) => {
@@ -42,27 +40,12 @@ const Navbar = () => {
 
   const searchToggle = (sign) => {
     dispatch(searching(sign));
-    dispatch(searchCategory(""));
+    dispatch(searchCategory(false));
   };
 
-  const WhichCategory = () => {
-    switch (category) {
-      case "여성":
-        return <CategoryNavbar />;
-      case "남성":
-        return <CategoryNavbar2 />;
-      case "백":
-        return <CategoryNavbar3 />;
-      case "리네아 로사":
-        return <CategoryNavbar4 />;
-
-      default:
-        return null;
-    }
-  };
   return (
     <Border>
-      {WhichCategory()}
+      <CategoryNavbar />
       <Boundary>
         <Fifty>
           <NavSection onClick={goToHome}>
@@ -75,7 +58,7 @@ const Navbar = () => {
           <MenuList>
             {menuList.map((el, i) => (
               <Menu
-                onMouseOver={() => dispatch(searchCategory(el))}
+                onMouseOver={() => dispatch(searchCategory(true))}
                 key={`menuList-${i}`}
               >
                 {el}
@@ -88,7 +71,6 @@ const Navbar = () => {
             <Mypage onClick={goToLogin}>
               {authenticate ? <UserSolid /> : <FontAwesomeIcon icon={faUser} />}
             </Mypage>
-
             {isOpen ? (
               <ModalBackdrop>
                 <StModal>
@@ -96,7 +78,7 @@ const Navbar = () => {
                     <h1>login</h1>
                     <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
                     <StInput placeholder="이메일 *" />
-                    <StInput type="password" placeholder="비밀 번호 *" />
+                    <StInput placeholder="비밀 번호 *" />
                   </ModalLogin>
 
                   <MdadalView>
@@ -118,7 +100,6 @@ const Navbar = () => {
             <Cart>
               <FontAwesomeIcon icon={faCartShopping} />
             </Cart>
-
             <SearchBox>
               <FontAwesomeIcon
                 icon={faSearch}
@@ -212,18 +193,12 @@ const Mypage = styled.div`
 `;
 
 const Modal = styled.div`
-  padding: 30px;
   background-color: #fff;
-  width: 100vw;
-  z-index: 5;
+  width: 100%;
   position: absolute;
   display: flex;
   justify-content: row;
   align-items: center;
-  left: 0;
-  top: 0;
-  border-bottom: 1px solid black;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   animation: searchAppear 0.3s;
 `;
 
@@ -244,7 +219,7 @@ const CloseButton = styled.div`
   background-color: #fff;
   font-size: 0.8em;
 `;
-// == login 스타일
+
 const ModalBackdrop = styled.div`
   display: flex;
   position: fixed;
@@ -311,7 +286,6 @@ const StInput = styled.input`
   height: 30px;
   margin-top: 40px;
   font-size: 20px;
-  color: white;
   &:focus {
     outline: none;
   }
@@ -357,5 +331,4 @@ const StSignup = styled.button`
     color: black;
   }
 `;
-
 export default Navbar;

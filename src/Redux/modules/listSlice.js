@@ -1,15 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../Instance/instance";
+import { getCookie } from "../../Shared/cookie";
+import setToken from "../../Pattern/setToken";
 
 export const __getProducts = createAsyncThunk(
-  "GET_POST",
-  async ({ num, page }, thunkAPI) => {
+  "GET_PRODUCTS",
+  async ({ gender, queryCategory, thema }, thunkAPI) => {
     try {
       const { data } = await instance.get(
-        `items/women/ready_to_wear?category=skirts`
+        `items/${gender}/${thema}?category=${queryCategory}`
       );
-      //data 안에는 [] title,price,color
-      return thunkAPI.fulfillWithValue({ ...data, num, page });
+      //data 안에는 [] title,price,color,
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const __addWishList = createAsyncThunk(
+  "ADD_WISHLIST",
+  async (payload, thunkAPI) => {
+    try {
+      const accessToken = getCookie("token");
+      setToken(accessToken);
+      const { data } = await instance.get(`user/${payload}/wishList`);
+      //data 안에는 [] title,price,color,
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -20,7 +37,8 @@ const initialState = {
   postList: [],
   search: false,
   authenticate: false,
-  category: false,
+  category: "",
+  msg: "",
 };
 
 const listSlice = createSlice({
@@ -45,8 +63,20 @@ const listSlice = createSlice({
       })
       .addCase(__getProducts.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.productList = action.payload;
       })
       .addCase(__getProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(__addWishList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__addWishList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(__addWishList.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

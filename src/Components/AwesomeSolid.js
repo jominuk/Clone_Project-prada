@@ -11,18 +11,10 @@ export const UserSolid = () => {
   );
 };
 
-// export const HeartSolid = () => {
-//   return (
-//     <>
-//       <FontAwesomeIcon icon={faHeart} />
-//     </>
-//   );
-// };
-
-// export const CartSolid = () => {
-//   return (
-//     <>
-//       <FontAwesomeIcon icon={faHeart} />
-//     </>
-//   );
-// };
+export const HeartSolid = () => {
+  return (
+    <>
+      <FontAwesomeIcon icon={faHeart} />
+    </>
+  );
+};

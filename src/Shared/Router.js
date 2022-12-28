@@ -4,16 +4,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Home from "../Pages/Home";
 import SignUp from "../Pages/Signup";
-import Login from "../Pages/Login";
-
 import Mypage from "../Pages/Mypage";
-
 import Main from "../Pages/Main";
 import Detail from "../Pages/Detail";
 import Footer from "../Components/Footer";
+import LoginModal from "../Components/LoginModal";
+
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { searchCategory, searching } from "../Redux/modules/listSlice";
+// import Login from "../Pages/Login";
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -36,10 +36,11 @@ const Router = () => {
       />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/main/:id" element={<Main />} />
+        <Route path="/:gender/:thema" element={<Main />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/mypage" element={<Mypage />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/modal" element={<LoginModal />} /> */}
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
