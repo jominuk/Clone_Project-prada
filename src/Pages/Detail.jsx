@@ -68,10 +68,10 @@ const Detail = () => {
             ₩ {MokData.price}
           </StContentPrice>
           <StContentColor>
-            색상:{MokData.color}
+            <StColorP1>색상 :</StColorP1>{MokData.color}
           </StContentColor>
           <StContentSize>
-            사이즈:사이즈 선택
+            <StColorP1>사이즈 :</StColorP1>사이즈 선택
           </StContentSize>
           <StContentSizeInfo>
             사이즈안내
@@ -219,24 +219,36 @@ box-sizing:border-box;
 `
 //    <  컨텐트   >
 const StContentBox = styled.div`
-width:40%;
+width:31%;
 /* height:auto; */
 box-sizing:border-box;
 `
-const StContentTitle = styled.div`
+const StContentTitle = styled.h1`
 margin:100px 0 40px 0;
 `
-const StContentPrice = styled.div`
+const StContentPrice = styled.p`
 margin:0 0 80px 0;
+font-size:18px;
+font-weight:700;
 
 `
 const StContentColor = styled.div`
-border-bottom:2px solid rgb(0,0,255,0.2);
+border-bottom:2px solid rgb(0,0,255,0.1);
 margin: 0 0 40px 0;
+display:flex;
+height:1.7%;
+box-sizing:border-box;
+`
+const StColorP1 = styled.p`
+  font-size:14px;
+  font-weight:700;
+  transform:translateY(-110%);
 `
 const StContentSize = styled.div`
-border-bottom:2px solid rgb(0,0,255,0.2);
+border-bottom:2px solid rgb(0,0,255,0.1);
 margin: 0 0 40px 0;
+height:1.7%;
+display:flex;
 
 `
 const StContentSizeInfo = styled.div`
@@ -256,6 +268,8 @@ const StMap = styled.div`
 text-decoration:underline;
 text-align:center;
 margin:0 0 100px 0;
+font-size:14px;
+font-weight:600;
 `
 const StP = styled.p`
 margin:0 0 40px 0;
@@ -318,8 +332,7 @@ padding-left:20px`
 
 const StItems = styled.div`
 height:80vh;
-/* width:50%; */
-border:2px solid #000;
+/* border:2px solid #000; */
 box-sizing:border-box;
 
 `

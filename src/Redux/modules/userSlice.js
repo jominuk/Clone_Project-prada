@@ -7,7 +7,7 @@ export const __signUp = createAsyncThunk(
     console.log("함수 작동 됨");
     try {
       const data = await instance.post("/user/signup", payload);
-      console.log(data);
+      console.log('data:', data);
       // console.log("서버로 부터 값을 받아옴")
       alert("회원가입 성공");
       return thunkAPI.fulfillWithValue(data);
@@ -39,7 +39,7 @@ const userSlice = createSlice({
       })
       .addCase(__signUp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.name = action.payload;
+        // state.name = action.payload;
       })
       .addCase(__signUp.rejected, (state, action) => {
         state.isLoading = false;

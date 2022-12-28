@@ -93,13 +93,14 @@ background-color:#F4F5F7;
 `
 
 const StHeaderPicWrapper = styled.div`
-height:280px;
-padding-top:40px;
+height:45vh;
+width:96%;
+padding:40px 0 0 40px;
 
 `
 
 const StHeaderPic = styled.div`
-height:270px;
+height:100%;
 justify-content: center;
 margin-top:10px;
 color:#fff;
@@ -115,16 +116,16 @@ transform:translateY(160%);
 
 //    <  대시보드  >
 const StDashBoard = styled.div`
-width:96%;
+width:93%;
 height:6%;
 display:flex;
 position:sticky;
-top:15%;
+top:10%;
 background-color:#000;
 color:#fff;
 line-height:50px;
 font-size:13px;
-margin:0 0px 0 20px;
+margin:0 0px 0 60px;
 padding-left:20px;
 justify-content:space-between;
 `
