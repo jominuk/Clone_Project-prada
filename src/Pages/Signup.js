@@ -31,7 +31,7 @@ const SignUp = ({ text }) => {
   const country = ["대한민국", "체코", "독일", "폴란드", "일본"];
 
   const onOptionClicked = (value) => {
-    console.log(value);
+    // console.log(value);
     setSelectedOption(value);
     setOpen(false);
   };
@@ -352,7 +352,7 @@ const StRigthContents = styled.div`
 `;
 
 const StEyes = styled.button`
-  background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8");
+  /* background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8"); */
   background-size: cover;
   background-size: 27px;
   background-repeat: no-repeat;
