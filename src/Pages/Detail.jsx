@@ -139,7 +139,7 @@ margin-top:40px;
 
 const StImageWrapper = styled.div`
 width:58%;
-/* height:80vh; */
+/* height:71vh; */
 /* border:2px solid #000; */
 margin-right:100px;
 box-sizing:border-box;

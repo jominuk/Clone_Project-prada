@@ -126,7 +126,7 @@ const StP2 = styled.p`
 padding-left:20px`
 
 const StItems = styled.div`
-height:80vh;
+height:71vh;
 /* border:2px solid #000; */
 box-sizing:border-box;
 
