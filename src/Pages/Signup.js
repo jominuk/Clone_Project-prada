@@ -36,10 +36,20 @@ const SignUp = ({ text }) => {
     setOpen(false);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
     data.country = selectedOption;
-    dispatch(__signUp(data));
+    await dispatch(__signUp(data));
+    // navigate("/login")
+    // messge === "회원가입 성공"
+    //   ? navigate("/login")
+    //   : alert("양식을 확인해 주세요");
+
+    // if (messge === "회원가입 성공") {
+    //   navigate("/login");
+    // } else {
+    //   alert("양식을 확인해 주세요");
+    // }
   };
 
   return (
@@ -352,7 +362,7 @@ const StRigthContents = styled.div`
 `;
 
 const StEyes = styled.button`
-  /* background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8"); */
+  background: url("");
   background-size: cover;
   background-size: 27px;
   background-repeat: no-repeat;

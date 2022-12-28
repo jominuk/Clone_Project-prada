@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { __loginUser } from "../Redux/modules/loginSlice";
+import { __login } from "../Redux/modules/loginSlice";
 
 const Login = ({ text }) => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Login = ({ text }) => {
     event.preventDefault();
     console.log(em, pw);
     dispatch(
-      __loginUser({
+      __login({
         email: em,
         password: pw,
       })
