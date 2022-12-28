@@ -13,6 +13,7 @@ import {
   setAuthenticate,
 } from "../Redux/modules/listSlice";
 import CatergoryNavbar from "./CatergoryNavbar";
+import InputMode from "./InputMode";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,6 +30,12 @@ const Navbar = () => {
     // authenticate ? setAuthenticate(false) : navigate("/login");
     authenticate ? dispatch(setAuthenticate(false)) : setIsOpen(true);
   };
+
+  const onSignUpHandler = () => {
+    navigate("/signup");
+    setIsOpen(false);
+  };
+
   const search = (e) => {
     if (e.key === "Enter") {
       navigate(`/?q=${e.target.value}`);
@@ -75,16 +82,26 @@ const Navbar = () => {
               <ModalBackdrop>
                 <StModal>
                   <ModalLogin>
-                    <h1>login</h1>
+                    <StLoginTitle>login</StLoginTitle>
                     <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
                     <StInput placeholder="이메일 *" />
                     <StInput type="password" placeholder="비밀 번호 *" />
+                    <StContentLogin>
+                      <StContents>
+                        <InputMode />
+
+                        <StContent>Remember me</StContent>
+                      </StContents>
+                      <StLoginButton>로그인</StLoginButton>
+                    </StContentLogin>
                   </ModalLogin>
 
                   <MdadalView>
                     <StSocialLogin>소셜 로그인 </StSocialLogin>
                     <StEnrollment>등록하지 않으셨나요?</StEnrollment>
-                    <StSignup>새 계정 만들기</StSignup>
+                    <StSignup onClick={() => onSignUpHandler()}>
+                      새 계정 만들기
+                    </StSignup>
                   </MdadalView>
 
                   <StModalClose onClick={() => setIsOpen(false)}>
@@ -245,7 +262,7 @@ const StModal = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 690px;
-  background-color: black;
+  background-color: #051f1dff;
   left: 0;
   top: -15px;
   animation: modal 0.8s;
@@ -286,7 +303,7 @@ const StSocialLogin = styled.div`
 `;
 
 const StInput = styled.input`
-  background-color: black;
+  background-color: #051f1dff;
   border: none;
   border-bottom: 2px solid #ccc;
   width: 130%;
@@ -309,9 +326,9 @@ const StSignup = styled.button`
   z-index: 0;
   color: white;
   position: relative;
-  margin: 20px 0 0 0;
+  margin: 45px 0 0 0;
   font-weight: bold;
-  font-size: 23px;
+  font-size: 20px;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid white;
@@ -338,6 +355,38 @@ const StSignup = styled.button`
   :hover {
     color: black;
   }
+`;
+
+const StLoginTitle = styled.div`
+  font-size: 35px;
+  font-weight: bold;
+  margin: 10px 0 15px 0;
+`;
+
+const StContents = styled.div`
+  display: flex;
+`;
+
+const StContent = styled.div`
+  margin: 70px 0 0 20px;
+  font-size: 20px;
+`;
+
+const StContentLogin = styled.div`
+  width: 131%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StLoginButton = styled.button`
+  margin: 65px 0 0 0;
+  width: 110px;
+  height: 50px;
+  color: black;
+  background-color: gray;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
 `;
 
 export default Navbar;
