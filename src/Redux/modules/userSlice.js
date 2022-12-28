@@ -6,7 +6,7 @@ export const __signUp = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("함수 작동 됨");
     try {
-      const data = await instance.post(" ", payload);
+      const data = await instance.post("/user/signup", payload);
       // console.log(data) = {message:회원가입성공, result : true}
       // console.log("서버로 부터 값을 받아옴")
       alert("회원가입 성공");
