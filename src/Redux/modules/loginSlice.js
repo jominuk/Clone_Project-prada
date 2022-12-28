@@ -1,52 +1,54 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { instance } from "../../instance/instance";
-// import setToken from "../../Pattern/setToken";
-// import { setCookie } from "../../shared/cookie";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { instance } from "../../Instance/instance";
+import setToken from "../../Pattern/setToken";
+import { setCookie } from "../../Shared/cookie";
 
-// export const __loginUser = createAsyncThunk(
-//   "LOGIN_USER",
-//   async (payload, thunkAPI) => {
-//     try {
-//       setToken();
-//       const data = await instance.post("", payload);
-//       setCookie("token", data.token, {
-//         path: "/",
-//         expire: "after60m",
-//       });
-//       // localStorage.setItem("", data);
-//       alert("로그인 성공!");
-//       return thunkAPI.fulfillWithValue(data);
-//     } catch ({ response }) {
-//       alert("아이디어와 비밀번호를 다시 확인해주세요.");
-//       return thunkAPI.rejectWithValue(response);
-//     }
-//   }
-// );
+export const __login = createAsyncThunk("LOGIN", async (payload, thunkAPI) => {
+  console.log(payload.email, payload.password);
+  try {
+    setToken();
+    const { data } = await instance.post("/user/login", {
+      email: payload.email,
+      password: payload.password,
+    });
+    setCookie("token", data.token, {
+      path: "/",
+      expire: "after60m", //서버에서 토큰 유효시간이 얼마나 되는지 물어보기
+    });
+    // localStorage.setItem("", data);
+    alert("로그인 성공!");
+    return thunkAPI.fulfillWithValue(console.log(data.token)); //data만 들어오면 에러가 난다? 직렬화의 에러(action을 실을 수 없는 것들)
+  } catch (error) {
+    alert("아이디어와 비밀번호를 다시 확인해주세요.");
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
-// const initialState = {
-//   email: "",
-//   password: "",
-//   isLoading: false,
-//   error: "",
-// };
+const initialState = {
+  email: "",
+  password: "",
+  //   login: false,
+  isLoading: false,
+  error: "",
+};
 
-// const userSlice = createSlice({
-//   name: "LOGIN_USER",
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(__loginUser.pending, (state) => {
-//         state.isLoading = true;
-//       })
-//       .addCase(__loginUser.fulfilled, (state) => {
-//         state.isLoading = true;
-//       })
-//       .addCase(__loginUser.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload.data.message;
-//       });
-//   },
-// });
+const loginSlice = createSlice({
+  name: "LOGIN_USER",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(__login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__login.fulfilled, (state) => {
+        state.isLoading = true;
+        // state.login = true;
+      })
+      .addCase(__login.rejected, (state, action) => {
+        state.isLoading = false;
+      });
+  },
+});
 
-// export default userSlice.reducer;
+export default loginSlice.reducer;
