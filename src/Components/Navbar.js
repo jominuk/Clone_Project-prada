@@ -30,6 +30,7 @@ const Navbar = () => {
 
   const { authenticate } = useSelector((state) => state.listSlice);
   const { login } = useSelector((state) => state.loginSlice);
+  const { fristName } = useSelector((state) => state.userSlice);
 
   const searched = useSelector((state) => state.listSlice.search);
 
@@ -172,6 +173,10 @@ const Navbar = () => {
               ) : (
                 <ModalBoxOne>
                   <StModalOne>
+                    <ModalLogin>
+                      <div>`${fristName}` 님 환영합니다.</div>
+                      <div>계정 정보, 주문 및 선호 제품 보기</div>
+                    </ModalLogin>
                     <StModalClose onClick={() => setIsOpen(false)}>
                       ✖
                     </StModalClose>
