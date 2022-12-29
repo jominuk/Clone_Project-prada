@@ -17,14 +17,14 @@ const Mypage = () => {
   const [boolAcount, setBoolAcount] = useState(false)
   const dispatch = useDispatch();
 
-  const MokData = {
-    token: '',
-    result: true,
-    admin: false,
-    firstName: '수현'
-  }
-  // const realData = useSelector((state)=>state.userSlice.MokFirstName)
-  // const ckRealData = useSelector((state)=>state.userSlice.MokFirstName)
+  // const MokData = {
+  //   token: '',
+  //   result: true,
+  //   admin: false,
+  //   firstName: '수현'
+  // }
+  const realData = useSelector((state) => state.detailSlice.userData)
+  // const ckRealData = useSelector((state) => console.log('state:', state.detailSlice.userData))
 
 
 
@@ -41,22 +41,22 @@ const Mypage = () => {
     setBoolMain(false); setBoolWish(false);
   }
 
-  // useEffect(() => {
-  //   dispatch(__getUserData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(__getUserData());
+  }, [dispatch]);
 
   return (
     <>
-
-      <StHeaderPicWrapper>
-        <StHeaderPic>
-          <StTextWrapper>
-            <h1>{MokData?.firstName}</h1>
-            {`님  환 영 합 니 다`}
-          </StTextWrapper>
-        </StHeaderPic>
-      </StHeaderPicWrapper>
-
+      <StBackground>
+        <StHeaderPicWrapper>
+          <StHeaderPic>
+            <StTextWrapper>
+              <Sth1>{realData?.firstName}</Sth1>
+              {`님  환 영 합 니 다`}
+            </StTextWrapper>
+          </StHeaderPic>
+        </StHeaderPicWrapper>
+      </StBackground>
       <StContainer>
         {isLogedIn ?
           (<StDashBoard>
@@ -82,19 +82,26 @@ const Mypage = () => {
 
 export default Mypage;
 
-const StContainer = styled.div`
-margin: 0 40px 0 40px;
-box-sizing:border-box;
-border:2px solid #fff;
-margin:0 auto;
-/* height:900px; */
-padding-top:20px;
+const StBackground = styled.div`
+  width:100%;
 background-color:#F4F5F7;
+box-sizing:border-box;
+`
+const StContainer = styled.div`
+box-sizing:border-box;
+/* margin:0 auto; */
+/* height:900px; */
+padding:20px 40px 0 40px;
+width:100%;
+background-color:#F4F5F7;
+/* background-color:transparent; */
+
 `
 
 const StHeaderPicWrapper = styled.div`
 height:45vh;
 width:96%;
+background-color:#F4F5F7;
 padding:40px 0 0 40px;
 
 `
@@ -105,12 +112,18 @@ justify-content: center;
 margin-top:10px;
 color:#fff;
 text-align:center;
-background-image:url("https://www.prada.com/content/dam/pradanux/registration/2019/10/23/My_account_w_DT.jpg/_jcr_content/renditions/cq5dam.web.3360.3360.webp");
+background-image:url("https://www.prada.com/content/dam/pradanux/registration/2019/10/23/My_account_w_DT.jpg/_jcr_content/renditions/cq5dam.web.1680.1680.webp");
+
 background-size:cover;
 `
 
 const StTextWrapper = styled.div`
-transform:translateY(160%);
+transform:translateY(230%);
+`
+const Sth1 = styled.h1`
+  font-size:40px;
+  font-weight:700;
+  transform:translateY(22px)
 `
 
 
