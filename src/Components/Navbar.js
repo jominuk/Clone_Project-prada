@@ -107,8 +107,8 @@ const Navbar = () => {
   const logout = () => {
     if (deleteCookie("token")) {
       navigate("/");
+      setIsOpen(false);
     }
-
     // setId("");
     // setPw("");
   };
