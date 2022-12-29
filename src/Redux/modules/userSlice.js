@@ -1,45 +1,52 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../Instance/instance";
 
-export const __nameCheck = createAsyncThunk(
-  "NAME_CHECK",
+export const __signUp = createAsyncThunk(
+  "SIGN_UP",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      await instance.post(" ");
-      return thunkAPI.fulfillWithValue(payload);
+      const { data } = await instance.post("/user/signup", payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      // alert("중복 된 이메일 입니다.");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
 
 const initialState = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
-  onEmail: "",
+  emailConfirm: "",
   password: "",
-  onPassword: "",
+  passwordConfirm: "",
+  country: "",
+  errorMsg: "",
+  msg: "",
 };
 
-const listSlice = createSlice({
+const userSlice = createSlice({
   name: "POST_SLICE",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(__nameCheck.pending, (state) => {
+      .addCase(__signUp.pending, (state) => {
+        console.log("Pending");
         state.isLoading = true;
       })
-      .addCase(__nameCheck.fulfilled, (state, action) => {
+      .addCase(__signUp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.name = action.payload;
+        state.msg = action.payload;
       })
-      .addCase(__nameCheck.rejected, (state, action) => {
+      .addCase(__signUp.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.errorMsg = action.payload;
       });
   },
 });
 
-export const { data } = listSlice.actions;
-export default listSlice.reducer;
+export default userSlice.reducer;

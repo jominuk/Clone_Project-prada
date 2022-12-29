@@ -2,89 +2,55 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { HoverButton } from "../Components/HoverButton";
+import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { __nameCheck } from "../Redux/modules/userSlice";
+import { __signUp } from "../Redux/modules/userSlice";
 
-const SignUp = () => {
+const SignUp = ({ text }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [Open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const [name, setName] = useState("");
-  const [nameCheck, setNameCheck] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [onEmail, setOnEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [onPassword, setOnPassword] = useState("");
-
-  // const [onCompleteSubmit, setOnCompleteSubmit] = useState("");
-  const [input, setinput] = useState({
-    name: "",
-    email: "",
-    onEmail: "",
-    password: "",
-    onPassword: "",
-  });
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const email = useRef();
+  email.current = watch("email");
+  const password = useRef();
+  password.current = watch("password");
 
   const selectMenu = () => setOpen(!Open);
-  const options = ["대한민국", "체코", "독일", "폴란드", "일본"];
+  const country = ["대한민국", "체코", "독일", "폴란드", "일본"];
 
   const onOptionClicked = (value) => {
+    // console.log(value);
     setSelectedOption(value);
     setOpen(false);
   };
 
-  const onNameHandler = (e) => {
-    setName(e.target.value);
-  };
-  const onEmailHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const onPasswordHandler = (e) => {
-    setOnEmail(e.target.value);
-  };
-  const onEmailCompleteHandler = (e) => {
-    setPassword(e.target.value);
-  };
-  const onPasswordCompleteHandler = (e) => {
-    setOnPassword(e.target.value);
-  };
+  const onSubmit = async (data) => {
+    console.log(data);
+    data.country = selectedOption;
+    const signUp = await dispatch(__signUp(data));
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(name, email, onEmail, password, onPassword);
-
-    if (name === "") {
-      alert("이름");
-      return;
+    if (signUp.payload.message === "회원가입 성공") {
+      navigate("/login");
+    } else {
+      alert("중복된 이메일 입니다.");
     }
-    if (email === "") {
-      alert("이메일");
-      return;
-    }
-    if (onEmail === "" || onEmail !== email) {
-      alert("이메일확인하세요.");
-      return;
-    }
-
-    // if (onEmail) {
-    //   alert("이메일체크");
-    //   return;
-    // }
-
-    // const a = input.name;
-    // if (!a.includes("@") && !a.includes(".")) {
-    //   setNameCheck(false);
-    // } else {
-    //   setNameCheck(true);
-    // }
   };
 
   return (
     <StDiv>
-      <StForm onSubmit={onSubmitHandler}>
+      <StForm onSubmit={handleSubmit(onSubmit)}>
         <StTitle> 등록</StTitle>
         <StAtitle> 지금 등록하시고 내 계정의 혜택을 누리세요</StAtitle>
         <StBtitle> * 필수 항목 </StBtitle>
@@ -92,11 +58,22 @@ const SignUp = () => {
           <StContentBoxOne>
             <StInput
               placeholder="이름 (성 제외)*"
-              type="name"
-              length={name.length}
-              value={name}
-              onChange={onNameHandler}
+              name="firstName"
+              type="firstName"
+              autoComplete="off"
+              {...register("firstName", {
+                required: "true",
+                minLength: 2,
+              })}
             />
+            <StError>
+              {errors.firstName && errors.firstName.type === "required" && (
+                <p> 이름을 입력해 주세요 </p>
+              )}
+              {errors.firstName && errors.firstName.type === "minLength" && (
+                <p> 다시 입력해 주세요 </p>
+              )}
+            </StError>
 
             <StDropDownContainer>
               <StDropDownHeader onClick={selectMenu}>
@@ -105,9 +82,14 @@ const SignUp = () => {
               {Open && (
                 <StDropDownListContainer>
                   <StDropDownList>
-                    {options.map((option, i) => (
+                    {country.map((option, i) => (
                       <StListItem
                         key={`options_${i}`}
+                        value="option"
+                        autoComplete="off"
+                        {...register("country", {
+                          required: "true",
+                        })}
                         onClick={() => onOptionClicked(option)}
                       >
                         {option}
@@ -121,61 +103,139 @@ const SignUp = () => {
             <StInput
               placeholder="이메일을 통한 *"
               type="email"
-              onChange={onEmailHandler}
+              name="email"
+              autoComplete="off"
+              {...register("email", {
+                required: "true",
+                pattern: /^\S+@\S+$/i,
+              })}
             />
+            <StError>{errors.email && <p> 이메일을 확인해 주세요 </p>}</StError>
+
             <StInput
-              placeholder="비밀번호 *"
+              placeholder="비밀번호 * "
+              name="password"
               type="password"
-              onChange={onPasswordHandler}
+              autoComplete="off"
+              {...register("password", {
+                required: "true",
+                minLength: 8,
+                maxLength: 16,
+              })}
             />
+            <StError>
+              {errors.password && errors.password.type === "required" && (
+                <p> 비밀번호를 입력해 주세요 </p>
+              )}
+              {errors.password && errors.password.type === "minLength" && (
+                <p> 8~16자로 입력해 주세요 </p>
+              )}
+              {errors.password && errors.password.type === "maxLength" && (
+                <p> 8~16자로 입력해 주세요 </p>
+              )}
+            </StError>
+
             <StPaswoordContents>
               비밀번호는 8~16자여야 합니다.
             </StPaswoordContents>
           </StContentBoxOne>
 
           <StContentBoxTwo>
-            <StInput placeholder="성" />
+            <StInput
+              placeholder="성"
+              type="lastName"
+              name="lastName"
+              autoComplete="off"
+              {...register("lastName", {
+                required: "true",
+              })}
+            />
             <Stdiv> </Stdiv>
             <StInput
               placeholder="이메일 주소 확인 *"
-              type="emailcomplete"
-              onChange={onEmailCompleteHandler}
+              type="emailConfirm"
+              name="emailConfirm"
+              autoComplete="off"
+              {...register("emailConfirm", {
+                required: "true",
+                validate: (value) => value === email.current,
+              })}
             />
+            <StError>
+              {errors.emailConfirm &&
+                errors.emailConfirm.type === "required" && (
+                  <p> 이메일을 확인해주세요. </p>
+                )}
+              {errors.emailConfirm &&
+                errors.emailConfirm.type === "validate" && (
+                  <p> 이메일을 확인해주세요. </p>
+                )}
+            </StError>
+
             <StInput
               placeholder="비밀번호 확인 *"
               type="password"
-              onChange={onPasswordCompleteHandler}
+              name="passwordConfirm"
+              autoComplete="off"
+              {...register("passwordConfirm", {
+                required: "true",
+                validate: (value) => value === password.current,
+              })}
             />
-            <StEyes> 비밀번호 표시 </StEyes>
+            <StError>
+              {errors.passWordConfirm &&
+                errors.passWordConfirm.type === "required" && (
+                  <p> 비밀번호를 확인해 주세요. </p>
+                )}
+              {errors.passWordConfirm &&
+                errors.passWordConfirm.type === "validate" && (
+                  <p> 비밀번호를 확인해 주세요. </p>
+                )}
+            </StError>
+
+            <StEyes type="button"> 비밀번호 표시 </StEyes>
           </StContentBoxTwo>
         </StContentBox>
 
         <StCheckBoxOne>
-          <StInputCheck type="checkbox" />
+          <StyledLabel htmlFor={text}>
+            <StyledInput type="checkbox" id={text} name={text} />
+            <StyledP>{text}</StyledP>
+          </StyledLabel>
           <StAgreeMent> 본인은 </StAgreeMent>
-          <StAgreeMentOne> 개인정보처리방침</StAgreeMentOne>
+          <StAgreeMentOne type="button"> 개인정보처리방침</StAgreeMentOne>
+
           <StAgreeMent>
             을 읽고 이에 동의합니다. 본인은 만 16세 이상임을 확인합니다.
           </StAgreeMent>
         </StCheckBoxOne>
-
         <StCheckBoxTwo>
-          <StInputCheck type="checkbox" />
+          <StyledLabel htmlFor={text}>
+            <StyledInput type="checkbox" id={text} name={text} />
+            <StyledP>{text}</StyledP>
+          </StyledLabel>
           <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
-          <StAgreeMentOne> 상세보기 </StAgreeMentOne>
+          <StAgreeMentOne type="button">상세보기</StAgreeMentOne>
+          {modalOpen && <StModal setModalOpen={setModalOpen} />}
         </StCheckBoxTwo>
         <StSubmit type="submit">등록</StSubmit>
       </StForm>
 
       <StRigthBox>
         <StRigthTitle>소셜 미디어 계정을 사용하여 등록</StRigthTitle>
-        <StRigthContents> 계정을 사용하여 등록하 십시오. </StRigthContents>
+        <StRigthContents> 계정을 사용하여 등록하십시오. </StRigthContents>
         <StRigthTitleOne> 이미 등록 하셨나요?</StRigthTitleOne>
+
         <StRigthContentsOne>
           로그인을 하시면 빠른 결제가 가능합니다.
         </StRigthContentsOne>
-
-        <HoverButton> 로그인 </HoverButton>
+        <HoverButton
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          로그인
+        </HoverButton>
       </StRigthBox>
     </StDiv>
   );
@@ -185,7 +245,7 @@ export default SignUp;
 
 const StDiv = styled.div`
   display: flex;
-  height: 100vh;
+  // height: 100vh;
   margin: 0 200px 0 200px;
 `;
 
@@ -218,6 +278,7 @@ const StContentBox = styled.div`
   display: flex;
 `;
 const StContentBoxOne = styled.div`
+  position: relative;
   margin: 50px 10px 0 20px;
   height: 350px;
   width: 50%;
@@ -258,6 +319,7 @@ const StDropDownHeader = styled.div`
   background-size: 15px;
   background-repeat: no-repeat;
   background-position: right;
+
   margin: 30px 0 0 0;
   font-size: 20px;
   border: none;
@@ -270,8 +332,11 @@ const StDropDownListContainer = styled.div`
 `;
 
 const StDropDownList = styled.div`
+  position: absolute;
+  width: 90%;
   padding: 10px 0 0 0;
   background: lightcyan;
+  border-radius: 20px;
   font-size: 20px;
   z-index: 10px;
 `;
@@ -293,7 +358,6 @@ const StRigthContents = styled.div`
 `;
 
 const StEyes = styled.button`
-  background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8");
   background-size: cover;
   background-size: 27px;
   background-repeat: no-repeat;
@@ -324,11 +388,6 @@ const StCheckBoxOne = styled.div`
   display: flex;
 `;
 
-const StInputCheck = styled.input`
-  width: 25px;
-  height: 25px;
-`;
-
 const StAgreeMent = styled.div`
   margin: 0 0 0 10px;
   font-size: 17px;
@@ -336,7 +395,6 @@ const StAgreeMent = styled.div`
 
 const StAgreeMentOne = styled.button`
   position: relative;
-  margin: 50px 0 0 0;
   font-weight: bold;
   font-size: 18px;
   background-color: transparent;
@@ -379,7 +437,52 @@ const StSubmit = styled.button`
   width: 95%;
   height: 50px;
   font-weight: 600;
-  color: #c6c6c6;
-  background-color: gray;
+  color: white;
+  background-color: black;
   cursor: pointer;
+`;
+
+const StError = styled.div`
+  font-size: 12px;
+  color: red;
+`;
+
+const StModal = styled.div`
+  width: 300px;
+  height: 200px;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: gray;
+  border: 1px solid black;
+  border-radius: 8px;
+`;
+
+const StyledInput = styled.input`
+  appearance: none;
+  height: 26px;
+  width: 26px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:checked {
+    border-color: transparent;
+    background-image: url("https://i.pinimg.com/736x/a0/ec/a3/a0eca3143a002a248079e3f9243926ef.jpg");
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 1px solid black;
+  }
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  user-select: none;
+`;
+
+const StyledP = styled.p`
+  margin-left: 0.25rem;
 `;

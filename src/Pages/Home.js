@@ -1,44 +1,126 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import styled from "styled-components";
-import { searching } from "../Redux/modules/listSlice";
+import { HoverButton } from "../Components/HoverButton";
+import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const { search } = useSelector((state) => state.listSlice);
-
-  const onToggleSearch = () => {
-    dispatch(searching(false));
-  };
+  const navigate = useNavigate();
   return (
     <>
-      <StDark search={search} onClick={onToggleSearch} />
       <Stdiv>
         <HomeLayout>
+          <Box></Box>
           <StFirstImage>
             <InsideFirstImage>
               <div>여성 선물</div>
-              <div>
-                <button>여성 제품</button>
-                <button>남성 제품</button>
-              </div>
+              <Gap>
+                <HoverButton
+                  mode="white"
+                  hoverColor="black"
+                  fontSize="15px"
+                  onClick={() =>
+                    navigate("/women/ready_to_wear?category=jacket_and_coats")
+                  }
+                >
+                  여성 제품
+                </HoverButton>
+                <HoverButton
+                  mode="white"
+                  hoverColor="black"
+                  fontSize="15px"
+                  onClick={() =>
+                    navigate("/men/ready_to_wear?category=jacket_and_coats")
+                  }
+                >
+                  남성 제품
+                </HoverButton>
+              </Gap>
             </InsideFirstImage>
           </StFirstImage>
           <StSecondImage>
             <SmallImageFirst>
               <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
-              <SmallImageButton>구매하기</SmallImageButton>
+              <div>
+                <HoverButton
+                  margin="20px 13px 0 0 "
+                  fontSize="15px"
+                  onClick={() => navigate("/women/ready_to_wear?category=all")}
+                >
+                  구매 하기
+                </HoverButton>
+              </div>
             </SmallImageFirst>
             <SmallImageSecond>
-              <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
-              <SmallImageButton>구매하기</SmallImageButton>
+              <SmallImageText> 남성 홀리데이 컬렉션</SmallImageText>
+              <div>
+                <HoverButton
+                  margin="20px 13px 0 0 "
+                  fontSize="13px"
+                  onClick={() =>
+                    navigate("/men/ready_to_wear?category=jacket_and_coats")
+                  }
+                >
+                  구매 하기
+                </HoverButton>
+              </div>
             </SmallImageSecond>
           </StSecondImage>
+          <div>
+            <Test>
+              <InsideFirstImage>
+                <div>남성 선물</div>
+                <Gap>
+                  <HoverButton
+                    mode="white"
+                    hoverColor="black"
+                    fontSize="15px"
+                    onClick={() =>
+                      navigate("/women/ready_to_wear?category=jacket_and_coats")
+                    }
+                  >
+                    여성 제품
+                  </HoverButton>
+                  <HoverButton
+                    mode="white"
+                    hoverColor="black"
+                    fontSize="15px"
+                    onClick={() =>
+                      navigate("/men/ready_to_wear?category=jacket_and_coats")
+                    }
+                  >
+                    남성 제품
+                  </HoverButton>
+                </Gap>
+              </InsideFirstImage>
+            </Test>
+
+            <FirstVideo>
+              <ReactPlayer
+                url="img/prada2.mp4"
+                width="100%"
+                height="70%"
+                muted={true} //chrome정책으로 인해 자동 재생을 위해 mute 옵션을 true로 해주었다.
+                playing={true}
+                loop={true}
+              />
+            </FirstVideo>
+          </div>
           <StThirdImage>
             <ThirdImageBox>
-              <div></div>
-              <div></div>
+              <LastImage></LastImage>
+              <StWord>Holiday 2022</StWord>
+              <HoverButton
+                mode="white"
+                hoverColor="black"
+                color="white"
+                fontSize="16px"
+                onClick={() =>
+                  navigate("/women/ready_to_wear?category=jacket_and_coats")
+                }
+              >
+                살펴보기
+              </HoverButton>
             </ThirdImageBox>
           </StThirdImage>
         </HomeLayout>
@@ -47,14 +129,29 @@ const Home = () => {
   );
 };
 
-const StDark = styled.div`
-  display: ${({ search }) => {
-    return search ? "block" : "none";
-  }};
-  width: 100%;
-  height: 100%;
+const Test = styled.div`
+  color: white;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 94.5%;
+  height: 85%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+`;
+
+const FirstVideo = styled.div`
+  width: 98.8%;
+  margin-left: 0.5vw;
+  display: flex;
+  justify-content: center;
+  border: none;
+  position: relative;
+  z-index: -1;
+`;
+
+const Box = styled.div`
+  width: 100%;
+  height: 50px;
 `;
 
 const Stdiv = styled.div`
@@ -64,6 +161,12 @@ const Stdiv = styled.div`
 
 const HomeLayout = styled.div`
   padding: 10px;
+`;
+
+const Gap = styled.div`
+  width: 150px;
+  justify-content: space-between;
+  display: flex;
 `;
 
 const StFirstImage = styled.div`
@@ -85,7 +188,6 @@ const InsideFirstImage = styled.div`
   font-size: 2em;
   font-weight: 600;
 `;
-
 const StSecondImage = styled.div`
   display: flex;
   justify-content: center;
@@ -117,18 +219,33 @@ const SmallImageText = styled.div`
   font-weight: 600;
 `;
 
-const SmallImageButton = styled.button`
-  height: 60px;
-`;
-
 const StThirdImage = styled.div`
-  background-color: #2d3436;
-  height: 600px;
+  background-color: black;
+  height: 700px;
   margin: 10px;
   display: flex;
-  align-items: center;
+
+  justify-content: center;
 `;
 const ThirdImageBox = styled.div`
-  border: 1px solid green;
+  margin-top: 45px;
+  width: 930px;
+  height: 450px;
 `;
+
+const LastImage = styled.div`
+  width: 900px;
+  height: 100%;
+  background-size: cover;
+  background-image: url("https://www.prada.com/content/dam/pradanux/home_page/2022/10/banner_pradasphere/pradasphere_home_DT.jpg/_jcr_content/renditions/cq5dam.web.1932.1932.webp");
+`;
+
+const StWord = styled.div`
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px;
+  padding: 22px 0;
+`;
+
 export default Home;

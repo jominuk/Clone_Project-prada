@@ -1,14 +1,51 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../Instance/instance";
+import { getCookie } from "../../Shared/cookie";
+import setToken from "../../Pattern/setToken";
 
-export const __getPostBox = createAsyncThunk(
-  "GET_POST",
-  async ({ num, page }, thunkAPI) => {
+export const __getProducts = createAsyncThunk(
+  "GET_PRODUCTS",
+  async ({ gender, queryCategory, thema }, thunkAPI) => {
     try {
+      console.log("겟요청");
       const { data } = await instance.get(
-        `/posts?categoryId=${num}&page=${page}`
+        `items/${gender}/${thema}?category=${queryCategory}`
       );
-      return thunkAPI.fulfillWithValue({ ...data, num, page });
+      //data 안에는 [] title,price,color,
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const __addWishList = createAsyncThunk(
+  "ADD_WISHLIST",
+  async (payload, thunkAPI) => {
+    try {
+      const accessToken = getCookie("token");
+      setToken(accessToken);
+
+      const data = await instance.post(`user/${payload}/wishList`);
+      console.log(data);
+      //data 안에는 [] title,price,color,
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const __removeWishList = createAsyncThunk(
+  "REMOVE_WISHLIST",
+  async (payload, thunkAPI) => {
+    try {
+      const accessToken = getCookie("token");
+      setToken(accessToken);
+      const data = await instance.delete(`user/${payload}/wishList`);
+      console.log(data);
+      //data 안에는 [] title,price,color,
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -18,35 +55,63 @@ export const __getPostBox = createAsyncThunk(
 const initialState = {
   postList: [],
   search: false,
+  authenticate: false,
+  category: "",
+  msg: "",
 };
 
 const listSlice = createSlice({
   name: "POST_SLICE",
   initialState,
   reducers: {
-    loginCheck: (state, action) => {
-      state.login = action.payload;
+    setAuthenticate: (state, action) => {
+      state.authenticate = action.payload;
     },
     searching: (state, action) => {
-      console.log(state.search);
       state.search = action.payload;
+    },
+    searchCategory: (state, action) => {
+      state.category = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
       //
-      .addCase(__getPostBox.pending, (state) => {
+      .addCase(__getProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(__getPostBox.fulfilled, (state, action) => {
+      .addCase(__getProducts.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.productList = action.payload;
       })
-      .addCase(__getPostBox.rejected, (state, action) => {
+      .addCase(__getProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(__addWishList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__addWishList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(__addWishList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(__removeWishList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__removeWishList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(__removeWishList.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { searching } = listSlice.actions;
+export const { searching, setAuthenticate, searchCategory } = listSlice.actions;
 export default listSlice.reducer;

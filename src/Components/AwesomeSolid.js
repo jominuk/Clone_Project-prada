@@ -1,7 +1,7 @@
 import { faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import React from "react";
+import { __removeWishList } from "../Redux/modules/listSlice";
 
 export const UserSolid = () => {
   return (
@@ -11,18 +11,15 @@ export const UserSolid = () => {
   );
 };
 
-// export const HeartSolid = () => {
-//   return (
-//     <>
-//       <FontAwesomeIcon icon={faHeart} />
-//     </>
-//   );
-// };
-
-// export const CartSolid = () => {
-//   return (
-//     <>
-//       <FontAwesomeIcon icon={faHeart} />
-//     </>
-//   );
-// };
+export const HeartSolid = (itemId) => {
+  return (
+    <>
+      <FontAwesomeIcon
+        onClick={() => {
+          __removeWishList(itemId);
+        }}
+        icon={faHeart}
+      />
+    </>
+  );
+};

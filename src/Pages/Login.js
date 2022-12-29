@@ -1,22 +1,97 @@
 import React from "react";
 import styled from "styled-components";
 import { HoverButton } from "../Components/HoverButton";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { __login } from "../Redux/modules/loginSlice";
+import { useSelector } from "react-redux";
 
-const Login = () => {
+const Login = ({ text }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { login } = useSelector((state) => state.loginSlice);
+  const [email, setEmail] = useState(false);
+  const [password, setPassword] = useState(false);
+  const [em, setId] = useState("");
+  const [pw, setPw] = useState("");
+
+  const onEmailHandlerID = (e) => {
+    if (em.includes("@") && em.includes(".")) {
+      setEmail(true);
+    } else {
+      setEmail(false);
+    }
+    setId(e.target.value);
+  };
+
+  const onEmailHandlerPw = (e) => {
+    setPw(e.target.value);
+  };
+
+  const loginHandler = (event) => {
+    event.preventDefault();
+    console.log(em, pw);
+    dispatch(
+      __login({
+        email: em,
+        password: pw,
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (pw.length > 8 || pw.length < 16) {
+      setPassword(true);
+    } else {
+      setPassword(false);
+    }
+  }, [pw]);
+
+  useEffect(() => {
+    if (login) {
+      navigate("/");
+    }
+  });
+
   return (
     <StDiv>
       <StForm>
-        <StTitle> login</StTitle>
+        <StTitle> login </StTitle>
         <StAtitle> 로그인을 하시면 빠른 결제가 가능합니다.</StAtitle>
-        <StInput placeholder=" 이메일 / 사용자 이름 *" />
-        <StInput placeholder=" 비밀번호 * " />
+
+        <StInput
+          placeholder=" 이메일 *"
+          onChange={(e) => onEmailHandlerID(e)}
+          value={em}
+        />
+        <StError>
+          {!email && em.length > 0 && <div>올바른 이메일을 입력해주세요.</div>}
+        </StError>
+
+        <StInput
+          placeholder=" 비밀번호 * "
+          type="password"
+          onChange={(e) => onEmailHandlerPw(e)}
+          value={pw}
+        />
+        <StError>
+          {!password && <div>영문, 숫자 포함 8자 이상 입력해주세요.</div>}
+        </StError>
 
         <StCheckBoxTwo>
-          <StInputCheck type="checkbox" />
-          <StAgreeMent> Remember me </StAgreeMent>
+          <StRemember>
+            <StyledLabel htmlFor={text}>
+              <StyledInput type="checkbox" id={text} name={text} />
+              <StyledP>{text}</StyledP>
+            </StyledLabel>
+            <StAgreeMent> Remember me </StAgreeMent>
+          </StRemember>
+
           <StAgreeMentOne> 비밀번호 찾기 </StAgreeMentOne>
         </StCheckBoxTwo>
-        <StSubmit>로그인</StSubmit>
+        <StSubmit onClick={loginHandler}>로그인</StSubmit>
       </StForm>
 
       <StRigthBox>
@@ -27,7 +102,7 @@ const Login = () => {
           로그인을 하시면 빠른 결제가 가능합니다.
         </StRigthContentsOne>
 
-        <HoverButton> 등록 </HoverButton>
+        <HoverButton onClick={() => navigate("/signup")}> 등록 </HoverButton>
       </StRigthBox>
     </StDiv>
   );
@@ -68,14 +143,21 @@ const StInput = styled.input`
   }
 `;
 
-const StInputCheck = styled.input`
-  width: 25px;
-  height: 25px;
-`;
+// const StInputCheck = styled.input`
+//   width: 25px;
+//   height: 25px;
+// `;
 
 const StCheckBoxTwo = styled.div`
+  width: 91%;
+
   display: flex;
   margin: 50px 0 0 0;
+  justify-content: space-between;
+`;
+
+const StRemember = styled.div`
+  display: flex;
 `;
 
 const StAgreeMent = styled.div`
@@ -123,8 +205,8 @@ const StSubmit = styled.button`
   width: 40%;
   height: 50px;
   font-weight: 600;
-  color: #c6c6c6;
-  background-color: gray;
+  color: white;
+  background-color: black;
   cursor: pointer;
 `;
 
@@ -153,4 +235,36 @@ const StRigthTitleOne = styled.div`
 const StRigthContentsOne = styled.div`
   margin: 20px 0 0 0;
   font-size: 18px;
+`;
+
+const StError = styled.div`
+  color: red;
+  font-size: 12px;
+`;
+
+const StyledInput = styled.input`
+  appearance: none;
+  height: 26px;
+  width: 26px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:checked {
+    border-color: transparent;
+    background-image: url("https://i.pinimg.com/736x/a0/ec/a3/a0eca3143a002a248079e3f9243926ef.jpg");
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 1px solid black;
+  }
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  user-select: none;
+`;
+
+const StyledP = styled.p`
+  margin-left: 0.25rem;
 `;
