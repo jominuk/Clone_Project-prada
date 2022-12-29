@@ -11,6 +11,7 @@ import {
 } from "../Redux/modules/cartSlice";
 
 const Cart = () => {
+  console.log("aa");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cartSlice);
