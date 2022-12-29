@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { __getItems } from "../Redux/modules/detailSlice";
-import { createGlobalStyle } from "styled-components";
 import Carousel from "./templates/Details/carousel";
 const Detail = () => {
   const { id } = useParams();
