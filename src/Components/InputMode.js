@@ -13,10 +13,10 @@ function InputMode({ text }) {
 export default InputMode;
 
 const StyledInput = styled.input`
-  margin: 55px 0 0 0;
+  margin: 30px 0 0 10px;
   appearance: none;
-  height: 26px;
-  width: 26px;
+  height: 20px;
+  width: 20px;
   border: 1px solid white;
   &:checked {
     border-color: transparent;

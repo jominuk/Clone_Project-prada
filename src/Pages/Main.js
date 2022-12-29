@@ -5,12 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { __addWishList, __getProducts } from "../Redux/modules/listSlice";
+import {
+  __addWishList,
+  __getProducts,
+  __removeWishList,
+} from "../Redux/modules/listSlice";
 import { HeartSolid } from "../Components/AwesomeSolid";
 import { list, themaKorea } from "../Components/CategorList";
+import { faHeartCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 const Main = () => {
-  const [heart, setHeart] = useState(false);
+  const [heart, setHeart] = useState([]);
   const { gender, thema } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -70,22 +75,33 @@ const Main = () => {
                 }}
               >
                 <ImageBox
-                  image={`url(${el.OptionImages[0].src})`}
+                  image={`url(${el.OptionImages[2].src})`}
                   hoverImage={`url(${el.OptionImages[1].src})`}
                 >
                   <HeartIcon
                     onClick={(e) => {
                       e.stopPropagation();
-                      dispatch(__addWishList(el.itemId));
-                      setHeart(!heart);
                     }}
                   >
-                    {heart ? (
-                      HeartSolid(el.itemId)
+                    {heart.includes(el.itemId) ? (
+                      <FontAwesomeIcon
+                        onClick={() => {
+                          dispatch(__removeWishList(el.itemId));
+                          const erasedList = heart.filter(
+                            (item) => item !== el.itemId
+                          );
+                          setHeart(erasedList);
+                        }}
+                        icon={faHeartCirclePlus}
+                      />
                     ) : (
                       <FontAwesomeIcon
                         icon={faHeart}
-                        onClick={() => __addWishList(el.itemId)}
+                        onClick={() => {
+                          dispatch(__addWishList(el.itemId));
+                          // dispatch(__removeWishList(el.itemId));
+                          setHeart([...heart, el.itemId]);
+                        }}
                       />
                     )}
                   </HeartIcon>
@@ -96,7 +112,12 @@ const Main = () => {
               </Product>
             );
           })}
-          <Product>
+          <Product
+            onClick={() => {
+              console.log("aa");
+              navigate(`/detail/3`);
+            }}
+          >
             <ImageBox
               hoverImage="url(https://www.prada.com/content/dam/pradabkg_products/2/291/291805/11A9F0002/291805_11A9_F0002_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg)"
               image="url(https://www.prada.com/content/dam/pradabkg_products/2/29Y/29Y056/11FCF0002/29Y056_11FC_F0002_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp)"
@@ -107,9 +128,7 @@ const Main = () => {
                   setHeart(!heart);
                   console.log(heart);
                 }}
-              >
-                {heart ? <FontAwesomeIcon icon={faHeart} /> : HeartSolid()}
-              </HeartIcon>
+              ></HeartIcon>
             </ImageBox>
             <ProductName>트윌 자켓</ProductName>
             <ProductPrice>₩ 2,900,000</ProductPrice>

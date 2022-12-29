@@ -193,7 +193,7 @@ const SignUp = ({ text }) => {
                 )}
             </StError>
 
-            <StEyes type="button"> 비밀번호 표시 </StEyes>
+            {/* <StEyes type="button"> 비밀번호 표시 </StEyes> */}
           </StContentBoxTwo>
         </StContentBox>
 
@@ -357,17 +357,17 @@ const StRigthContents = styled.div`
   font-size: 18px;
 `;
 
-const StEyes = styled.button`
-  background-size: cover;
-  background-size: 27px;
-  background-repeat: no-repeat;
-  font-size: 17px;
-  margin: 5px 0 0 0;
-  border: none;
-  background-color: white;
-  width: 180px;
-  cursor: pointer;
-`;
+// const StEyes = styled.button`
+//   background-size: cover;
+//   background-size: 27px;
+//   background-repeat: no-repeat;
+//   font-size: 17px;
+//   margin: 5px 0 0 0;
+//   border: none;
+//   background-color: white;
+//   width: 180px;
+//   cursor: pointer;
+// `;
 
 const StRigthTitleOne = styled.div`
   font-size: 25px;

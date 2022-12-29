@@ -14,6 +14,7 @@ export const __getProducts = createAsyncThunk(
       //data 안에는 [] title,price,color,
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      console.log(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -25,12 +26,13 @@ export const __addWishList = createAsyncThunk(
     try {
       const accessToken = getCookie("token");
       setToken(accessToken);
-
+      console.log("위시리스트 추가?", payload);
       const data = await instance.post(`user/${payload}/wishList`);
       console.log(data);
       //data 안에는 [] title,price,color,
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -47,6 +49,7 @@ export const __removeWishList = createAsyncThunk(
       //data 안에는 [] title,price,color,
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log(error.response.data);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
