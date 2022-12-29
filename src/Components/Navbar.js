@@ -35,7 +35,6 @@ const Navbar = () => {
   const { authenticate } = useSelector((state) => state.listSlice);
   const { login } = useSelector((state) => state.loginSlice);
   const { firstname } = useSelector((state) => state.loginSlice);
-  console.log(firstname);
 
   const searched = useSelector((state) => state.listSlice.search);
 
