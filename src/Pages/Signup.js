@@ -358,7 +358,6 @@ const StRigthContents = styled.div`
 `;
 
 const StEyes = styled.button`
-  background: url("");
   background-size: cover;
   background-size: 27px;
   background-repeat: no-repeat;

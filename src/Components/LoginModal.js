@@ -4,50 +4,31 @@ import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { UserSolid } from "./AwesomeSolid";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import {
   searchCategory,
   searching,
   setAuthenticate,
 } from "../Redux/modules/listSlice";
 import CategoryNavbar from "./CategoryNavbar";
-import CategoryNavbar2 from "./CategoryNavbar2";
-import CategoryNavbar3 from "./CategoryNavbar3";
-
-import InputMode from "./InputMode";
-import { useEffect } from "react";
-import { __login } from "../Redux/modules/loginSlice";
-// import LogoutModal from "./LogoutModal";
-import { getCookie } from "../Shared/cookie";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
-  const { category } = useSelector((state) => state.listSlice);
-  const [em, setId] = useState("");
-  const [pw, setPw] = useState("");
-  const [email, setEmail] = useState(false);
 
   const { authenticate } = useSelector((state) => state.listSlice);
-  const { login } = useSelector((state) => state.loginSlice);
-  const { fristName } = useSelector((state) => state.userSlice);
 
   const searched = useSelector((state) => state.listSlice.search);
 
   const menuList = ["여성", "남성", "백", "리네아 로사", "PRADASPHERE"];
   const goToLogin = () => {
+    // authenticate ? setAuthenticate(false) : navigate("/login");
     authenticate ? dispatch(setAuthenticate(false)) : setIsOpen(true);
   };
-
-  const onSignUpHandler = () => {
-    navigate("/signup");
-    setIsOpen(false);
-  };
-
   const search = (e) => {
     if (e.key === "Enter") {
       navigate(`/?q=${e.target.value}`);
@@ -59,61 +40,12 @@ const Navbar = () => {
 
   const searchToggle = (sign) => {
     dispatch(searching(sign));
-    dispatch(searchCategory(""));
+    dispatch(searchCategory(false));
   };
-
-  const WhichCategory = () => {
-    switch (category) {
-      case "여성":
-        return <CategoryNavbar />;
-      case "남성":
-        return <CategoryNavbar2 />;
-      case "백":
-        return <CategoryNavbar3 />;
-      case "리네아 로사":
-        return <CategoryNavbar3 />;
-      case "PRADASPHERE":
-        return <CategoryNavbar3 />;
-
-      default:
-        return null;
-    }
-  };
-
-  const onEmailHandlerID = (e) => {
-    if (em.includes("@") && em.includes(".")) {
-      setEmail(true);
-    } else {
-      setEmail(false);
-    }
-    setId(e.target.value);
-  };
-
-  const onEmailHandlerPw = (e) => {
-    setPw(e.target.value);
-  };
-
-  const loginHandler = (event) => {
-    event.preventDefault();
-    console.log(em, pw);
-    dispatch(
-      __login({
-        email: em,
-        password: pw,
-      })
-    );
-  };
-
-  useEffect(() => {
-    if (login) {
-      navigate("/");
-      setIsOpen(false);
-    }
-  }, [login]);
 
   return (
     <Border>
-      {WhichCategory()}
+      <CategoryNavbar />
       <Boundary>
         <Fifty>
           <NavSection onClick={goToHome}>
@@ -126,7 +58,7 @@ const Navbar = () => {
           <MenuList>
             {menuList.map((el, i) => (
               <Menu
-                onMouseOver={() => dispatch(searchCategory(el))}
+                onMouseOver={() => dispatch(searchCategory(true))}
                 key={`menuList-${i}`}
               >
                 {el}
@@ -137,73 +69,29 @@ const Navbar = () => {
         <Fifty>
           <FlexEnd>
             <Mypage onClick={goToLogin}>
-              {getCookie("token") ? (
-                <div>
-                  <UserSolid />
-                </div>
-              ) : (
-                <div>
-                  <FontAwesomeIcon icon={faUser} />
-                </div>
-              )}
+              {authenticate ? <UserSolid /> : <FontAwesomeIcon icon={faUser} />}
             </Mypage>
-
             {isOpen ? (
-              !getCookie("token") ? (
-                <ModalBackdrop>
-                  <StModal>
-                    <ModalLogin>
-                      <StLoginTitle>login</StLoginTitle>
-                      <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
-                      <StInput
-                        placeholder="이메일 *"
-                        onChange={(e) => onEmailHandlerID(e)}
-                        value={em}
-                      />
-                      <StInput
-                        type="password"
-                        placeholder="비밀 번호 *"
-                        onChange={(e) => onEmailHandlerPw(e)}
-                        value={pw}
-                      />
-                      <StContentLogin>
-                        <StContents>
-                          <InputMode />
+              <ModalBackdrop>
+                <StModal>
+                  <ModalLogin>
+                    <h1>login</h1>
+                    <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
+                    <StInput placeholder="이메일 *" />
+                    <StInput placeholder="비밀 번호 *" />
+                  </ModalLogin>
 
-                          <StContent>Remember me</StContent>
-                        </StContents>
-                        <StLoginButton onClick={loginHandler}>
-                          로그인
-                        </StLoginButton>
-                      </StContentLogin>
-                    </ModalLogin>
+                  <MdadalView>
+                    <StSocialLogin>소셜 로그인 </StSocialLogin>
+                    <StEnrollment>등록하지 않으셨나요?</StEnrollment>
+                    <StSignup>새 계정 만들기</StSignup>
+                  </MdadalView>
 
-                    <MdadalView>
-                      <StSocialLogin>소셜 로그인 </StSocialLogin>
-                      <StEnrollment>등록하지 않으셨나요?</StEnrollment>
-                      <StSignup onClick={() => onSignUpHandler()}>
-                        새 계정 만들기
-                      </StSignup>
-                    </MdadalView>
-
-                    <StModalClose onClick={() => setIsOpen(false)}>
-                      ✖
-                    </StModalClose>
-                  </StModal>
-                </ModalBackdrop>
-              ) : (
-                <ModalBoxOne>
-                  <StModalOne>
-                    <ModalLogin>
-                      <div>`${fristName}` 님 환영합니다.</div>
-                      <div>계정 정보, 주문 및 선호 제품 보기</div>
-                    </ModalLogin>
-                    <StModalClose onClick={() => setIsOpen(false)}>
-                      ✖
-                    </StModalClose>
-                  </StModalOne>
-                </ModalBoxOne>
-              )
+                  <StModalClose onClick={() => setIsOpen(false)}>
+                    ✖
+                  </StModalClose>
+                </StModal>
+              </ModalBackdrop>
             ) : null}
 
             <WishList>
@@ -212,7 +100,6 @@ const Navbar = () => {
             <Cart>
               <FontAwesomeIcon icon={faCartShopping} />
             </Cart>
-
             <SearchBox>
               <FontAwesomeIcon
                 icon={faSearch}
@@ -306,18 +193,12 @@ const Mypage = styled.div`
 `;
 
 const Modal = styled.div`
-  padding: 30px;
   background-color: #fff;
-  width: 100vw;
-  z-index: 5;
+  width: 100%;
   position: absolute;
   display: flex;
   justify-content: row;
   align-items: center;
-  left: 0;
-  top: 0;
-  border-bottom: 1px solid black;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   animation: searchAppear 0.3s;
 `;
 
@@ -338,7 +219,7 @@ const CloseButton = styled.div`
   background-color: #fff;
   font-size: 0.8em;
 `;
-// == login 스타일
+
 const ModalBackdrop = styled.div`
   display: flex;
   position: fixed;
@@ -356,8 +237,8 @@ const StModal = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 75%;
-  background-color: #1b1b1b;
+  height: 690px;
+  background-color: black;
   left: 0;
   top: -15px;
   animation: modal 0.8s;
@@ -398,14 +279,13 @@ const StSocialLogin = styled.div`
 `;
 
 const StInput = styled.input`
-  background-color: #1b1b1b;
+  background-color: black;
   border: none;
   border-bottom: 2px solid #ccc;
   width: 130%;
   height: 30px;
   margin-top: 40px;
   font-size: 20px;
-  color: white;
   &:focus {
     outline: none;
   }
@@ -421,9 +301,9 @@ const StSignup = styled.button`
   z-index: 0;
   color: white;
   position: relative;
-  margin: 45px 0 0 0;
+  margin: 20px 0 0 0;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 23px;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid white;
@@ -451,71 +331,4 @@ const StSignup = styled.button`
     color: black;
   }
 `;
-
-const StLoginTitle = styled.div`
-  font-size: 35px;
-  font-weight: bold;
-  margin: 10px 0 15px 0;
-`;
-
-const StContents = styled.div`
-  display: flex;
-`;
-
-const StContent = styled.div`
-  margin: 70px 0 0 20px;
-  font-size: 20px;
-`;
-
-const StContentLogin = styled.div`
-  width: 131%;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const StLoginButton = styled.button`
-  margin: 65px 0 0 0;
-  width: 110px;
-  height: 50px;
-  color: black;
-  background-color: gray;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-`;
-
-const ModalBoxOne = styled.div`
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  justify-content: center;
-  align-items: center;
-`;
-
-const StModalOne = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 40%;
-  background-color: #1b1b1b;
-  left: 0;
-  top: -15px;
-  animation: modal 0.8s;
-  @keyframes modal {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-    to {
-      opacitiy: 1;
-      transform: translateZ(0);
-    }
-  }
-`;
-
 export default Navbar;

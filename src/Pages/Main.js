@@ -1,42 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { __addWishList, __getProducts } from "../Redux/modules/listSlice";
+import { HeartSolid } from "../Components/AwesomeSolid";
+import { list, themaKorea } from "../Components/CategorList";
+
 const Main = () => {
-  const [selectedItem, setSelectedItem] = useState("");
-  const arr = [
-    "전체 보기",
-    "아우터",
-    "재킷 및 코트",
-    "니트웨어",
-    "드레스",
-    "셔츠 및 탑",
-    "티셔츠 및 스웨트셔츠",
-    "스커트",
-    "데님",
-    "가죽 의류",
-    "파자마 및 언더웨어",
-  ];
+  const [heart, setHeart] = useState(false);
+  const { gender, thema } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const URLSearch = new URLSearchParams(window.location.search);
+  const queryCategory = URLSearch.get("category");
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  const { productList } = useSelector((state) => state.listSlice);
+
+  useEffect(() => {
+    dispatch(__getProducts({ gender, thema, queryCategory }));
+  }, [queryCategory, thema, gender]);
 
   const filter = (e) => {
-    setSelectedItem(e.target.id);
-    console.log(e.target.id);
+    // setSelectedItem(e.target.id);
+    navigate(`/${gender}/${thema}?category=${e.target.id}`);
   };
-
   return (
     <div>
       <Box />
       <SecondNavbar>
-        <Stdiv>레디 투 웨어</Stdiv>
-        {arr.map((el, i) =>
-          selectedItem === el ? (
-            <Stdiv3 key={`메뉴바 ${i}`} onClick={filter} id={el}>
-              {el}
+        <Stdiv>{themaKorea(thema)}</Stdiv>
+        {list(gender, thema)?.map((el, i) =>
+          queryCategory === el.eng ? (
+            <Stdiv3 key={`메뉴바 ${i}`} onClick={filter} id={el.eng}>
+              {el.kr}
             </Stdiv3>
           ) : (
-            <Stdiv2 key={`메뉴바 ${i}`} onClick={filter} id={el}>
-              {el}
+            <Stdiv2 key={`메뉴바 ${i}`} onClick={filter} id={el.eng}>
+              {el.kr}
             </Stdiv2>
           )
         )}
@@ -45,7 +52,7 @@ const Main = () => {
 
       <Boundary>
         <SpaceBetween>
-          <HowManyProduct>217 제품</HowManyProduct>
+          <HowManyProduct>{productList?.length} 제품</HowManyProduct>
           <FilterButton>
             <div>필터</div>
             <div>|</div>
@@ -53,14 +60,56 @@ const Main = () => {
           </FilterButton>
         </SpaceBetween>
         <ProductBox>
-          <Product>
-            <ImageBox image="url(https://www.prada.com/content/dam/pradabkg_products/U/UJL/UJL34A/11B3F0806/UJL34A_11B3_F0806_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp)">
-              <FontAwesomeIcon
+          {productList?.map((el, i) => {
+            return (
+              <Product
+                key={`product_${i}`}
                 onClick={() => {
-                  console.log("클릭");
+                  console.log("aa");
+                  navigate(`/detail/${el.itemId}`);
                 }}
-                icon={faHeart}
-              />
+              >
+                <ImageBox
+                  image={`url(${el.OptionImages[0].src})`}
+                  hoverImage={`url(${el.OptionImages[1].src})`}
+                >
+                  <HeartIcon
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(__addWishList(el.itemId));
+                      setHeart(!heart);
+                    }}
+                  >
+                    {heart ? (
+                      HeartSolid(el.itemId)
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        onClick={() => __addWishList(el.itemId)}
+                      />
+                    )}
+                  </HeartIcon>
+                </ImageBox>
+                <ProductName>{el.title}</ProductName>
+                <ProductPrice>₩ {numberWithCommas(el.price)}</ProductPrice>
+                <ProductColor>{el.ItemColors.length} 색상</ProductColor>
+              </Product>
+            );
+          })}
+          <Product>
+            <ImageBox
+              hoverImage="url(https://www.prada.com/content/dam/pradabkg_products/2/291/291805/11A9F0002/291805_11A9_F0002_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg)"
+              image="url(https://www.prada.com/content/dam/pradabkg_products/2/29Y/29Y056/11FCF0002/29Y056_11FC_F0002_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp)"
+            >
+              <HeartIcon
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setHeart(!heart);
+                  console.log(heart);
+                }}
+              >
+                {heart ? <FontAwesomeIcon icon={faHeart} /> : HeartSolid()}
+              </HeartIcon>
             </ImageBox>
             <ProductName>트윌 자켓</ProductName>
             <ProductPrice>₩ 2,900,000</ProductPrice>
@@ -83,31 +132,26 @@ const Main = () => {
             <ProductName>트윌 자켓</ProductName>
             <ProductPrice>₩ 2,900,000</ProductPrice>
             <ProductColor>2 색상</ProductColor>
-          </Product>
-          <Product>
-            <ImageBox image="url(https://www.prada.com/content/dam/pradabkg_products/U/UJL/UJL34A/11B3F0806/UJL34A_11B3_F0806_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp)" />
-            <ProductName>트윌 자켓</ProductName>
-            <ProductPrice>₩ 2,900,000</ProductPrice>
-            <ProductColor>2 색상</ProductColor>
-          </Product>
-          <Product>
-            <ImageBox image="url(https://www.prada.com/content/dam/pradabkg_products/U/UJL/UJL34A/11B3F0806/UJL34A_11B3_F0806_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp)" />
-            <ProductName>트윌 자켓</ProductName>
-            <ProductPrice>₩ 2,900,000</ProductPrice>
-            <ProductColor>2 색상</ProductColor>
-          </Product>
+          </Product>{" "}
         </ProductBox>
         <Flex>
           <MoreButton>더 보기</MoreButton>
         </Flex>
-        <CategoryHighlight>니트웨어</CategoryHighlight>
-        <CategoryFooter>PRADA / 여성 / 레디 투 웨어 / 니트웨어</CategoryFooter>
+        <CategoryHighlight>{queryCategory?.toUpperCase()}</CategoryHighlight>
+        <CategoryFooter>
+          PRADA / {gender?.toUpperCase()} / {thema?.toUpperCase()} /{" "}
+          {queryCategory?.toUpperCase()}
+        </CategoryFooter>
       </Boundary>
     </div>
   );
 };
 
 export default Main;
+
+const HeartIcon = styled.div`
+  display: none;
+`;
 
 const SecondNavbar = styled.div`
   height: 60px;
@@ -193,6 +237,14 @@ const ImageBox = styled.div`
   justify-content: right;
   align-items: flex-end;
   padding: 15px;
+  transition: all 0.6s cubic-bezier(0.5, 0, 0.5, 1);
+  &:hover {
+    background-image: ${(props) => props.hoverImage};
+
+    & div {
+      display: block;
+    }
+  }
 `;
 
 const ProductBox = styled.div`
