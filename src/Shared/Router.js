@@ -23,6 +23,7 @@ const Router = () => {
 
   return (
     <BrowserRouter>
+      {/* <Modal /> */}
       <Navbar />
       <StDark
         search={search}

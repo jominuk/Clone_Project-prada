@@ -14,14 +14,22 @@ import {
 } from "../Redux/modules/listSlice";
 import CatergoryNavbar from "./CatergoryNavbar";
 import InputMode from "./InputMode";
+import { useEffect } from "react";
+import { __login } from "../Redux/modules/loginSlice";
+// import LogoutModal from "./LogoutModal";
+import { getCookie } from "../Shared/cookie";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [em, setId] = useState("");
+  const [pw, setPw] = useState("");
+  const [email, setEmail] = useState(false);
 
   const { authenticate } = useSelector((state) => state.listSlice);
+  const { login } = useSelector((state) => state.loginSlice);
 
   const searched = useSelector((state) => state.listSlice.search);
 
@@ -49,6 +57,38 @@ const Navbar = () => {
     dispatch(searching(sign));
     dispatch(searchCategory(false));
   };
+
+  const onEmailHandlerID = (e) => {
+    if (em.includes("@") && em.includes(".")) {
+      setEmail(true);
+    } else {
+      setEmail(false);
+    }
+    setId(e.target.value);
+  };
+
+  const onEmailHandlerPw = (e) => {
+    setPw(e.target.value);
+  };
+
+  const loginHandler = (event) => {
+    event.preventDefault();
+    console.log(em, pw);
+    dispatch(
+      __login({
+        email: em,
+        password: pw,
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (login) {
+      navigate("/");
+      setIsOpen(false);
+    }
+  }, [login]);
+
   return (
     <Border>
       <CatergoryNavbar />
@@ -75,40 +115,69 @@ const Navbar = () => {
         <Fifty>
           <FlexEnd>
             <Mypage onClick={goToLogin}>
-              {authenticate ? <UserSolid /> : <FontAwesomeIcon icon={faUser} />}
+              {getCookie("token") ? (
+                <div>
+                  <UserSolid />
+                </div>
+              ) : (
+                <div>
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
+              )}
             </Mypage>
 
             {isOpen ? (
-              <ModalBackdrop>
-                <StModal>
-                  <ModalLogin>
-                    <StLoginTitle>login</StLoginTitle>
-                    <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
-                    <StInput placeholder="이메일 *" />
-                    <StInput type="password" placeholder="비밀 번호 *" />
-                    <StContentLogin>
-                      <StContents>
-                        <InputMode />
+              !getCookie("token") ? (
+                <ModalBackdrop>
+                  <StModal>
+                    <ModalLogin>
+                      <StLoginTitle>login</StLoginTitle>
+                      <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
+                      <StInput
+                        placeholder="이메일 *"
+                        onChange={(e) => onEmailHandlerID(e)}
+                        value={em}
+                      />
+                      <StInput
+                        type="password"
+                        placeholder="비밀 번호 *"
+                        onChange={(e) => onEmailHandlerPw(e)}
+                        value={pw}
+                      />
+                      <StContentLogin>
+                        <StContents>
+                          <InputMode />
 
-                        <StContent>Remember me</StContent>
-                      </StContents>
-                      <StLoginButton>로그인</StLoginButton>
-                    </StContentLogin>
-                  </ModalLogin>
+                          <StContent>Remember me</StContent>
+                        </StContents>
+                        <StLoginButton onClick={loginHandler}>
+                          로그인
+                        </StLoginButton>
+                      </StContentLogin>
+                    </ModalLogin>
 
-                  <MdadalView>
-                    <StSocialLogin>소셜 로그인 </StSocialLogin>
-                    <StEnrollment>등록하지 않으셨나요?</StEnrollment>
-                    <StSignup onClick={() => onSignUpHandler()}>
-                      새 계정 만들기
-                    </StSignup>
-                  </MdadalView>
+                    <MdadalView>
+                      <StSocialLogin>소셜 로그인 </StSocialLogin>
+                      <StEnrollment>등록하지 않으셨나요?</StEnrollment>
+                      <StSignup onClick={() => onSignUpHandler()}>
+                        새 계정 만들기
+                      </StSignup>
+                    </MdadalView>
 
-                  <StModalClose onClick={() => setIsOpen(false)}>
-                    ✖
-                  </StModalClose>
-                </StModal>
-              </ModalBackdrop>
+                    <StModalClose onClick={() => setIsOpen(false)}>
+                      ✖
+                    </StModalClose>
+                  </StModal>
+                </ModalBackdrop>
+              ) : (
+                <ModalBoxOne>
+                  <StModalOne>
+                    <StModalClose onClick={() => setIsOpen(false)}>
+                      ✖
+                    </StModalClose>
+                  </StModalOne>
+                </ModalBoxOne>
+              )
             ) : null}
 
             <WishList>
@@ -387,6 +456,40 @@ const StLoginButton = styled.button`
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
+`;
+
+const ModalBoxOne = styled.div`
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+`;
+
+const StModalOne = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 40%;
+  background-color: #1b1b1b;
+  left: 0;
+  top: -15px;
+  animation: modal 0.8s;
+  @keyframes modal {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0);
+    }
+    to {
+      opacitiy: 1;
+      transform: translateZ(0);
+    }
+  }
 `;
 
 export default Navbar;

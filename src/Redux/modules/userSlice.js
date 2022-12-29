@@ -8,10 +8,9 @@ export const __signUp = createAsyncThunk(
     try {
       const { data } = await instance.post("/user/signup", payload);
       console.log(data);
-      //  data.messge === "회원가입 성공"
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      alert("양식을 확인해 주세요");
+      // alert("중복 된 이메일 입니다.");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
