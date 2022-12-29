@@ -39,17 +39,13 @@ const SignUp = ({ text }) => {
   const onSubmit = async (data) => {
     console.log(data);
     data.country = selectedOption;
-    await dispatch(__signUp(data));
-    // navigate("/login")
-    // messge === "회원가입 성공"
-    //   ? navigate("/login")
-    //   : alert("양식을 확인해 주세요");
+    const signUp = await dispatch(__signUp(data));
 
-    // if (messge === "회원가입 성공") {
-    //   navigate("/login");
-    // } else {
-    //   alert("양식을 확인해 주세요");
-    // }
+    if (signUp.payload.message === "회원가입 성공") {
+      navigate("/login");
+    } else {
+      alert("중복된 이메일 입니다.");
+    }
   };
 
   return (

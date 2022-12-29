@@ -6,16 +6,18 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { __login } from "../Redux/modules/loginSlice";
+import { useSelector } from "react-redux";
 
 const Login = ({ text }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { login } = useSelector((state) => state.loginSlice);
   const [email, setEmail] = useState(false);
   const [password, setPassword] = useState(false);
   const [em, setId] = useState("");
   const [pw, setPw] = useState("");
 
-  const handleId = (e) => {
+  const onEmailHandlerID = (e) => {
     if (em.includes("@") && em.includes(".")) {
       setEmail(true);
     } else {
@@ -24,7 +26,7 @@ const Login = ({ text }) => {
     setId(e.target.value);
   };
 
-  const handlePw = (e) => {
+  const onEmailHandlerPw = (e) => {
     setPw(e.target.value);
   };
 
@@ -47,6 +49,12 @@ const Login = ({ text }) => {
     }
   }, [pw]);
 
+  useEffect(() => {
+    if (login) {
+      navigate("/");
+    }
+  });
+
   return (
     <StDiv>
       <StForm>
@@ -55,7 +63,7 @@ const Login = ({ text }) => {
 
         <StInput
           placeholder=" 이메일 *"
-          onChange={(e) => handleId(e)}
+          onChange={(e) => onEmailHandlerID(e)}
           value={em}
         />
         <StError>
@@ -65,7 +73,7 @@ const Login = ({ text }) => {
         <StInput
           placeholder=" 비밀번호 * "
           type="password"
-          onChange={(e) => handlePw(e)}
+          onChange={(e) => onEmailHandlerPw(e)}
           value={pw}
         />
         <StError>
