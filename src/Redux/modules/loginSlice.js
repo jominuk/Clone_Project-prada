@@ -18,7 +18,7 @@ export const __login = createAsyncThunk("LOGIN", async (payload, thunkAPI) => {
     });
     localStorage.setItem("email", data.email);
     alert(`${data.firstname}님 환영합니다.`);
-    return thunkAPI.fulfillWithValue(data.token); //data만 들어오면 에러가 난다? 직렬화의 에러(action을 실을 수 없는 것들)
+    return thunkAPI.fulfillWithValue(data.firstname); //data만 들어오면 에러가 난다? 직렬화의 에러(action을 실을 수 없는 것들)
   } catch (error) {
     alert("아이디어와 비밀번호를 다시 확인해주세요.");
     return thunkAPI.rejectWithValue(error.response.data);
@@ -26,6 +26,7 @@ export const __login = createAsyncThunk("LOGIN", async (payload, thunkAPI) => {
 });
 
 const initialState = {
+  firstname: "",
   email: "",
   password: "",
   login: false,
@@ -42,8 +43,10 @@ const loginSlice = createSlice({
       .addCase(__login.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(__login.fulfilled, (state) => {
+      .addCase(__login.fulfilled, (state, action) => {
         state.isLoading = true;
+        state.firstname = action.payload;
+        console.log(action.payload);
         state.login = true;
       })
       .addCase(__login.rejected, (state, action) => {
