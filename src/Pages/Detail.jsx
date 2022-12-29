@@ -205,23 +205,16 @@ export default Detail;
 
 const StContainer = styled.div`
   margin: 0 40px 0 40px;
-  /* height:auto;
-width:100%; */
-  /* border:2px solid #000; */
   padding-top: 40px;
   box-sizing: border-box;
 `;
 const StFlexBox = styled.div`
   display: flex;
-  /* width:i; */
-  /* height:80vh; */
   margin-top: 40px;
 `;
 
 const StImageWrapper = styled.div`
   width: 58%;
-  /* height:80vh; */
-  /* border:2px solid #000; */
   margin-right: 100px;
   box-sizing: border-box;
 `;
@@ -258,7 +251,6 @@ const StItem = styled.div`
 //    <  컨텐트   >
 const StContentBox = styled.div`
   width: 31%;
-  /* height:auto; */
   box-sizing: border-box;
 `;
 const StContentTitle = styled.h1`
@@ -325,10 +317,7 @@ const StInfoLink = styled.a`
 //  <  관련 항목  >
 const StAnotherList = styled.div`
   width: 100%;
-  /* height:500px; */
-  /* border:2px solid #000; */
   box-sizing: border-box;
-  /* padding-left:100px; */
   margin: 100px 0 0 0;
   overflow: hidden;
 `;
@@ -339,9 +328,7 @@ const StHeader = styled.div`
 `;
 
 const StButtonWrapper = styled.div``;
-const StH2 = styled.h2`
-  /* transform:translateX(-100%) */
-`;
+const StH2 = styled.h2``;
 
 const StArrowButton = styled.button`
   background-color: #fff;
@@ -350,17 +337,14 @@ const StArrowButton = styled.button`
   cursor: pointer;
   &:nth-child(1) {
     margin-right: 10px;
-    /* color:rgb(255,255,255,) */
     opacity: 0.5;
   }
 `;
 
 const StTestItemContainer = styled.div`
-  /* border:2px solid #000; */
   display: flex;
 `;
 const StTestItemBox = styled.div`
-  /* border:2px solid #000; */
   margin-right: 20px;
 `;
 const StP2 = styled.p`
@@ -370,7 +354,6 @@ const StP2 = styled.p`
 const StItems = styled.div`
   height: 80vh;
   width: 30em;
-  /* border:2px solid #000; */
   box-sizing: border-box;
 `;
 

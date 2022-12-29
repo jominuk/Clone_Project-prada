@@ -17,7 +17,6 @@ import CategoryNavbar2 from "./CategoryNavbar2";
 import CategoryNavbar3 from "./CategoryNavbar3";
 
 import InputMode from "./InputMode";
-import { useEffect } from "react";
 import { __login } from "../Redux/modules/loginSlice";
 import { getCookie } from "../Shared/cookie";
 import { deleteCookie } from "../Shared/cookie";
@@ -115,12 +114,10 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    if (login) {
-      navigate("/");
-      setIsOpen(false);
-    }
-  }, [login]);
+  const MyPage = () => {
+    navigate("/mypage");
+    setIsOpen(false);
+  };
 
   return (
     <Border>
@@ -213,7 +210,7 @@ const Navbar = () => {
 
                       <div>
                         <ModalLoginbutton>
-                          <StSignup1>대시보드</StSignup1>
+                          <StSignup1 onClick={MyPage}>대시보드</StSignup1>
                           <StSignup2>계정 상세 정보</StSignup2>
                           <StSignup1>주문</StSignup1>
                         </ModalLoginbutton>
@@ -221,7 +218,7 @@ const Navbar = () => {
                     </ModalLoginName>
 
                     <div>
-                      <StModalClose onClick={() => setIsOpen(true)}>
+                      <StModalClose onClick={() => setIsOpen(false)}>
                         ✖
                       </StModalClose>
                       <Stlogout onClick={logout}>로그아웃</Stlogout>

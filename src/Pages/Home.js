@@ -74,7 +74,7 @@ const Home = () => {
                   <HoverButton
                     mode="white"
                     hoverColor="black"
-                    fontSize="15px"
+                    fontSize="14px"
                     onClick={() =>
                       navigate("/women/ready_to_wear?category=jacket_and_coats")
                     }
@@ -84,7 +84,7 @@ const Home = () => {
                   <HoverButton
                     mode="white"
                     hoverColor="black"
-                    fontSize="15px"
+                    fontSize="14px"
                     onClick={() =>
                       navigate("/men/ready_to_wear?category=jacket_and_coats")
                     }
@@ -164,7 +164,7 @@ const HomeLayout = styled.div`
 `;
 
 const Gap = styled.div`
-  width: 150px;
+  width: 155px;
   justify-content: space-between;
   display: flex;
 `;
