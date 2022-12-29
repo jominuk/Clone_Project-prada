@@ -31,7 +31,7 @@ const SignUp = ({ text }) => {
   const country = ["대한민국", "체코", "독일", "폴란드", "일본"];
 
   const onOptionClicked = (value) => {
-    console.log(value);
+    // console.log(value);
     setSelectedOption(value);
     setOpen(false);
   };

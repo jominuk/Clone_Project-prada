@@ -52,7 +52,7 @@ const MypageMain = () => {
 export default MypageMain;
 
 const StItems = styled.div`
-margin-left:40px;
+margin-left:80px;
 `
 
 const StLastOrder = styled.div`
@@ -94,8 +94,8 @@ const StWishListWrapper = styled.div`
 background-color:#fff;
 height:200px;
 /* position:absolute; */
-width:96%;
-margin-left:20px;
+width:92%;
+margin-left:60px;
 padding:20px 0 0 50px;
 font-size:23px;
 

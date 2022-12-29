@@ -110,7 +110,7 @@ const StContainer = styled.div`
 `
 const StItem = styled.div`
   box-sizing:border-box;
-  width:27%;
+  width:23%;
   padding:20px;
 `
 const StCancelButton = styled.button`
@@ -127,7 +127,7 @@ const StCancelButton = styled.button`
 
 
 const StPic = styled.div`
-height:381px;
+height:63%;
 box-sizing:border-box;
 `
 const Stimg = styled.img`
