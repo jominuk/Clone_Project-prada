@@ -357,18 +357,6 @@ const StRigthContents = styled.div`
   font-size: 18px;
 `;
 
-// const StEyes = styled.button`
-//   background-size: cover;
-//   background-size: 27px;
-//   background-repeat: no-repeat;
-//   font-size: 17px;
-//   margin: 5px 0 0 0;
-//   border: none;
-//   background-color: white;
-//   width: 180px;
-//   cursor: pointer;
-// `;
-
 const StRigthTitleOne = styled.div`
   font-size: 25px;
   margin: 200px 0 0 0;

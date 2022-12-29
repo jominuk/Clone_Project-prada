@@ -9,7 +9,6 @@ import Main from "../Pages/Main";
 import Detail from "../Pages/Detail";
 import Footer from "../Components/Footer";
 import Cart from "../Pages/Cart";
-import WhishList from "../Pages/templates/Mypages/WhishList";
 
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -46,7 +45,6 @@ const Router = () => {
         {/* <Route path="/detail/:id" element={<Detail />} /> */}
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/wish" element={<WhishList />} />
 
         <Route path="/login" element={<Login />} />
 

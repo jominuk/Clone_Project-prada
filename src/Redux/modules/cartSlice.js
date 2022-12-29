@@ -7,10 +7,10 @@ export const __getCartList = createAsyncThunk(
   "GET_CARTLIST",
   async (payload, thunkAPI) => {
     try {
-      console.log("겟요청");
       const accessToken = getCookie("token");
       setToken(accessToken);
       const { data } = await instance.get(`user/cart`);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error.response.data);
@@ -25,8 +25,26 @@ export const __postCartList = createAsyncThunk(
     try {
       const accessToken = getCookie("token");
       setToken(accessToken);
-      const { data } = await instance.post(`/user/:itemId/cart
+      const { data } = await instance.post(`/user/2/cart
       `);
+      console.log("a");
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const __removeCartList = createAsyncThunk(
+  "REMOVE_CARTLIST",
+  async (payload, thunkAPI) => {
+    try {
+      const accessToken = getCookie("token");
+      setToken(accessToken);
+      const { data } = await instance.post(`/user/2/cart
+      `);
+      console.log("a");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error.response.data);
@@ -51,34 +69,34 @@ const cartSlice = createSlice({
       })
       .addCase(__getCartList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.productList = action.payload;
+        state.cartList = action.payload;
       })
       .addCase(__getCartList.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(__postCartList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__postCartList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(__postCartList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(__removeCartList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__removeCartList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(__removeCartList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
-    //   .addCase(__addWishList.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(__addWishList.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.msg = action.payload.msg;
-    //   })
-    //   .addCase(__addWishList.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.error = action.payload;
-    //   })
-    //   .addCase(__removeWishList.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(__removeWishList.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.msg = action.payload.msg;
-    //   })
-    //   .addCase(__removeWishList.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.error = action.payload;
-    //   });
   },
 });
 

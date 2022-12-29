@@ -38,29 +38,32 @@ const Cart = () => {
       </HowMuch>
       <Stiv>
         <ImageBox></ImageBox>
-        <div>
-          <div>싱글 브레스티드 더블 새틴 재킷</div>
-          <div>P516N_393_F0009_S_231</div>
-          <div>색상: 화이트</div>
-          <div>사이즈: 40</div>
-          <button>상품 수정</button>
-          <button>삭제</button>
-        </div>
-        <div>수량 : 1</div>
-        <div>₩ 6,000,000</div>
+
+        <StProduct>
+          <StProductTitle>싱글 브레스티드 더블 새틴 재킷</StProductTitle>
+          <StProductNumber>P516N_393_F0009_S_231</StProductNumber>
+          <StProductColor>색상: 화이트</StProductColor>
+          <StProductSize>사이즈: 40</StProductSize>
+          <StDeleteButton>삭제</StDeleteButton>
+        </StProduct>
+
+        <StCount>수량 : 1</StCount>
+        <StPrice>₩ 6,000,000</StPrice>
       </Stiv>
+
       <Stiv>
         <ImageBox></ImageBox>
-        <div>
-          <div>싱글 브레스티드 더블 새틴 재킷</div>
-          <div>P516N_393_F0009_S_231</div>
-          <div>색상: 화이트</div>
-          <div>사이즈: 40</div>
-          <button>상품 수정</button>
-          <button>삭제</button>
-        </div>
-        <div>수량 : 1</div>
-        <div>₩ 6,000,000</div>
+
+        <StProduct>
+          <StProductTitle>싱글 브레스티드 더블 새틴 재킷</StProductTitle>
+          <StProductNumber>P516N_393_F0009_S_231</StProductNumber>
+          <StProductColor>색상: 화이트</StProductColor>
+          <StProductSize>사이즈: 40</StProductSize>
+          <StDeleteButton>삭제</StDeleteButton>
+        </StProduct>
+
+        <StCount>수량 : 1</StCount>
+        <StPrice>₩ 6,000,000</StPrice>
       </Stiv>
       <Desc>
         <div>
@@ -109,14 +112,15 @@ const Stiv = styled.div`
   display: flex;
   flex-direction: row;
   & div {
-    margin-right: 60px;
+    margin-right: 30px;
   }
 `;
 
 const HowMuch = styled.div`
-  height: 290px;
-  border: 1px solid green;
-  width: 320px;
+  height: 280px;
+  border: 1px solid #ebebeb;
+  padding: 10px;
+  width: 310px;
   position: absolute;
   right: 17vw;
 `;
@@ -135,4 +139,46 @@ const Desc = styled.div`
   & div {
     margin-bottom: 20px;
   }
+`;
+
+const StProduct = styled.div`
+  height: 80%;
+  margin: 15px 0 0 0;
+`;
+
+const StProductTitle = styled.div`
+  font-weight: bold;
+  font-size: 14px;
+`;
+
+const StProductNumber = styled.div`
+  font-size: 12px;
+  margin: 12px 0 0 0;
+`;
+
+const StProductColor = styled.div`
+  font-size: 13px;
+  margin: 12px 0 0 0;
+`;
+
+const StProductSize = styled.div`
+  font-size: 13px;
+  margin: 3px 0 0 0;
+`;
+
+const StDeleteButton = styled.button`
+  margin: 40px 0 0 0;
+  border: none;
+  border-bottom: 1px solid #ebebeb;
+  background-color: white;
+`;
+
+const StCount = styled.div`
+  margin: 12px 0 0 50px;
+  font-size: 15px;
+`;
+
+const StPrice = styled.div`
+  margin: 12px 0 0 30px;
+  font-weight: 500;
 `;

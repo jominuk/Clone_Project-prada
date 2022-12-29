@@ -39,7 +39,12 @@ const Navbar = () => {
 
   const menuList = ["여성", "남성", "백", "리네아 로사", "PRADASPHERE"];
   const goToLogin = () => {
-    authenticate ? dispatch(setAuthenticate(false)) : setIsOpen(true);
+    authenticate ? dispatch(setAuthenticate(false)) : Mod();
+  };
+
+  const Mod = () => {
+    setIsOpen(true);
+    dispatch(searchCategory(""));
   };
 
   const onSignUpHandler = () => {
