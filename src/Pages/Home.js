@@ -19,11 +19,20 @@ const Home = () => {
                   mode="white"
                   hoverColor="black"
                   fontSize="15px"
-                  onClick={() => navigate("/main/aa")}
+                  onClick={() =>
+                    navigate("/women/ready_to_wear?category=jacket_and_coats")
+                  }
                 >
                   여성 제품
                 </HoverButton>
-                <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                <HoverButton
+                  mode="white"
+                  hoverColor="black"
+                  fontSize="15px"
+                  onClick={() =>
+                    navigate("/men/ready_to_wear?category=jacket_and_coats")
+                  }
+                >
                   남성 제품
                 </HoverButton>
               </Gap>
@@ -33,29 +42,53 @@ const Home = () => {
             <SmallImageFirst>
               <SmallImageText>여성 홀리데이 컬렉션</SmallImageText>
               <div>
-                <HoverButton margin="20px 13px 0 0 " fontSize="15px">
+                <HoverButton
+                  margin="20px 13px 0 0 "
+                  fontSize="15px"
+                  onClick={() => navigate("/women/ready_to_wear?category=all")}
+                >
                   구매 하기
                 </HoverButton>
               </div>
             </SmallImageFirst>
-            <SmallImageSecond>
+            <SmallImageFirst>
               <SmallImageText>남성 홀리데이 컬렉션</SmallImageText>
               <div>
-                <HoverButton margin="20px 13px 0 0 " fontSize="13px">
+                <HoverButton
+                  margin="20px 13px 0 0 "
+                  fontSize="13px"
+                  onClick={() =>
+                    navigate("/men/ready_to_wear?category=jacket_and_coats")
+                  }
+                >
                   구매 하기
                 </HoverButton>
               </div>
-            </SmallImageSecond>
+            </SmallImageFirst>
           </StSecondImage>
           <div>
             <Test>
               <InsideFirstImage>
                 <div>남성 선물</div>
                 <Gap>
-                  <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                  <HoverButton
+                    mode="white"
+                    hoverColor="black"
+                    fontSize="15px"
+                    onClick={() =>
+                      navigate("/women/ready_to_wear?category=jacket_and_coats")
+                    }
+                  >
                     여성 제품
                   </HoverButton>
-                  <HoverButton mode="white" hoverColor="black" fontSize="15px">
+                  <HoverButton
+                    mode="white"
+                    hoverColor="black"
+                    fontSize="15px"
+                    onClick={() =>
+                      navigate("/men/ready_to_wear?category=jacket_and_coats")
+                    }
+                  >
                     남성 제품
                   </HoverButton>
                 </Gap>
@@ -75,8 +108,19 @@ const Home = () => {
           </div>
           <StThirdImage>
             <ThirdImageBox>
-              <div></div>
-              <div></div>
+              <LastImage></LastImage>
+              <StWord>Holiday 2022</StWord>
+              <HoverButton
+                mode="white"
+                hoverColor="black"
+                color="white"
+                fontSize="16px"
+                onClick={() =>
+                  navigate("/women/ready_to_wear?category=jacket_and_coats")
+                }
+              >
+                살펴보기
+              </HoverButton>
             </ThirdImageBox>
           </StThirdImage>
         </HomeLayout>
@@ -176,13 +220,31 @@ const SmallImageText = styled.div`
 `;
 
 const StThirdImage = styled.div`
-  background-color: #2d3436;
-  height: 600px;
+  background-color: black;
+  height: 700px;
   margin: 10px;
   display: flex;
-  align-items: center;
+
+  justify-content: center;
 `;
 const ThirdImageBox = styled.div`
-  border: 1px solid green;
+  margin-top: 45px;
+  width: 930px;
+  height: 450px;
+`;
+
+const LastImage = styled.div`
+  width: 900px;
+  height: 100%;
+  background-size: cover;
+  background-image: url("https://www.prada.com/content/dam/pradanux/home_page/2022/10/banner_pradasphere/pradasphere_home_DT.jpg/_jcr_content/renditions/cq5dam.web.1932.1932.webp");
+`;
+
+const StWord = styled.div`
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px;
+  padding: 22px 0;
 `;
 export default Home;

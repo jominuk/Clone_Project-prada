@@ -7,11 +7,12 @@ export const __getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async ({ gender, queryCategory, thema }, thunkAPI) => {
     try {
+      console.log("겟요청");
       const { data } = await instance.get(
         `items/${gender}/${thema}?category=${queryCategory}`
       );
       //data 안에는 [] title,price,color,
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -24,7 +25,25 @@ export const __addWishList = createAsyncThunk(
     try {
       const accessToken = getCookie("token");
       setToken(accessToken);
-      const { data } = await instance.get(`user/${payload}/wishList`);
+
+      const data = await instance.post(`user/${payload}/wishList`);
+      console.log(data);
+      //data 안에는 [] title,price,color,
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const __removeWishList = createAsyncThunk(
+  "REMOVE_WISHLIST",
+  async (payload, thunkAPI) => {
+    try {
+      const accessToken = getCookie("token");
+      setToken(accessToken);
+      const data = await instance.delete(`user/${payload}/wishList`);
+      console.log(data);
       //data 안에는 [] title,price,color,
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -77,6 +96,17 @@ const listSlice = createSlice({
         state.msg = action.payload.msg;
       })
       .addCase(__addWishList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(__removeWishList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__removeWishList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(__removeWishList.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

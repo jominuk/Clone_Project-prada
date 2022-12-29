@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { __signUp } from "../Redux/modules/userSlice";
 
-const SignUp = () => {
+const SignUp = ({ text }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [Open, setOpen] = useState(false);
@@ -31,7 +31,6 @@ const SignUp = () => {
   const country = ["대한민국", "체코", "독일", "폴란드", "일본"];
 
   const onOptionClicked = (value) => {
-    console.log(value);
     setSelectedOption(value);
     setOpen(false);
   };
@@ -187,12 +186,15 @@ const SignUp = () => {
                 )}
             </StError>
 
-            <StEyes> 비밀번호 표시 </StEyes>
+            <StEyes type="button"> 비밀번호 표시 </StEyes>
           </StContentBoxTwo>
         </StContentBox>
 
         <StCheckBoxOne>
-          <StInputCheck type="checkbox" />
+          <StyledLabel htmlFor={text}>
+            <StyledInput type="checkbox" id={text} name={text} />
+            <StyledP>{text}</StyledP>
+          </StyledLabel>
           <StAgreeMent> 본인은 </StAgreeMent>
           <StAgreeMentOne type="button"> 개인정보처리방침</StAgreeMentOne>
 
@@ -201,7 +203,10 @@ const SignUp = () => {
           </StAgreeMent>
         </StCheckBoxOne>
         <StCheckBoxTwo>
-          <StInputCheck type="checkbox" />
+          <StyledLabel htmlFor={text}>
+            <StyledInput type="checkbox" id={text} name={text} />
+            <StyledP>{text}</StyledP>
+          </StyledLabel>
           <StAgreeMent> 개인정보 수집 및 이용에 대한 동의 (필수)</StAgreeMent>
           <StAgreeMentOne type="button">상세보기</StAgreeMentOne>
           {modalOpen && <StModal setModalOpen={setModalOpen} />}
@@ -346,7 +351,6 @@ const StRigthContents = styled.div`
 `;
 
 const StEyes = styled.button`
-  background: url("https://www.flaticon.com/svg/vstatic/svg/3917/3917112.svg?token=exp=1671799237~hmac=12e15b31c7acbb5759b5310a6c4072e8");
   background-size: cover;
   background-size: 27px;
   background-repeat: no-repeat;
@@ -377,11 +381,6 @@ const StCheckBoxOne = styled.div`
   display: flex;
 `;
 
-const StInputCheck = styled.input`
-  width: 25px;
-  height: 25px;
-`;
-
 const StAgreeMent = styled.div`
   margin: 0 0 0 10px;
   font-size: 17px;
@@ -389,7 +388,6 @@ const StAgreeMent = styled.div`
 
 const StAgreeMentOne = styled.button`
   position: relative;
-  margin: 50px 0 0 0;
   font-weight: bold;
   font-size: 18px;
   background-color: transparent;
@@ -453,4 +451,31 @@ const StModal = styled.div`
   background-color: gray;
   border: 1px solid black;
   border-radius: 8px;
+`;
+
+const StyledInput = styled.input`
+  appearance: none;
+  height: 26px;
+  width: 26px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:checked {
+    border-color: transparent;
+    background-image: url("https://i.pinimg.com/736x/a0/ec/a3/a0eca3143a002a248079e3f9243926ef.jpg");
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 1px solid black;
+  }
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  user-select: none;
+`;
+
+const StyledP = styled.p`
+  margin-left: 0.25rem;
 `;

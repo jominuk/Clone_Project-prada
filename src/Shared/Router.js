@@ -13,7 +13,7 @@ import LoginModal from "../Components/LoginModal";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { searchCategory, searching } from "../Redux/modules/listSlice";
-// import Login from "../Pages/Login";
+import Login from "../Pages/Login";
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -22,9 +22,19 @@ const Router = () => {
   };
 
   const { search, category } = useSelector((state) => state.listSlice);
-
+  // const commentList = [
+  //   { postId: 1, comments: ["a", "b", "c"] },
+  //   { postId: 2, comments: ["a", "b", "c"] },
+  // ];
   return (
     <BrowserRouter>
+      {/* {commentList.map((el) => {
+        el.postId === data.postId
+          ? el.comments.map((item) => {
+              return <div>aa</div>;
+            })
+          : null;
+      })} */}
       <Navbar />
       <StDark
         search={search}
@@ -37,10 +47,14 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:gender/:thema" element={<Main />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:itemId" element={<Detail />} />
+        {/* <Route path="/detail/:id" element={<Detail />} /> */}
         <Route path="/mypage" element={<Mypage />} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/modal" element={<LoginModal />} /> */}
+
+        <Route path="/modal" element={<LoginModal />} />
+
+        <Route path="/login" element={<Login />} />
+
         <Route path="/signup" element={<SignUp />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

@@ -2,18 +2,35 @@ import React from "react";
 import styled from "styled-components";
 
 const CategoryNavbar3 = () => {
+  const arr1 = ["소프트 필", "뉴 포멀", "파티 에센셜", "라이프스타일 액세서리"];
   return (
     <>
       <Category>
-        <ImageBox />
-        <Stdiv />
+        <ImageBox image="url(https://www.prada.com/content/dam/pradanux/e-commerce/2022/09/update_co_fw22/menu_3/gift_women.jpg/_jcr_content/renditions/cq5dam.web.3328.3328.webp)" />
+        <Stdiv>
+          <FirstCategoryBox width="190px" backgroundColor="#ebebeb">
+            <Highlight>여성 선물</Highlight>
+            {arr1.map((el, i) => {
+              return <div key={`하이라이트_${i}`}>{el}</div>;
+            })}
+          </FirstCategoryBox>
+        </Stdiv>
+        <ImageBox image="url(https://www.prada.com/content/dam/pradanux/e-commerce/2022/09/update_co_fw22/menu_3/gift_men.jpg/_jcr_content/renditions/cq5dam.web.3328.3328.webp)" />
+        <Stdiv>
+          <FirstCategoryBox width="190px" backgroundColor="#ebebeb">
+            <Highlight>남성 선물</Highlight>
+            {arr1.map((el, i) => {
+              return <div key={`하이라이트_${i}`}>{el}</div>;
+            })}
+          </FirstCategoryBox>
+        </Stdiv>
       </Category>
     </>
   );
 };
 
 const ImageBox = styled.div`
-  background-image: url("https://www.prada.com/content/dam/pradanux/e-commerce/2022/11/holiday/menu/bags/desktop/bag_big.jpg/_jcr_content/renditions/cq5dam.web.1680.1680.webp");
+  background-image: ${(props) => props.image};
   background-size: cover;
   height: 380px;
   width: 380px;
@@ -21,17 +38,39 @@ const ImageBox = styled.div`
 
   &:hover {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("https://www.prada.com/content/dam/pradanux/e-commerce/2022/11/holiday/menu/bags/desktop/bag_big.jpg/_jcr_content/renditions/cq5dam.web.1680.1680.webp");
+      ${(props) => props.image};
+  }
+`;
+
+const Highlight = styled.h5`
+  margin: 8px 12%;
+  font-size: 12px;
+  cursor: pointer;
+`;
+
+const FirstCategoryBox = styled.div`
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  & div {
+    margin: 6px 12%;
+    line-height: 17px;
+    &:hover {
+      cursor: pointer;
+      color: #71797f;
+    }
   }
 `;
 
 const Stdiv = styled.div`
   width: 240px;
-  height: 100%;
+  height: 95%;
   background-color: #ebebeb;
 `;
 
 const Category = styled.div`
+  gap: 10px;
   background-color: #fff;
   width: 100vw;
   position: absolute;
@@ -43,10 +82,8 @@ const Category = styled.div`
   height: 400px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   transition-duration: 0.5s;
-  animation: smoothAppear 0.6s;
-  & div div:hover {
-    color: #71797f;
-  }
+  align-items: center;
+  /* animation: smoothAppear 0.1s; */
 `;
 
 export default CategoryNavbar3;

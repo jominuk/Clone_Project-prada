@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { __loginUser } from "../Redux/modules/loginSlice";
 
-const Login = () => {
+const Login = ({ text }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState(false);
@@ -30,12 +31,12 @@ const Login = () => {
   const loginHandler = (event) => {
     event.preventDefault();
     console.log(em, pw);
-    dispatch(
-      __loginUser({
-        email: em,
-        password: pw,
-      })
-    );
+    // dispatch(
+    //   __loginUser({
+    //     email: em,
+    //     password: pw,
+    //   })
+    // );
   };
 
   useEffect(() => {
@@ -72,8 +73,14 @@ const Login = () => {
         </StError>
 
         <StCheckBoxTwo>
-          <StInputCheck type="checkbox" />
-          <StAgreeMent> Remember me </StAgreeMent>
+          <StRemember>
+            <StyledLabel htmlFor={text}>
+              <StyledInput type="checkbox" id={text} name={text} />
+              <StyledP>{text}</StyledP>
+            </StyledLabel>
+            <StAgreeMent> Remember me </StAgreeMent>
+          </StRemember>
+
           <StAgreeMentOne> 비밀번호 찾기 </StAgreeMentOne>
         </StCheckBoxTwo>
         <StSubmit onClick={loginHandler}>로그인</StSubmit>
@@ -128,14 +135,21 @@ const StInput = styled.input`
   }
 `;
 
-const StInputCheck = styled.input`
-  width: 25px;
-  height: 25px;
-`;
+// const StInputCheck = styled.input`
+//   width: 25px;
+//   height: 25px;
+// `;
 
 const StCheckBoxTwo = styled.div`
+  width: 91%;
+
   display: flex;
   margin: 50px 0 0 0;
+  justify-content: space-between;
+`;
+
+const StRemember = styled.div`
+  display: flex;
 `;
 
 const StAgreeMent = styled.div`
@@ -218,4 +232,31 @@ const StRigthContentsOne = styled.div`
 const StError = styled.div`
   color: red;
   font-size: 12px;
+`;
+
+const StyledInput = styled.input`
+  appearance: none;
+  height: 26px;
+  width: 26px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:checked {
+    border-color: transparent;
+    background-image: url("https://i.pinimg.com/736x/a0/ec/a3/a0eca3143a002a248079e3f9243926ef.jpg");
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 1px solid black;
+  }
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  user-select: none;
+`;
+
+const StyledP = styled.p`
+  margin-left: 0.25rem;
 `;

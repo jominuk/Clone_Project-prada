@@ -1,7 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { searchCategory } from "../Redux/modules/listSlice";
 
 const CategoryNavbar2 = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const arr1 = [
     "신상품",
     "기프트",
@@ -12,27 +18,33 @@ const CategoryNavbar2 = () => {
     "AC Factory",
   ];
   const arr2 = [
-    "재킷 및 코트",
-    "셔츠",
-    "니트웨어",
-    "셔츠 및 탑",
-    "티셔츠 및 폴로 셔츠",
-    "조깅복 및 스웨트 셔츠",
-    "팬츠 및 버뮤다",
-    "데님",
-    "수트",
-    "아우터",
-    "가족 소재",
+    { kr: "재킷 및 코트", eng: "jacket_and_coats" },
+    { kr: "셔츠", eng: "knitwear" },
+    { kr: "니트웨어", eng: "dresses" },
+    { kr: "셔츠 및 탑", eng: "shirts_and_tops" },
+    { kr: "티셔츠 및 폴로 셔츠", eng: "c" },
+    { kr: "조깅복 및 스웨트 셔츠", eng: "d" },
+    { kr: "팬츠 및 버뮤다", eng: "e" },
+    { kr: "데님", eng: "f" },
+    { kr: "수트", eng: "g" },
+    { kr: "아우터", eng: "h" },
+    { kr: "가족 소재", eng: "outer" },
   ];
   const arr3 = [
-    "메신저백",
-    "백팩 및 밸트백",
-    "토드백",
-    "브리프케이스",
-    "클리치",
-    "백팩",
+    { kr: "메신저백", eng: "shoulder_bags" },
+    { kr: "백팩 및 밸트백", eng: "top" },
+    { kr: "토드백", eng: "ho" },
+    { kr: "브리프케이스", eng: "mi" },
+    { kr: "클리치", eng: "backpack_bags" },
+    { kr: "백팩", eng: "briefcase" },
   ];
-  const arr4 = ["스니커즈", "로퍼", "레이스업", "샌들", "부츠"];
+  const arr4 = [
+    { kr: "스니커즈", eng: "shoulder_bags" },
+    { kr: "로퍼", eng: "top" },
+    { kr: "레이스업", eng: "ho" },
+    { kr: "샌들", eng: "mi" },
+    { kr: "부츠", eng: "backpack_bags" },
+  ];
   const arr5 = [
     "맞춤형 벨트",
     "카드 및 카드홀더",
@@ -58,19 +70,49 @@ const CategoryNavbar2 = () => {
         <FirstCategoryBox>
           <Highlight>레디 투 웨어</Highlight>
           {arr2.map((el, i) => {
-            return <div key={`레디투웨어_${i}`}>{el}</div>;
+            return (
+              <div
+                key={`레디투웨어_${i}`}
+                onClick={() => {
+                  navigate(`/men/ready_to_wear?category=${el.eng}`);
+                  dispatch(searchCategory(false));
+                }}
+              >
+                {el.kr}
+              </div>
+            );
           })}
         </FirstCategoryBox>
         <FirstCategoryBox>
           <Highlight>백</Highlight>
           {arr3.map((el, i) => {
-            return <div key={`백_${i}`}>{el}</div>;
+            return (
+              <div
+                key={`백_${i}`}
+                onClick={() => {
+                  navigate(`/men/bags?category=${el.eng}`);
+                  dispatch(searchCategory(false));
+                }}
+              >
+                {el.kr}
+              </div>
+            );
           })}
         </FirstCategoryBox>
         <FirstCategoryBox>
           <Highlight>슈즈</Highlight>
           {arr4.map((el, i) => {
-            return <div key={`슈즈_${i}`}>{el}</div>;
+            return (
+              <div
+                key={`슈즈_${i}`}
+                onClick={() => {
+                  navigate(`/men/shoes?category=${el.eng}`);
+                  dispatch(searchCategory(false));
+                }}
+              >
+                {el.kr}
+              </div>
+            );
           })}
         </FirstCategoryBox>
         <FirstCategoryBox>

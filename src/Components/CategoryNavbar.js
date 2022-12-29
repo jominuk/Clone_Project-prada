@@ -20,14 +20,14 @@ const CategoryNavbar = () => {
     { kr: "아우터", eng: "outer" },
     { kr: "재킷 및 코트", eng: "jacket_and_coats" },
     { kr: "니트웨어", eng: "knitwear" },
-    { kr: "드레스", eng: "" },
-    { kr: "셔츠 및 탑", eng: "outer" },
-    { kr: "티셔츠 및 스웨트셔츠", eng: "outer" },
-    { kr: "스커트", eng: "outer" },
-    { kr: "팬츠 및 반바지", eng: "outer" },
-    { kr: "데님", eng: "outer" },
-    { kr: "가족 의류", eng: "outer" },
-    { kr: "파자마 및 언더웨어", eng: "outer" },
+    { kr: "드레스", eng: "dresses" },
+    { kr: "셔츠 및 탑", eng: "shirts_and_tops" },
+    { kr: "티셔츠 및 스웨트셔츠", eng: "c" },
+    { kr: "스커트", eng: "d" },
+    { kr: "팬츠 및 반바지", eng: "e" },
+    { kr: "데님", eng: "f" },
+    { kr: "가족 의류", eng: "g" },
+    { kr: "파자마 및 언더웨어", eng: "h" },
   ];
   const arr3 = [
     { kr: "숄더백", eng: "shoulder_bags" },
@@ -38,12 +38,12 @@ const CategoryNavbar = () => {
     { kr: "브리프케이스", eng: "briefcase" },
   ];
   const arr4 = [
-    "로퍼",
-    "펌프스 및 발레리나",
-    "스니커즈",
-    "샌들",
-    "레이스업",
-    "앵글 부츠 및 부츠",
+    { kr: "로퍼", eng: "shoulder_bags" },
+    { kr: "펌프스 및 발레리나", eng: "top" },
+    { kr: "스니커즈", eng: "ho" },
+    { kr: "샌들", eng: "mi" },
+    { kr: "레이스업", eng: "backpack_bags" },
+    { kr: "앵글 부츠 및 부츠", eng: "briefcase" },
   ];
   const arr5 = [
     "지갑 및 카드홀더",
@@ -73,7 +73,7 @@ const CategoryNavbar = () => {
               <div
                 key={`레디투웨어_${i}`}
                 onClick={() => {
-                  navigate(`/woman/ready_to_wear?category=${el.eng}`);
+                  navigate(`/women/ready_to_wear?category=${el.eng}`);
                   dispatch(searchCategory(false));
                 }}
               >
@@ -89,7 +89,7 @@ const CategoryNavbar = () => {
               <div
                 key={`백_${i}`}
                 onClick={() => {
-                  navigate(`/woman/bags?category=${el.eng}`);
+                  navigate(`/women/bags?category=${el.eng}`);
                   dispatch(searchCategory(false));
                 }}
               >
@@ -101,7 +101,17 @@ const CategoryNavbar = () => {
         <FirstCategoryBox>
           <Highlight>슈즈</Highlight>
           {arr4.map((el, i) => {
-            return <div key={`슈즈_${i}`}>{el}</div>;
+            return (
+              <div
+                onClick={() => {
+                  navigate(`/women/shoes?category=${el.eng}`);
+                  dispatch(searchCategory(false));
+                }}
+                key={`슈즈_${i}`}
+              >
+                {el.kr}
+              </div>
+            );
           })}
         </FirstCategoryBox>
         <FirstCategoryBox>
@@ -160,7 +170,7 @@ const Category = styled.div`
   height: 400px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   transition-duration: 0.5s;
-  animation: smoothAppear 0.1s;
+  /* animation: smoothAppear 0.1s; */
   & div div:hover {
     color: #71797f;
   }
