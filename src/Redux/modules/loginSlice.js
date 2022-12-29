@@ -37,7 +37,11 @@ const initialState = {
 const loginSlice = createSlice({
   name: "LOGIN_USER",
   initialState,
-  reducers: {},
+  reducers: {
+    loginCheck: (state, action) => {
+      state.login = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(__login.pending, (state) => {
