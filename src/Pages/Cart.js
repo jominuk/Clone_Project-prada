@@ -4,31 +4,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { HoverButton } from "../Components/HoverButton";
-import { __getCartList } from "../Redux/modules/cartSlice";
+import {
+  __getCartList,
+  __postCartList,
+  __removeCartList,
+} from "../Redux/modules/cartSlice";
 
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cartSlice);
-  console.log(cartList);
+  console.log(cartList[0]);
   useEffect(() => {
     dispatch(__getCartList());
   }, []);
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   return (
     <Padding>
       <Box></Box>
-      <button
-        onClick={() => {
-          //   dispatch(__postCartList());
-        }}
-      >
-        asdfasdfas
-      </button>
       <h1>쇼핑백</h1>
       <HowMuch>
         <div>
-          <div>총액(2 상품) </div>
-          <h2>₩ 7,970,000</h2>
+          <div>총액(1 상품) </div>
+          <h2>
+            {/* {cartList &&
+              numberWithCommas(
+                cartList
+                  ?.map((el) => el.price)
+                  ?.reduce((e, a) => {
+                    return e + a;
+                  })
+              )} */}
+          </h2>
         </div>
         <div>
           By proceeding with this payment, you accept the General Terms and
@@ -36,35 +45,28 @@ const Cart = () => {
         </div>
         <button>체크아웃 진행</button>
       </HowMuch>
-      <Stiv>
-        <ImageBox></ImageBox>
 
-        <StProduct>
-          <StProductTitle>싱글 브레스티드 더블 새틴 재킷</StProductTitle>
-          <StProductNumber>P516N_393_F0009_S_231</StProductNumber>
-          <StProductColor>색상: 화이트</StProductColor>
-          <StProductSize>사이즈: 40</StProductSize>
-          <StDeleteButton>삭제</StDeleteButton>
-        </StProduct>
+      {cartList?.map((el, i) => {
+        return (
+          <Stiv key={`Stiv_${i}`}>
+            <ImageBox image={`url(${el.OptionImages[0].src})`} />
+            <StProduct>
+              <StProductTitle>{el.title}</StProductTitle>
+              <StProductColor>색상: {el.ItemColors[0].color}</StProductColor>
+              <StProductSize>사이즈: {el.OptionSizes[0].size}</StProductSize>
+              <StDeleteButton
+                onClick={() => dispatch(__removeCartList(el.itemId))}
+              >
+                삭제
+              </StDeleteButton>
+            </StProduct>
 
-        <StCount>수량 : 1</StCount>
-        <StPrice>₩ 6,000,000</StPrice>
-      </Stiv>
+            <StCount>수량 : 1</StCount>
+            <StPrice>₩ {numberWithCommas(el.price)}</StPrice>
+          </Stiv>
+        );
+      })}
 
-      <Stiv>
-        <ImageBox></ImageBox>
-
-        <StProduct>
-          <StProductTitle>싱글 브레스티드 더블 새틴 재킷</StProductTitle>
-          <StProductNumber>P516N_393_F0009_S_231</StProductNumber>
-          <StProductColor>색상: 화이트</StProductColor>
-          <StProductSize>사이즈: 40</StProductSize>
-          <StDeleteButton>삭제</StDeleteButton>
-        </StProduct>
-
-        <StCount>수량 : 1</StCount>
-        <StPrice>₩ 6,000,000</StPrice>
-      </Stiv>
       <Desc>
         <div>
           모든 주문은 배송 가능한 제품의 재고가 있을 경우에 한해 생성되며 3~5
@@ -128,7 +130,7 @@ const HowMuch = styled.div`
 const ImageBox = styled.div`
   width: 150px;
   height: 190px;
-  background-image: url("https://www.prada.com/content/dam/pradabkg_products/P/P3I/P3I76R/12CRF0056/P3I76R_12CR_F0056_S_231_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg");
+  background-image: ${(props) => props.image || ""};
   background-size: cover;
 `;
 

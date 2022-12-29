@@ -42,9 +42,9 @@ export const __removeCartList = createAsyncThunk(
     try {
       const accessToken = getCookie("token");
       setToken(accessToken);
-      const { data } = await instance.post(`/user/2/cart
+      const { data } = await instance.delete(`/user/${payload}/cart
       `);
-      console.log("a");
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error.response.data);
