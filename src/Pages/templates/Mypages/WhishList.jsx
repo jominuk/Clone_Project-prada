@@ -55,7 +55,7 @@ const WhishList = () => {
             {MokData.map((wish) => {
               // { realData.map((wish))=>{
               return (
-                <StItem>
+                <StItem key={`${wish.wishListId}`}>
                   <StCancelButton onClick={() => deleteWish(wish.wishListId)}>X</StCancelButton>
                   <StPic>
                     <Stimg src={wish.OptionImage.scr}></Stimg>
@@ -63,6 +63,8 @@ const WhishList = () => {
                   <StInfo>
                     <StName>{wish.title}</StName>
                     <StPrice>₩ {wish.price}</StPrice>
+
+
                     <StColorWrapper><Stp>{wish.itemColor.color}</Stp></StColorWrapper>
                     <StSizeWrapper>
                       <StSize>
@@ -100,8 +102,8 @@ const WhishList = () => {
 export default WhishList;
 
 const Wrapper = styled.div`
-  margin-left:20px;
-  width:97%;
+  margin-left:60px;
+  width:94%;
 `
 
 const StContainer = styled.div`
@@ -110,7 +112,7 @@ const StContainer = styled.div`
 `
 const StItem = styled.div`
   box-sizing:border-box;
-  width:23%;
+  width:26%;
   padding:20px;
 `
 const StCancelButton = styled.button`
@@ -217,9 +219,9 @@ const StUl = styled.ul`
 `
 const StDropWrapper = styled.div`
   display:flex;
-height:30px; 
+height:30px;
 align-items:center;
-border-bottom:1px solid rgb(0,0,0,0.2); 
+border-bottom:1px solid rgb(0,0,0,0.2);
 `
 const StSpace = styled.div`
   width:50px;
