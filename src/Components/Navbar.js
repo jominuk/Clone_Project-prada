@@ -55,6 +55,22 @@ const Navbar = () => {
   const goToHome = () => {
     navigate("/");
   };
+  const Wish = () => {
+    if (getCookie("token")) {
+      navigate("/mypage");
+    } else {
+      alert("로그인을 진행해 주세요");
+      navigate("login");
+    }
+  };
+  const shoppingBasket = () => {
+    if (getCookie("token")) {
+      navigate("/cart");
+    } else {
+      alert("로그인을 진행해 주세요");
+      navigate("login");
+    }
+  };
 
   const searchToggle = (sign) => {
     dispatch(searching(sign));
@@ -228,10 +244,10 @@ const Navbar = () => {
               )
             ) : null}
 
-            <WishList>
+            <WishList onClick={Wish}>
               <FontAwesomeIcon icon={faHeart} />
             </WishList>
-            <Cart>
+            <Cart onClick={shoppingBasket}>
               <FontAwesomeIcon icon={faCartShopping} />
             </Cart>
 
