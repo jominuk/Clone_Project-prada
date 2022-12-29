@@ -102,15 +102,17 @@ const Navbar = () => {
         password: pw,
       })
     );
+    setId("");
+    setPw("");
+    setIsOpen(false);
+    dispatch(setAuthenticate(true));
   };
 
   const logout = () => {
     if (deleteCookie("token")) {
       navigate("/");
-      setIsOpen(false);
     }
-    // setId("");
-    // setPw("");
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -163,7 +165,9 @@ const Navbar = () => {
                   <StModal>
                     <ModalLogin>
                       <StLoginTitle>login</StLoginTitle>
-                      <div>로그인을 하시면 빠른 결제가 가능합니다.</div>
+                      <StContentLoginPass>
+                        로그인을 하시면 빠른 결제가 가능합니다.
+                      </StContentLoginPass>
                       <StInput
                         placeholder="이메일 *"
                         onChange={(e) => onEmailHandlerID(e)}
@@ -217,7 +221,7 @@ const Navbar = () => {
                     </ModalLoginName>
 
                     <div>
-                      <StModalClose onClick={() => setIsOpen(false)}>
+                      <StModalClose onClick={() => setIsOpen(true)}>
                         ✖
                       </StModalClose>
                       <Stlogout onClick={logout}>로그아웃</Stlogout>
@@ -377,7 +381,7 @@ const StModal = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 75%;
+  height: 60%;
   background-color: #1b1b1b;
   left: 0;
   top: -15px;
@@ -395,9 +399,9 @@ const StModal = styled.div`
 `;
 
 const ModalLogin = styled.div`
-  width: 150vw;
-  height: 90vh;
-  margin: 150px 0 0 280px;
+  width: 110vw;
+  height: 50vh;
+  margin: 150px 0 0 350px;
   color: white;
 `;
 
@@ -426,20 +430,23 @@ const StInput = styled.input`
   background-color: #1b1b1b;
   border: none;
   border-bottom: 2px solid #ccc;
-  width: 70%;
-  height: 30px;
-  margin-top: 25px;
+  width: 80%;
+  height: 28px;
+  margin-top: 23px;
   font-size: 15px;
   color: white;
   &:focus {
     outline: none;
+  }
+  ::placeholder {
+    color: white;
   }
 `;
 
 const StEnrollment = styled.div`
   font-size: 22px;
   font-weight: bold;
-  margin-top: 150px;
+  margin-top: 100px;
 `;
 
 const StSignup = styled.button`
@@ -448,7 +455,7 @@ const StSignup = styled.button`
   position: relative;
   margin: 45px 0 0 0;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid white;
@@ -478,7 +485,7 @@ const StSignup = styled.button`
 `;
 
 const StLoginTitle = styled.div`
-  font-size: 30px;
+  font-size: 28px;
   font-weight: bold;
   margin: 10px 0 15px 0;
 `;
@@ -489,23 +496,23 @@ const StContents = styled.div`
 `;
 
 const StContent = styled.div`
-  margin: 70px 0 0 20px;
-  font-size: 20px;
+  margin: 42px 0 0 15px;
+  font-size: 15px;
 `;
 
 const StContentLogin = styled.div`
-  width: 71%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
 `;
 
 const StLoginButton = styled.button`
-  margin: 65px 0 0 0;
-  width: 100px;
+  margin: 35px 0 0 0;
+  width: 95px;
   height: 40px;
   color: black;
   background-color: gray;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
 `;
@@ -655,6 +662,10 @@ const Stlogout = styled.button`
   font-weight: bold;
   margin: 260px 150px 0 0;
   cursor: pointer;
+`;
+
+const StContentLoginPass = styled.div`
+  font-size: 15px;
 `;
 
 export default Navbar;
