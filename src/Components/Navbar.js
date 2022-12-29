@@ -19,8 +19,8 @@ import CategoryNavbar3 from "./CategoryNavbar3";
 import InputMode from "./InputMode";
 import { useEffect } from "react";
 import { __login } from "../Redux/modules/loginSlice";
-// import LogoutModal from "./LogoutModal";
 import { getCookie } from "../Shared/cookie";
+import { deleteCookie } from "../Shared/cookie";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -102,6 +102,15 @@ const Navbar = () => {
         password: pw,
       })
     );
+  };
+
+  const logout = () => {
+    if (deleteCookie("token")) {
+      navigate("/");
+      setIsOpen(false);
+    }
+    // setId("");
+    // setPw("");
   };
 
   useEffect(() => {
@@ -194,13 +203,25 @@ const Navbar = () => {
               ) : (
                 <ModalBoxOne>
                   <StModalOne>
-                    <ModalLogin>
-                      <div>{firstname} 님 환영합니다.</div>
-                      <div>계정 정보, 주문 및 선호 제품 보기</div>
-                    </ModalLogin>
-                    <StModalClose onClick={() => setIsOpen(false)}>
-                      ✖
-                    </StModalClose>
+                    <ModalLoginName>
+                      <StName>{firstname} 님 환영합니다.</StName>
+                      <StPrount>계정 정보, 주문 및 선호 제품 보기</StPrount>
+
+                      <div>
+                        <ModalLoginbutton>
+                          <StSignup1>대시보드</StSignup1>
+                          <StSignup2>계정 상세 정보</StSignup2>
+                          <StSignup1>주문</StSignup1>
+                        </ModalLoginbutton>
+                      </div>
+                    </ModalLoginName>
+
+                    <div>
+                      <StModalClose onClick={() => setIsOpen(false)}>
+                        ✖
+                      </StModalClose>
+                      <Stlogout onClick={logout}>로그아웃</Stlogout>
+                    </div>
                   </StModalOne>
                 </ModalBoxOne>
               )
@@ -516,6 +537,119 @@ const StModalOne = styled.div`
       transform: translateZ(0);
     }
   }
+`;
+
+const ModalLoginName = styled.div`
+  width: 40%;
+  height: 100px;
+  margin: 120px 0 0 200px;
+`;
+
+const StName = styled.div`
+  font-size: 29px;
+  font-weight: bold;
+  margin: 10px;
+  color: #5f5f5f;
+`;
+
+const StPrount = styled.div`
+  margin: 25px 0 0 10px;
+  color: white;
+`;
+
+const ModalLoginbutton = styled.div`
+  display: flex;
+  margin-top: 20px;
+  width: 50%;
+  height: 50px;
+`;
+
+const StSignup1 = styled.div`
+  width: 100px;
+  height: 40px;
+  z-index: 0;
+  color: white;
+  position: relative;
+  text-align: center;
+  margin: 45px 10px 0 10px;
+  font-weight: bold;
+  font-size: 21px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  transition: all 0.5s;
+  overflow: hidden;
+  cursor: pointer;
+  :focus {
+    outline: none;
+  }
+  :before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    top: 100%;
+    left: 0%;
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  :hover:before {
+    transform: translateY(-100%);
+  }
+  :hover {
+    color: black;
+  }
+`;
+
+const StSignup2 = styled.div`
+  width: 180px;
+  height: 40px;
+  z-index: 0;
+  color: white;
+  position: relative;
+  text-align: center;
+  margin: 45px 10px 0 10px;
+  font-weight: bold;
+  font-size: 21px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  transition: all 0.5s;
+  overflow: hidden;
+  cursor: pointer;
+  :focus {
+    outline: none;
+  }
+  :before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    top: 100%;
+    left: 0%;
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  :hover:before {
+    transform: translateY(-100%);
+  }
+  :hover {
+    color: black;
+  }
+`;
+
+const Stlogout = styled.button`
+  height: 50px;
+  width: 100px;
+  background-color: #1b1b1b;
+  color: white;
+  border: 1px solid white;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 260px 120px 0 0;
+  cursor: pointer;
 `;
 
 export default Navbar;
