@@ -4,7 +4,7 @@ export const list = (gender, thema) => {
       case "ready_to_wear":
         return [
           { kr: "아우터", eng: "outer" },
-          { kr: "재킷 및 코트", eng: "jacket_and_coats" },
+          { kr: "재킷 및 코트", eng: "jackets_and_coats" },
           { kr: "니트웨어", eng: "knitwear" },
           { kr: "드레스", eng: "dresses" },
           { kr: "셔츠 및 탑", eng: "shirts_and_tops" },
@@ -41,7 +41,7 @@ export const list = (gender, thema) => {
     switch (thema) {
       case "ready_to_wear":
         return [
-          { kr: "재킷 및 코트", eng: "jacket_and_coats" },
+          { kr: "재킷 및 코트", eng: "jackets_and_coats" },
           { kr: "셔츠", eng: "knitwear" },
           { kr: "니트웨어", eng: "dresses" },
           { kr: "셔츠 및 탑", eng: "shirts_and_tops" },

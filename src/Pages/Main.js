@@ -112,7 +112,12 @@ const Main = () => {
               </Product>
             );
           })}
-          <Product>
+          <Product
+            onClick={() => {
+              console.log("aa");
+              navigate(`/detail/3`);
+            }}
+          >
             <ImageBox
               hoverImage="url(https://www.prada.com/content/dam/pradabkg_products/2/291/291805/11A9F0002/291805_11A9_F0002_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg)"
               image="url(https://www.prada.com/content/dam/pradabkg_products/2/29Y/29Y056/11FCF0002/29Y056_11FC_F0002_S_222_MDF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.800.1000.webp)"

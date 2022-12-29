@@ -18,7 +18,7 @@ const CategoryNavbar = () => {
   ];
   const arr2 = [
     { kr: "아우터", eng: "outer" },
-    { kr: "재킷 및 코트", eng: "jacket_and_coats" },
+    { kr: "재킷 및 코트", eng: "jackets_and_coats" },
     { kr: "니트웨어", eng: "knitwear" },
     { kr: "드레스", eng: "dresses" },
     { kr: "셔츠 및 탑", eng: "shirts_and_tops" },
