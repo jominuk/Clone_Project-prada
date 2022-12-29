@@ -14,12 +14,7 @@ export const UserSolid = () => {
 export const HeartSolid = (itemId) => {
   return (
     <>
-      <FontAwesomeIcon
-        onClick={() => {
-          __removeWishList(itemId);
-        }}
-        icon={faHeart}
-      />
+      <FontAwesomeIcon icon={faHeart} />
     </>
   );
 };
