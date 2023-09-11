@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/CloneProjectprada/static/css/main.3d3934a6.css",
-    "main.js": "/CloneProjectprada/static/js/main.f17c41a5.js",
-    "static/js/787.400877c5.chunk.js": "/CloneProjectprada/static/js/787.400877c5.chunk.js",
-    "index.html": "/CloneProjectprada/index.html",
-    "main.3d3934a6.css.map": "/CloneProjectprada/static/css/main.3d3934a6.css.map",
-    "main.f17c41a5.js.map": "/CloneProjectprada/static/js/main.f17c41a5.js.map",
-    "787.400877c5.chunk.js.map": "/CloneProjectprada/static/js/787.400877c5.chunk.js.map"
+    "main.css": "/cloneprojectprada/static/css/main.3d3934a6.css",
+    "main.js": "/cloneprojectprada/static/js/main.f29a2914.js",
+    "static/js/787.400877c5.chunk.js": "/cloneprojectprada/static/js/787.400877c5.chunk.js",
+    "index.html": "/cloneprojectprada/index.html",
+    "main.3d3934a6.css.map": "/cloneprojectprada/static/css/main.3d3934a6.css.map",
+    "main.f29a2914.js.map": "/cloneprojectprada/static/js/main.f29a2914.js.map",
+    "787.400877c5.chunk.js.map": "/cloneprojectprada/static/js/787.400877c5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3d3934a6.css",
-    "static/js/main.f17c41a5.js"
+    "static/js/main.f29a2914.js"
   ]
 }
